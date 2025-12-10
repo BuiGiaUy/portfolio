@@ -49,11 +49,14 @@ services:
 
   # Backend API
   backend:
+    # For local development: build from source
     build:
       context: ./portfolio-backend
       dockerfile: docker/Dockerfile
       args:
         NODE_ENV: ${NODE_ENV:-production}
+    # For production (VPS): uncomment and use pre-built images from Docker Hub
+    # image: ${DOCKERHUB_USERNAME}/portfolio-backend:latest
     container_name: portfolio-backend
     restart: unless-stopped
     depends_on:
@@ -98,12 +101,15 @@ services:
 
   # Frontend
   frontend:
+    # For local development: build from source
     build:
       context: ./portfolio-frontend
       dockerfile: docker/Dockerfile
       args:
         NODE_ENV: ${NODE_ENV:-production}
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost/api}
+    # For production (VPS): uncomment and use pre-built images from Docker Hub
+    # image: ${DOCKERHUB_USERNAME}/portfolio-frontend:latest
     container_name: portfolio-frontend
     restart: unless-stopped
     depends_on:
