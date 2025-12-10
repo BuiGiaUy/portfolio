@@ -1,0 +1,23 @@
+# Ignore environment files
+.env
+.env.local
+.env.production
+
+# Ignore logs
+*.log
+
+# Ignore node modules
+portfolio-backend/node_modules/
+portfolio-frontend/node_modules/
+
+# Ignore build files
+portfolio-backend/dist/
+portfolio-frontend/.next/
+portfolio-frontend/out/
+
+# Ignore editor configs
+.vscode/
+.idea/
+
+# Docker ignored files
+docker-data/
