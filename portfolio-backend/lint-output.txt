@@ -1,0 +1,15 @@
+
+D:\Project\profolio\portfolio-backend\src\application\usecases\create-user.usecase.spec.ts
+   51:59  error  Async arrow function has no 'await' expression  @typescript-eslint/require-await
+   91:59  error  Async arrow function has no 'await' expression  @typescript-eslint/require-await
+  106:59  error  Async arrow function has no 'await' expression  @typescript-eslint/require-await
+  131:59  error  Async arrow function has no 'await' expression  @typescript-eslint/require-await
+
+D:\Project\profolio\portfolio-backend\src\infrastructure\repositories\user-inmemory.repository.ts
+  18:3   error  Async method 'findById' has no 'await' expression           @typescript-eslint/require-await
+  22:3   error  Async method 'findByEmail' has no 'await' expression        @typescript-eslint/require-await
+  27:3   error  Async method 'save' has no 'await' expression               @typescript-eslint/require-await
+  38:12  error  Unexpected `await` of a non-Promise (non-"Thenable") value  @typescript-eslint/await-thenable
+
+✖ 8 problems (8 errors, 0 warnings)
+
