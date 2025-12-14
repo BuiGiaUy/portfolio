@@ -6,6 +6,7 @@ import {
   USER_REPOSITORY,
 } from '../../../domain/repositories/user.repository.interface';
 import { AuthResponseDto } from '../../dto/auth/auth-response.dto';
+import { JwtPayload } from 'src/infrastructure/auth/strategies/jwt.strategy';
 
 @Injectable()
 export class LoginUseCase {
@@ -39,16 +40,20 @@ export class LoginUseCase {
     }
 
     // Generate tokens
-    const payload = { sub: user.id, email: user.email, role: user.role };
+    const payload: JwtPayload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
 
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRATION || '15m',
+      expiresIn: '15m',
     });
 
     const refreshToken = this.jwtService.sign(payload, {
       secret: process.env.REFRESH_TOKEN_SECRET,
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRATION || '7d',
+      expiresIn: '7d',
     });
 
     // Hash and store refresh token

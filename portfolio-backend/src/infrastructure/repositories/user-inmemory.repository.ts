@@ -37,4 +37,15 @@ export class UserInMemoryRepository implements IUserRepository {
   findAll(): Promise<User[]> {
     return Promise.resolve(Array.from(this.users.values()));
   }
+
+  async updateRefreshToken(
+    userId: string,
+    refreshTokenHash: string | null,
+  ): Promise<void> {
+    const user = await this.findById(userId);
+    if (user) {
+      user.updateRefreshToken(refreshTokenHash);
+      await this.save(user);
+    }
+  }
 }

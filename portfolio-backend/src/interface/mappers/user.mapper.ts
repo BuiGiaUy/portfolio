@@ -12,7 +12,7 @@ export class UserMapper {
     return {
       id: user.id,
       email: user.email,
-      name: user.name,
+      name: user.email.split('@')[0], // Generate name from email
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

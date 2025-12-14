@@ -6,6 +6,7 @@ import {
   USER_REPOSITORY,
 } from '../../../domain/repositories/user.repository.interface';
 import { AuthResponseDto } from '../../dto/auth/auth-response.dto';
+import { JwtPayload } from 'src/infrastructure/auth/strategies/jwt.strategy';
 
 @Injectable()
 export class RefreshTokenUseCase {
@@ -20,7 +21,7 @@ export class RefreshTokenUseCase {
   ): Promise<{ authResponse: AuthResponseDto; refreshToken: string }> {
     try {
       // Verify refresh token
-      const payload = this.jwtService.verify(refreshToken, {
+      const payload: JwtPayload = this.jwtService.verify(refreshToken, {
         secret: process.env.REFRESH_TOKEN_SECRET,
       });
 
@@ -50,12 +51,12 @@ export class RefreshTokenUseCase {
 
       const accessToken = this.jwtService.sign(newPayload, {
         secret: process.env.JWT_SECRET,
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRATION || '15m',
+        expiresIn: '15m',
       });
 
       const newRefreshToken = this.jwtService.sign(newPayload, {
         secret: process.env.REFRESH_TOKEN_SECRET,
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRATION || '7d',
+        expiresIn: '7d',
       });
 
       // Rotate refresh token (invalidate old, store new)

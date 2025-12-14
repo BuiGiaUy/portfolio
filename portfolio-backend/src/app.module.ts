@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -63,7 +64,15 @@ import { COMMENT_REPOSITORY } from './domain/repositories/comment.repository.int
  * Domain has NO knowledge of infrastructure or interface layers.
  */
 @Module({
-  imports: [CacheModule, AuthModule, AdminModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+    CacheModule,
+    AuthModule,
+    AdminModule,
+  ],
   controllers: [
     AppController,
     HealthController,

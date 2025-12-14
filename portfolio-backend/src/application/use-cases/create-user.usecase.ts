@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as userRepositoryInterface from '../../domain/repositories/user.repository.interface';
 import { User } from '../../domain/entities/user.entity';
 import { CreateUserDto } from '../dtos/user.dto';
+import { Role } from '../../domain/enums/role.enum';
 
 /**
  * Application Layer Use Case
@@ -23,15 +24,19 @@ export class CreateUserUseCase {
     if (existingUser) {
       throw new Error('User with this email already exists');
     }
+    const hashedPassword = this.hashPassword(dto.password);
+    const now = new Date();
 
     // Create new user entity (domain logic)
     const user = new User(
-      this.generateId(), // In real app, use UUID library
+      this.generateId(),
       dto.email,
-      dto.name,
-      this.hashPassword(dto.password), // In real app, use bcrypt
-      new Date(),
-      new Date(),
+      hashedPassword,
+      Role.VIEWER, // Default role for new users
+      null, // refreshTokenHash
+      true, // active
+      now, // createdAt
+      now, // updatedAt
     );
 
     // Persist using repository

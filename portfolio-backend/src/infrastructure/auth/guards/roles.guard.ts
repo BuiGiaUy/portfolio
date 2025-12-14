@@ -1,6 +1,11 @@
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from '../../../domain/enums/role.enum';
+import { Role } from 'src/domain/enums/role.enum';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { RequestUser } from '../strategies/jwt.strategy';
 
@@ -36,9 +41,7 @@ export class RolesGuard implements CanActivate {
 
     // Additional check: VIEWER can only perform GET requests
     if (user.role === Role.VIEWER && request.method !== 'GET') {
-      throw new ForbiddenException(
-        'VIEWER role can only perform GET requests',
-      );
+      throw new ForbiddenException('VIEWER role can only perform GET requests');
     }
 
     return true;

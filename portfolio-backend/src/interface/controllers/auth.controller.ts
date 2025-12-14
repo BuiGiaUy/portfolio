@@ -10,14 +10,14 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
-import { LoginDto } from '../../../application/dto/auth/login.dto';
-import { LoginUseCase } from '../../../application/use-cases/auth/login.usecase';
-import { RefreshTokenUseCase } from '../../../application/use-cases/auth/refresh-token.usecase';
-import { LogoutUseCase } from '../../../application/use-cases/auth/logout.usecase';
-import { GetMeUseCase } from '../../../application/use-cases/auth/get-me.usecase';
-import { JwtAuthGuard } from '../../../infrastructure/auth/guards/jwt-auth.guard';
-import { CurrentUser } from '../../../infrastructure/auth/decorators/current-user.decorator';
-import { RequestUser } from '../../../infrastructure/auth/strategies/jwt.strategy';
+import { LoginDto } from 'src/application/dto/auth/login.dto';
+import { LoginUseCase } from 'src/application/use-cases/auth/login.usecase';
+import { RefreshTokenUseCase } from 'src/application/use-cases/auth/refresh-token.usecase';
+import { LogoutUseCase } from 'src/application/use-cases/auth/logout.usecase';
+import { GetMeUseCase } from 'src/application/use-cases/auth/get-me.usecase';
+import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
+import { CurrentUser } from 'src/infrastructure/auth/decorators/current-user.decorator';
+import { RequestUser } from 'src/infrastructure/auth/strategies/jwt.strategy';
 
 @Controller('auth')
 export class AuthController {

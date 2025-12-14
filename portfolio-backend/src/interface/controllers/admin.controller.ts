@@ -1,8 +1,16 @@
-import { Controller, Get, Post, Patch, Delete, Param, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../../infrastructure/auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../../../infrastructure/auth/guards/roles.guard';
-import { Roles } from '../../../infrastructure/auth/decorators/roles.decorator';
-import { Role } from '../../../domain/enums/role.enum';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
+import { RolesGuard } from 'src/infrastructure/auth/guards/roles.guard';
+import { Roles } from 'src/infrastructure/auth/decorators/roles.decorator';
+import { Role } from 'src/domain/enums/role.enum';
+import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
 
 @Controller('admin')
 @UseGuards(JwtAuthGuard, RolesGuard)
