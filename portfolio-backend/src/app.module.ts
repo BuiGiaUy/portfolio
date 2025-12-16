@@ -15,6 +15,7 @@ import { AdminModule } from './interface/modules/admin.module';
 import { CreateUserUseCase } from './application/use-cases/create-user.usecase';
 import { CreateProjectUseCase } from './application/use-cases/create-project.usecase';
 import { CreateCommentUseCase } from './application/use-cases/create-comment.usecase';
+import { GetAllProjectsUseCase } from './application/use-cases/get-all-projects.usecase';
 import { GetProjectsByUserUseCase } from './application/use-cases/get-projects-by-user.usecase';
 import { GetCommentsByProjectUseCase } from './application/use-cases/get-comments-by-project.usecase';
 import { GetProjectUseCase } from './application/use-cases/get-project.usecase';
@@ -87,6 +88,7 @@ import { COMMENT_REPOSITORY } from './domain/repositories/comment.repository.int
     CreateUserUseCase,
     CreateProjectUseCase,
     CreateCommentUseCase,
+    GetAllProjectsUseCase,
     GetProjectUseCase,
     GetProjectsByUserUseCase,
     GetCommentsByProjectUseCase,

@@ -20,11 +20,16 @@ async function bootstrap() {
     }),
   );
 
+  // Enable CORS
+  app.enableCors();
+
   // Apply rate limiter middleware globally
   const rateLimiterService = app.get(RateLimiterService);
-  app.use(new RateLimiterMiddleware(rateLimiterService).use.bind(
-    new RateLimiterMiddleware(rateLimiterService),
-  ));
+  app.use(
+    new RateLimiterMiddleware(rateLimiterService).use.bind(
+      new RateLimiterMiddleware(rateLimiterService),
+    ),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }

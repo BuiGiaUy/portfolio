@@ -95,53 +95,38 @@ export interface UseProjectsResult {
 
 export function useProjects(): UseProjectsResult {
   const [projects, setProjects] = React.useState<Project[]>([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);
 
   const fetchData = React.useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
+
       const data = await projectService.getProjects();
-      setProjects(data);
+
+      // 🔒 GUARANTEE ARRAY
+      setProjects(Array.isArray(data) ? data : []);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch projects'));
+      setProjects([]); // 🔒 fallback an toàn
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   React.useEffect(() => {
-    let isMounted = true;
+    fetchData();
+  }, [fetchData]);
 
-    const load = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const data = await projectService.getProjects();
-        if (isMounted) {
-          setProjects(data);
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(err instanceof Error ? err : new Error('Failed to fetch projects'));
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    load();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  return { projects, isLoading, error, refetch: fetchData };
+  return {
+    projects,
+    isLoading,
+    error,
+    refetch: fetchData,
+  };
 }
+
 
 /**
  * Hook for managing project view state
