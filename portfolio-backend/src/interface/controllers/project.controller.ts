@@ -10,6 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateProjectUseCase } from '../../application/use-cases/create-project.usecase';
+import { GetAllProjectsUseCase } from '../../application/use-cases/get-all-projects.usecase';
 import { GetProjectsByUserUseCase } from '../../application/use-cases/get-projects-by-user.usecase';
 import { GetProjectUseCase } from '../../application/use-cases/get-project.usecase';
 import { UpdateProjectDetailsUseCase } from '../../application/use-cases/update-project-details.usecase';
@@ -46,6 +47,7 @@ import { CacheTTL } from '../../infrastructure/cache/cache-ttl.decorator';
 export class ProjectController {
   constructor(
     private readonly createProjectUseCase: CreateProjectUseCase,
+    private readonly getAllProjectsUseCase: GetAllProjectsUseCase,
     private readonly getProjectsByUserUseCase: GetProjectsByUserUseCase,
     private readonly getProjectUseCase: GetProjectUseCase,
     private readonly updateProjectDetailsUseCase: UpdateProjectDetailsUseCase,
@@ -70,6 +72,22 @@ export class ProjectController {
     await this.cacheInvalidationService.invalidateOnCreate(dto.userId);
 
     return ProjectMapper.toDto(project);
+  }
+
+  /**
+   * Get all projects
+   *
+   * Cache Strategy:
+   * - Automatically cached by CacheInterceptor for 60 seconds
+   * - Cache key format: cache:/projects
+   * - Public endpoint for portfolio display
+   */
+  @Get()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
+  async findAll(): Promise<ProjectResponseDto[]> {
+    const projects = await this.getAllProjectsUseCase.execute();
+    return ProjectMapper.toDtoArray(projects);
   }
 
   /**
