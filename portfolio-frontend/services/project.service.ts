@@ -1,137 +1,88 @@
+/**
+ * Project Service
+ * Uses the new API client for all project-related operations
+ */
+
 'use client';
 
+import { apiClient } from '@/lib/api';
 import { Project, ProjectListResponse, ViewMode, ViewIncrementResponse } from '@/types/project';
 
 /**
- * API Base URL configuration
+ * Project Service Class
  */
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+class ProjectService {
+  private readonly baseUrl = '/projects';
 
-/**
- * Custom error class for API errors
- */
-export class ApiError extends Error {
-  constructor(
-    message: string,
-    public status: number,
-    public statusText: string
-  ) {
-    super(message);
-    this.name = 'ApiError';
+  /**
+   * Fetch all projects
+   */
+  async getProjects(): Promise<Project[]> {
+    const response = await apiClient.get<ProjectListResponse>(this.baseUrl);
+    return response.data;
   }
-}
 
-/**
- * Fetch all projects from the backend
- * Uses Next.js caching with 60-second revalidation
- */
-export async function fetchProjects(): Promise<Project[]> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/projects`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      next: { revalidate: 60 },
-    });
-
-    if (!response.ok) {
-      throw new ApiError(
-        `Failed to fetch projects`,
-        response.status,
-        response.statusText
-      );
-    }
-
-    const data: ProjectListResponse = await response.json();
-    return data.data;
-  } catch (error) {
-    if (error instanceof ApiError) {
+  /**
+   * Fetch a single project by ID
+   */
+  async getProjectById(id: string): Promise<Project | null> {
+    try {
+      const response = await apiClient.get<Project>(`${this.baseUrl}/${id}`);
+      return response;
+    } catch (error: unknown) {
+      // Return null for 404 errors
+      if (error && typeof error === 'object' && 'statusCode' in error && error.statusCode === 404) {
+        return null;
+      }
       throw error;
     }
-    console.error('Failed to fetch projects:', error);
-    throw new ApiError('Network error while fetching projects', 0, 'Network Error');
   }
-}
 
-/**
- * Fetch a single project by ID
- */
-export async function fetchProjectById(id: string): Promise<Project | null> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/projects/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      next: { revalidate: 60 },
-    });
-
-    if (response.status === 404) {
-      return null;
-    }
-
-    if (!response.ok) {
-      throw new ApiError(
-        `Failed to fetch project ${id}`,
-        response.status,
-        response.statusText
+  /**
+   * Increment project views
+   */
+  async incrementViews(id: string, mode: ViewMode = 'optimistic'): Promise<ViewIncrementResponse> {
+    try {
+      const response = await apiClient.post<ViewIncrementResponse>(
+        `${this.baseUrl}/${id}/view-${mode}`
       );
+      return response;
+    } catch (error) {
+      console.error(`Failed to increment views for project ${id}:`, error);
+      // Return fallback response
+      return { id, views: -1 };
     }
+  }
 
-    const project: Project = await response.json();
-    return project;
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-    console.error(`Failed to fetch project ${id}:`, error);
-    throw new ApiError(`Network error while fetching project ${id}`, 0, 'Network Error');
+  /**
+   * Create a new project (requires authentication)
+   */
+  async createProject(data: Partial<Project>): Promise<Project> {
+    const response = await apiClient.post<Project>(this.baseUrl, data);
+    return response;
+  }
+
+  /**
+   * Update a project (requires authentication)
+   */
+  async updateProject(id: string, data: Partial<Project>): Promise<Project> {
+    const response = await apiClient.put<Project>(`${this.baseUrl}/${id}`, data);
+    return response;
+  }
+
+  /**
+   * Delete a project (requires authentication)
+   */
+  async deleteProject(id: string): Promise<void> {
+    await apiClient.delete(`${this.baseUrl}/${id}`);
   }
 }
 
-/**
- * Increment project views
- * @param id - Project ID
- * @param mode - 'optimistic' or 'pessimistic' view increment mode
- * @returns Updated view count
- */
-export async function incrementProjectView(
-  id: string,
-  mode: ViewMode = 'optimistic'
-): Promise<ViewIncrementResponse> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/projects/${id}/view-${mode}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store',
-    });
-
-    if (!response.ok) {
-      throw new ApiError(
-        `Failed to increment views for project ${id}`,
-        response.status,
-        response.statusText
-      );
-    }
-
-    const data: ViewIncrementResponse = await response.json();
-    return data;
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-    // Log but don't throw - view increment is not critical
-    console.error(`Failed to increment views for project ${id}:`, error);
-    // Return a fallback response
-    return { id, views: -1 };
-  }
-}
+// Export singleton instance
+export const projectService = new ProjectService();
 
 /**
- * React Hook for fetching projects with loading and error states
+ * React Hook for fetching projects
  */
 import React from 'react';
 
@@ -151,7 +102,7 @@ export function useProjects(): UseProjectsResult {
     try {
       setIsLoading(true);
       setError(null);
-      const data = await fetchProjects();
+      const data = await projectService.getProjects();
       setProjects(data);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch projects'));
@@ -167,7 +118,7 @@ export function useProjects(): UseProjectsResult {
       try {
         setIsLoading(true);
         setError(null);
-        const data = await fetchProjects();
+        const data = await projectService.getProjects();
         if (isMounted) {
           setProjects(data);
         }
@@ -193,7 +144,7 @@ export function useProjects(): UseProjectsResult {
 }
 
 /**
- * Hook for managing project view state with optimistic updates
+ * Hook for managing project view state
  */
 export interface UseProjectViewResult {
   incrementView: (mode?: ViewMode) => Promise<number>;
@@ -218,7 +169,7 @@ export function useProjectView(
       }
 
       try {
-        const result = await incrementProjectView(projectId, mode);
+        const result = await projectService.incrementViews(projectId, mode);
         
         // Update with actual value from server
         if (result.views >= 0) {

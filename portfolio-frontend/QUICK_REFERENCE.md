@@ -52,7 +52,7 @@ const USE_MOCK_DATA = false; // 👈 That's it!
 Then set your API URL in `.env.local`:
 
 ```bash
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ```
 
 **No UI changes needed!** ✅
