@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState, useCallback } from 'react';
-import Image from 'next/image';
-import { incrementProjectView, type UseProjectViewResult } from '@/services/project.service';
-import type { ViewMode } from '@/types/project';
+import React, { useState, useCallback } from "react";
+import Image from "next/image";
+import { projectService } from "@/services/project.service";
+import type { ViewMode } from "@/types/project";
 
 export interface ProjectCardProps {
   id: string;
@@ -18,7 +18,7 @@ export interface ProjectCardProps {
 }
 
 // Fallback image for error handling
-const FALLBACK_IMAGE = '/images/project-placeholder.svg';
+const FALLBACK_IMAGE = "/images/project-placeholder.svg";
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   id,
@@ -29,7 +29,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   views,
   onView,
   imageSlot,
-  viewMode = 'optimistic',
+  viewMode = "optimistic",
 }) => {
   const [imageError, setImageError] = useState(false);
   const [viewCount, setViewCount] = useState(views);
@@ -46,23 +46,23 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     setIsIncrementing(true);
 
     // Optimistic update
-    if (viewMode === 'optimistic') {
+    if (viewMode === "optimistic") {
       setViewCount((prev) => prev + 1);
     }
 
     try {
-      const result = await incrementProjectView(id, viewMode);
-      
+      const result = await projectService.incrementViews(id, viewMode);
+
       // Update with actual value from server if valid
       if (result.views >= 0) {
         setViewCount(result.views);
       }
     } catch (error) {
       // Rollback optimistic update on error
-      if (viewMode === 'optimistic') {
+      if (viewMode === "optimistic") {
         setViewCount((prev) => prev - 1);
       }
-      console.error('Failed to increment view:', error);
+      console.error("Failed to increment view:", error);
     } finally {
       setIsIncrementing(false);
     }
@@ -96,7 +96,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         )}
         {/* Gradient Overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90"
           aria-hidden="true"
         />
@@ -148,7 +148,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {/* Tags */}
         {tags.length > 0 && (
-          <div className="mb-4 flex flex-wrap gap-2" role="list" aria-label="Project tags">
+          <div
+            className="mb-4 flex flex-wrap gap-2"
+            role="list"
+            aria-label="Project tags"
+          >
             {tags.map((tag) => (
               <span
                 key={tag}
@@ -195,7 +199,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               Loading...
             </span>
           ) : (
-            'View Project'
+            "View Project"
           )}
         </button>
       </div>

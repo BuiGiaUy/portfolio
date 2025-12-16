@@ -92,7 +92,7 @@ const USE_MOCK_DATA = false;
 Create `.env.local`:
 
 ```bash
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ```
 
 ### Step 3: Done! 🎉

@@ -1,32 +1,12 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState, useCallback } from 'react';
-import { ProjectList } from '@/components';
-import { fetchProjects } from '@/services/project.service';
-import type { Project } from '@/types/project';
+import React, { useCallback } from "react";
+import { ProjectList } from "@/components";
+import { useProjects } from "@/services/project.service";
+import type { Project } from "@/types/project";
 
 export default function Home() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  const loadProjects = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await fetchProjects();
-      setProjects(data);
-    } catch (err) {
-      console.error('Failed to fetch projects:', err);
-      setError(err instanceof Error ? err : new Error('Failed to fetch projects'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadProjects();
-  }, [loadProjects]);
+  const { projects, isLoading, error, refetch } = useProjects();
 
   const handleProjectView = useCallback((project: Project) => {
     console.log(`Viewing project: ${project.id} - ${project.title}`);
@@ -35,8 +15,8 @@ export default function Home() {
   }, []);
 
   const handleRefresh = useCallback(() => {
-    loadProjects();
-  }, [loadProjects]);
+    refetch();
+  }, [refetch]);
 
   // Error State
   if (error) {
@@ -98,8 +78,14 @@ export default function Home() {
       {/* Hero Header */}
       <header className="relative overflow-hidden border-b border-gray-200/50 bg-white/80 backdrop-blur-xl dark:border-gray-700/50 dark:bg-gray-900/80">
         {/* Decorative gradient blobs */}
-        <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-500/20 blur-3xl" aria-hidden="true" />
-        <div className="absolute -top-12 -right-12 h-48 w-48 rounded-full bg-gradient-to-br from-indigo-400/20 to-pink-500/20 blur-3xl" aria-hidden="true" />
+        <div
+          className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-500/20 blur-3xl"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute -top-12 -right-12 h-48 w-48 rounded-full bg-gradient-to-br from-indigo-400/20 to-pink-500/20 blur-3xl"
+          aria-hidden="true"
+        />
 
         <div className="relative container mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
           <div className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:justify-between lg:text-left">
@@ -122,29 +108,40 @@ export default function Home() {
               </h1>
 
               <p className="max-w-xl text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl">
-                Crafting exceptional digital experiences with modern technologies.
-                Explore my latest projects and see how I bring ideas to life.
+                Crafting exceptional digital experiences with modern
+                technologies. Explore my latest projects and see how I bring
+                ideas to life.
               </p>
 
               {/* Stats */}
               <div className="mt-8 flex flex-wrap justify-center gap-8 lg:justify-start">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
-                    {isLoading ? '...' : projects.length}
+                    {isLoading ? "..." : projects.length}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Projects</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Projects
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
                     {isLoading
-                      ? '...'
-                      : projects.reduce((sum, p) => sum + p.views, 0).toLocaleString()}
+                      ? "..."
+                      : projects
+                          .reduce((sum, p) => sum + p.views, 0)
+                          .toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Total Views</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Total Views
+                  </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-pink-600 dark:text-pink-400">5+</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Years</div>
+                  <div className="text-3xl font-bold text-pink-600 dark:text-pink-400">
+                    5+
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Years
+                  </div>
                 </div>
               </div>
             </div>
@@ -158,11 +155,13 @@ export default function Home() {
                 className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/40 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-offset-gray-900"
               >
                 <span
-                  className={`transition-transform duration-300 ${isLoading ? 'animate-spin' : 'group-hover:rotate-180'}`}
+                  className={`transition-transform duration-300 ${
+                    isLoading ? "animate-spin" : "group-hover:rotate-180"
+                  }`}
                 >
                   ⟳
                 </span>
-                {isLoading ? 'Refreshing...' : 'Refresh Projects'}
+                {isLoading ? "Refreshing..." : "Refresh Projects"}
               </button>
 
               <a
@@ -170,7 +169,9 @@ export default function Home() {
                 className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-gray-200 bg-white/50 px-8 py-4 font-semibold text-gray-700 backdrop-blur-sm transition-all duration-300 hover:border-indigo-300 hover:bg-white hover:text-indigo-600 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-300 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
               >
                 View All Projects
-                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
               </a>
             </div>
           </div>
@@ -185,8 +186,9 @@ export default function Home() {
               Featured Projects
             </h2>
             <p className="mx-auto max-w-2xl text-gray-600 dark:text-gray-400">
-              Here are some of my recent projects. Each one represents a unique challenge
-              and showcases different aspects of my skills and expertise.
+              Here are some of my recent projects. Each one represents a unique
+              challenge and showcases different aspects of my skills and
+              expertise.
             </p>
           </div>
         </div>
@@ -206,7 +208,9 @@ export default function Home() {
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🚀</span>
-              <span className="font-semibold text-gray-900 dark:text-white">Portfolio</span>
+              <span className="font-semibold text-gray-900 dark:text-white">
+                Portfolio
+              </span>
             </div>
 
             <div className="flex items-center gap-6">

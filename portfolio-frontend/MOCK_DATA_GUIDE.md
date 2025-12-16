@@ -133,7 +133,7 @@ const USE_MOCK_DATA = false;
 Create or update `.env.local`:
 
 ```bash
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
 # or for production
 NEXT_PUBLIC_API_URL=https://api.yourportfolio.com
 ```

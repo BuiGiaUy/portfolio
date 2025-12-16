@@ -1,35 +1,16 @@
-'use client';
+"use client";
 
-import React, { useState, useCallback } from 'react';
-import { ProjectList } from './ProjectList';
-import { fetchProjects } from '@/services/project.service';
-import type { Project } from '@/types/project';
+import React, { useCallback } from "react";
+import { ProjectList } from "./ProjectList";
+import { useProjects } from "@/services/project.service";
+import type { Project } from "@/types/project";
 
 /**
  * Example Usage Component
  * Demonstrates how to use ProjectList with backend integration
  */
 export default function ExampleUsage() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  const loadProjects = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await fetchProjects();
-      setProjects(data);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    loadProjects();
-  }, [loadProjects]);
+  const { projects, isLoading, error, refetch } = useProjects();
 
   const handleProjectView = useCallback((project: Project) => {
     console.log(`Viewing project: ${project.id} - ${project.title}`);
@@ -48,7 +29,7 @@ export default function ExampleUsage() {
               {error.message}
             </p>
             <button
-              onClick={loadProjects}
+              onClick={refetch}
               className="rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-md transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 hover:shadow-xl"
             >
               Try Again
@@ -74,16 +55,18 @@ export default function ExampleUsage() {
               </p>
               {!isLoading && projects.length > 0 && (
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">
-                  {projects.length} projects • {projects.reduce((s, p) => s + p.views, 0).toLocaleString()} views
+                  {projects.length} projects •{" "}
+                  {projects.reduce((s, p) => s + p.views, 0).toLocaleString()}{" "}
+                  views
                 </p>
               )}
             </div>
             <button
-              onClick={loadProjects}
+              onClick={refetch}
               disabled={isLoading}
               className="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-offset-gray-800"
             >
-              {isLoading ? 'Loading...' : 'Refresh'}
+              {isLoading ? "Loading..." : "Refresh"}
             </button>
           </div>
         </div>
