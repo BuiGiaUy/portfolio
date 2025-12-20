@@ -13,6 +13,10 @@ RUN npm config set fetch-retry-mintimeout 20000
 
 RUN npm ci
 
+COPY prisma ./prisma
+
+RUN npx prisma generate
+
 COPY tsconfig*.json ./
 COPY src ./src
 
@@ -27,6 +31,7 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
 COPY package.json package-lock.json ./
 
 # Fix network  VN
@@ -37,9 +42,12 @@ RUN npm config set fetch-retry-mintimeout 20000
 # install production deps
 RUN npm ci --omit=dev
 
+# Generate Prisma Client (required for runtime)
+RUN npx prisma generate
+
 # Install curl for healthcheck
 RUN apk add --no-cache curl
 
 EXPOSE 3000
 
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main.js"]
