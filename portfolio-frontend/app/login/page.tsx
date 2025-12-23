@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/api";
 import { useAuthState } from "@/lib/auth-utils";
 import { useRouter } from "next/navigation";
@@ -18,6 +18,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, router]);
+
   // Redirect if already authenticated
   if (checkingAuth) {
     return (
@@ -27,27 +33,12 @@ export default function LoginPage() {
     );
   }
 
-  if (isAuthenticated) {
-    router.push("/dashboard");
-    return null;
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     try {
-      const result = await login({
-        email,
-        password,
-      });
-
-      if (result) {
-        // Get redirect param from URL
-        const params = new URLSearchParams(window.location.search);
-        const redirect = params.get("redirect") || "/dashboard";
-        router.push(redirect);
-      }
+      await login({ email, password });
+      router.push("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     }

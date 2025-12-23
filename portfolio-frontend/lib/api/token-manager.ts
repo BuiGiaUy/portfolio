@@ -1,28 +1,43 @@
 /**
  * Token Manager
  * Handles storage and retrieval of authentication tokens
+ * Access token is stored in HttpOnly cookies (set by backend)
+ * User data is stored in localStorage for client-side access
  */
 
 import { API_CONFIG } from './config';
 import { AuthTokens, AuthUser } from './types';
 
+/**
+ * Helper to get cookie value by name (client-side only)
+ */
+function getCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null;
+  
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  
+  if (parts.length === 2) {
+    return parts.pop()?.split(';').shift() || null;
+  }
+  
+  return null;
+}
+
 class TokenManager {
   private isClient = typeof window !== 'undefined';
 
   /**
-   * Get access token from storage
+   * Get access token from cookies
+   * Note: This reads from cookies set by the backend
+   * HttpOnly cookies cannot be read by JavaScript, so this will return null
+   * The token is automatically sent with requests via cookies
    */
   getAccessToken(): string | null {
     if (!this.isClient) return null;
-    return localStorage.getItem(API_CONFIG.auth.tokenKey);
-  }
-
-  /**
-   * Get refresh token from storage
-   */
-  getRefreshToken(): string | null {
-    if (!this.isClient) return null;
-    return localStorage.getItem(API_CONFIG.auth.refreshTokenKey);
+    // Try to read from cookie (will be null for HttpOnly cookies)
+    // This is mainly for checking if user is authenticated
+    return getCookie('accessToken');
   }
 
   /**
@@ -41,19 +56,13 @@ class TokenManager {
   }
 
   /**
-   * Set access token in storage
+   * Set access token - NOT USED anymore
+   * Access token is set as HttpOnly cookie by backend
+   * Keeping this method for backward compatibility
    */
-  setAccessToken(token: string): void {
-    if (!this.isClient) return;
-    localStorage.setItem(API_CONFIG.auth.tokenKey, token);
-  }
-
-  /**
-   * Set refresh token in storage
-   */
-  setRefreshToken(token: string): void {
-    if (!this.isClient) return;
-    localStorage.setItem(API_CONFIG.auth.refreshTokenKey, token);
+  setAccessToken(): void {
+    // No-op: Access token is set by backend as HttpOnly cookie
+    // We cannot set HttpOnly cookies from JavaScript
   }
 
   /**
@@ -66,10 +75,12 @@ class TokenManager {
 
   /**
    * Set all auth data
+   * Note: Only stores user data in localStorage
+   * Tokens are managed by backend via HttpOnly cookies
    */
-  setAuthData(tokens: AuthTokens, user?: AuthUser): void {
-    this.setAccessToken(tokens.accessToken);
-    this.setRefreshToken(tokens.refreshToken);
+  setAuthData(_tokens: AuthTokens, user?: AuthUser): void {
+    // Tokens are set by backend as HttpOnly cookies
+    // We only store user data
     if (user) {
       this.setUser(user);
     }
@@ -80,25 +91,27 @@ class TokenManager {
    */
   clearAuthData(): void {
     if (!this.isClient) return;
-    localStorage.removeItem(API_CONFIG.auth.tokenKey);
-    localStorage.removeItem(API_CONFIG.auth.refreshTokenKey);
     localStorage.removeItem(API_CONFIG.auth.userKey);
+    // Cookies are cleared by backend on logout
   }
 
   /**
    * Check if user is authenticated
+   * Check both cookie and user data
    */
   isAuthenticated(): boolean {
-    return !!this.getAccessToken();
+    // Check if we have user data (indicates logged in)
+    return !!this.getUser();
   }
 
   /**
    * Get authorization header value
+   * Returns null because auth is handled via cookies
    */
   getAuthHeader(): string | null {
-    const token = this.getAccessToken();
-    if (!token) return null;
-    return `${API_CONFIG.auth.tokenPrefix} ${token}`;
+    // Auth is handled via HttpOnly cookies
+    // No need to manually set Authorization header
+    return null;
   }
 }
 

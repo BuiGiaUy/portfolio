@@ -77,10 +77,8 @@ class AuthService {
    */
   async logout(): Promise<void> {
     try {
-      // Call logout endpoint (optional - backend can invalidate tokens)
-      await apiClient.post(API_CONFIG.endpoints.logout, {
-        refreshToken: tokenManager.getRefreshToken(),
-      });
+      // Call logout endpoint - refresh token sent via cookie
+      await apiClient.post(API_CONFIG.endpoints.logout, {});
     } catch (error) {
       // Continue with logout even if API call fails
       console.error('Logout API call failed:', error);
@@ -97,23 +95,18 @@ class AuthService {
 
   /**
    * Refresh access token
+   * Note: Tokens are managed by backend via HttpOnly cookies
    */
   async refreshToken(): Promise<RefreshTokenResponse> {
-    const refreshToken = tokenManager.getRefreshToken();
-
-    if (!refreshToken) {
-      throw new Error('No refresh token available');
-    }
-
+    // Refresh token is sent automatically as HttpOnly cookie
     const response = await apiClient.post<RefreshTokenResponse>(
       API_CONFIG.endpoints.refresh,
-      { refreshToken },
+      {}, // Empty body - token comes from cookie
       { skipAuth: true, skipRefresh: true }
     );
 
-    // Update tokens
-    tokenManager.setAccessToken(response.accessToken);
-    tokenManager.setRefreshToken(response.refreshToken);
+    // Tokens are set by backend as HttpOnly cookies
+    // No need to store them in localStorage
 
     return response;
   }
