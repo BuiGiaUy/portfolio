@@ -8,6 +8,7 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { LoginDto } from 'src/application/dto/auth/login.dto';
@@ -39,11 +40,21 @@ export class AuthController {
       loginDto.password,
     );
 
+    // Set access token as HttpOnly cookie (for server-side middleware)
+    response.cookie('accessToken', authResponse.accessToken, {
+      httpOnly: true,
+      secure: process.env.COOKIE_SECURE === 'true',
+      sameSite:
+        (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      maxAge: 15 * 60 * 1000, // 15 minutes (same as JWT expiry)
+    });
+
     // Set refresh token as HttpOnly cookie
     response.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.COOKIE_SECURE === 'true',
-      sameSite: (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      sameSite:
+        (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -56,20 +67,32 @@ export class AuthController {
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const refreshToken = request.cookies?.refreshToken;
+    const refreshToken = request.cookies?.refreshToken as string | undefined;
 
     if (!refreshToken) {
-      throw new Error('Refresh token not found');
+      throw new UnauthorizedException(
+        'Refresh token not found. Please login again.',
+      );
     }
 
     const { authResponse, refreshToken: newRefreshToken } =
       await this.refreshTokenUseCase.execute(refreshToken);
 
+    // Set new access token as HttpOnly cookie
+    response.cookie('accessToken', authResponse.accessToken, {
+      httpOnly: true,
+      secure: process.env.COOKIE_SECURE === 'true',
+      sameSite:
+        (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+
     // Rotate refresh token
     response.cookie('refreshToken', newRefreshToken, {
       httpOnly: true,
       secure: process.env.COOKIE_SECURE === 'true',
-      sameSite: (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      sameSite:
+        (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -85,7 +108,8 @@ export class AuthController {
   ) {
     await this.logoutUseCase.execute(user.userId);
 
-    // Clear refresh token cookie
+    // Clear both auth cookies
+    response.clearCookie('accessToken');
     response.clearCookie('refreshToken');
 
     return { message: 'Logged out successfully' };

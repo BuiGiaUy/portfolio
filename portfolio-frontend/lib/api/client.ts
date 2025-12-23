@@ -34,6 +34,7 @@ class ApiClient {
       baseURL: API_CONFIG.baseURL,
       timeout: API_CONFIG.timeout,
       headers: API_CONFIG.headers,
+      withCredentials: true, // Send cookies with requests
     });
 
     // Setup interceptors
@@ -87,11 +88,25 @@ class ApiClient {
           logError(apiError, 'Network Error');
           return Promise.reject(apiError);
         }
-
+        const hasAccessToken = !!tokenManager.getAccessToken();
         const { status } = error.response;
-
+        const AUTH_EXCLUDED_ENDPOINTS = [
+          API_CONFIG.endpoints.login,
+          API_CONFIG.endpoints.register,
+          API_CONFIG.endpoints.refresh,
+          API_CONFIG.endpoints.logout,
+        ];
+        const isAuthEndpoint = AUTH_EXCLUDED_ENDPOINTS.some((url) =>
+          originalRequest.url?.includes(url)
+        );
         // Handle 401 Unauthorized - Token refresh
-        if (status === 401 && !originalRequest._retry && !originalRequest.skipRefresh) {
+        if (
+          status === 401 &&
+          hasAccessToken &&
+          !originalRequest._retry &&
+          !originalRequest.skipRefresh &&
+          !isAuthEndpoint
+        ) {
           originalRequest._retry = true;
 
           try {
@@ -146,24 +161,13 @@ class ApiClient {
     this.isRefreshing = true;
 
     try {
-      const refreshToken = tokenManager.getRefreshToken();
-      
-      if (!refreshToken) {
-        throw new Error('No refresh token available');
-      }
-
-      // Call refresh endpoint
       const response = await this.axiosInstance.post<RefreshTokenResponse>(
         API_CONFIG.endpoints.refresh,
-        { refreshToken },
+        {}, // Empty body - token comes from cookie
         { skipAuth: true, skipRefresh: true } as ExtendedAxiosRequestConfig
       );
 
-      const { accessToken, refreshToken: newRefreshToken } = response.data;
-
-      // Update tokens
-      tokenManager.setAccessToken(accessToken);
-      tokenManager.setRefreshToken(newRefreshToken);
+      const { accessToken } = response.data;
 
       // Notify all subscribers
       this.refreshSubscribers.forEach((callback) => callback(accessToken));

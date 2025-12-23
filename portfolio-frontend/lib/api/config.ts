@@ -5,7 +5,7 @@
 
 export const API_CONFIG = {
   // Base URL from environment or default
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000',
+  baseURL: process.env.NEXT_PUBLIC_API_URL!,
   
   // Timeout in milliseconds
   timeout: 30000,
@@ -20,7 +20,6 @@ export const API_CONFIG = {
   // Auth configuration
   auth: {
     tokenKey: 'access_token',
-    refreshTokenKey: 'refresh_token',
     userKey: 'user',
     tokenPrefix: 'Bearer',
   },

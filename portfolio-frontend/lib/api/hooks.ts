@@ -103,14 +103,12 @@ export function useAuth() {
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
     
     try {
-      const response = await authService.login(credentials);
-      setState({
-        user: response.user,
+      await authService.login(credentials);
+      setState((prev) => ({
+        ...prev,
         isAuthenticated: true,
         isLoading: false,
-        error: null,
-      });
-      return response;
+      }));
     } catch (error) {
       setState((prev) => ({
         ...prev,
