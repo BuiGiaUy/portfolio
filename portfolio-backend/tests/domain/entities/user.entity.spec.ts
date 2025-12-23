@@ -1,11 +1,14 @@
 import { User } from 'src/domain/entities/user.entity';
+import { Role } from 'src/domain/enums/role.enum';
 
 describe('User Entity', () => {
   const validUserData = {
     id: 'user-123',
     email: 'test@example.com',
-    name: 'John Doe',
     passwordHash: 'hashed_password_123',
+    role: Role.VIEWER,
+    refreshTokenHash: null,
+    active: true,
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
   };
@@ -16,8 +19,10 @@ describe('User Entity', () => {
       const user = new User(
         validUserData.id,
         validUserData.email,
-        validUserData.name,
         validUserData.passwordHash,
+        validUserData.role,
+        validUserData.refreshTokenHash,
+        validUserData.active,
         validUserData.createdAt,
         validUserData.updatedAt,
       );
@@ -25,8 +30,9 @@ describe('User Entity', () => {
       // Assert
       expect(user.id).toBe(validUserData.id);
       expect(user.email).toBe(validUserData.email);
-      expect(user.name).toBe(validUserData.name);
       expect(user.passwordHash).toBe(validUserData.passwordHash);
+      expect(user.role).toBe(validUserData.role);
+      expect(user.active).toBe(validUserData.active);
       expect(user.createdAt).toBe(validUserData.createdAt);
       expect(user.updatedAt).toBe(validUserData.updatedAt);
     });
@@ -37,8 +43,10 @@ describe('User Entity', () => {
         new User(
           '',
           validUserData.email,
-          validUserData.name,
           validUserData.passwordHash,
+          validUserData.role,
+          validUserData.refreshTokenHash,
+          validUserData.active,
           validUserData.createdAt,
           validUserData.updatedAt,
         );
@@ -51,8 +59,10 @@ describe('User Entity', () => {
         new User(
           validUserData.id,
           '',
-          validUserData.name,
           validUserData.passwordHash,
+          validUserData.role,
+          validUserData.refreshTokenHash,
+          validUserData.active,
           validUserData.createdAt,
           validUserData.updatedAt,
         );
@@ -65,40 +75,14 @@ describe('User Entity', () => {
         new User(
           validUserData.id,
           'invalid-email',
-          validUserData.name,
           validUserData.passwordHash,
+          validUserData.role,
+          validUserData.refreshTokenHash,
+          validUserData.active,
           validUserData.createdAt,
           validUserData.updatedAt,
         );
       }).toThrow('Invalid email format');
-    });
-
-    it('should throw error when name is missing', () => {
-      // Act & Assert
-      expect(() => {
-        new User(
-          validUserData.id,
-          validUserData.email,
-          '',
-          validUserData.passwordHash,
-          validUserData.createdAt,
-          validUserData.updatedAt,
-        );
-      }).toThrow('User name is required');
-    });
-
-    it('should throw error when name is too short', () => {
-      // Act & Assert
-      expect(() => {
-        new User(
-          validUserData.id,
-          validUserData.email,
-          'J',
-          validUserData.passwordHash,
-          validUserData.createdAt,
-          validUserData.updatedAt,
-        );
-      }).toThrow('User name must be at least 2 characters long');
     });
 
     it('should throw error when passwordHash is missing', () => {
@@ -107,12 +91,46 @@ describe('User Entity', () => {
         new User(
           validUserData.id,
           validUserData.email,
-          validUserData.name,
           '',
+          validUserData.role,
+          validUserData.refreshTokenHash,
+          validUserData.active,
           validUserData.createdAt,
           validUserData.updatedAt,
         );
       }).toThrow('User password hash is required');
+    });
+
+    it('should throw error when role is missing', () => {
+      // Act & Assert
+      expect(() => {
+        new User(
+          validUserData.id,
+          validUserData.email,
+          validUserData.passwordHash,
+          null as any,
+          validUserData.refreshTokenHash,
+          validUserData.active,
+          validUserData.createdAt,
+          validUserData.updatedAt,
+        );
+      }).toThrow('User role is required');
+    });
+
+    it('should throw error when active status is missing', () => {
+      // Act & Assert
+      expect(() => {
+        new User(
+          validUserData.id,
+          validUserData.email,
+          validUserData.passwordHash,
+          validUserData.role,
+          validUserData.refreshTokenHash,
+          null as any,
+          validUserData.createdAt,
+          validUserData.updatedAt,
+        );
+      }).toThrow('User active status is required');
     });
 
     it('should throw error when createdAt is missing', () => {
@@ -121,8 +139,10 @@ describe('User Entity', () => {
         new User(
           validUserData.id,
           validUserData.email,
-          validUserData.name,
           validUserData.passwordHash,
+          validUserData.role,
+          validUserData.refreshTokenHash,
+          validUserData.active,
           null as any,
           validUserData.updatedAt,
         );
@@ -135,8 +155,10 @@ describe('User Entity', () => {
         new User(
           validUserData.id,
           validUserData.email,
-          validUserData.name,
           validUserData.passwordHash,
+          validUserData.role,
+          validUserData.refreshTokenHash,
+          validUserData.active,
           validUserData.createdAt,
           null as any,
         );
@@ -144,65 +166,75 @@ describe('User Entity', () => {
     });
   });
 
-  describe('updateProfile', () => {
-    it('should update name and timestamp when valid', () => {
+  describe('updateRefreshToken', () => {
+    it('should update refresh token and timestamp', () => {
       // Arrange
       const user = new User(
         validUserData.id,
         validUserData.email,
-        validUserData.name,
         validUserData.passwordHash,
+        validUserData.role,
+        validUserData.refreshTokenHash,
+        validUserData.active,
         validUserData.createdAt,
         validUserData.updatedAt,
       );
       const originalUpdatedAt = user.updatedAt;
-      const newName = 'Jane Smith';
+      const newRefreshTokenHash = 'new_refresh_token_hash';
 
       // Wait to ensure timestamp changes
       setTimeout(() => {}, 1);
 
       // Act
-      user.updateProfile(newName);
+      user.updateRefreshToken(newRefreshTokenHash);
 
       // Assert
-      expect(user.name).toBe(newName);
+      expect(user.refreshTokenHash).toBe(newRefreshTokenHash);
       expect(user.updatedAt.getTime()).toBeGreaterThanOrEqual(
         originalUpdatedAt.getTime(),
       );
     });
+  });
 
-    it('should throw error when name is too short', () => {
+  describe('activate and deactivate', () => {
+    it('should deactivate user', () => {
       // Arrange
       const user = new User(
         validUserData.id,
         validUserData.email,
-        validUserData.name,
         validUserData.passwordHash,
+        validUserData.role,
+        validUserData.refreshTokenHash,
+        true,
         validUserData.createdAt,
         validUserData.updatedAt,
       );
 
-      // Act & Assert
-      expect(() => {
-        user.updateProfile('J');
-      }).toThrow('User name must be at least 2 characters long');
+      // Act
+      user.deactivate();
+
+      // Assert
+      expect(user.active).toBe(false);
     });
 
-    it('should throw error when name is empty', () => {
+    it('should activate user', () => {
       // Arrange
       const user = new User(
         validUserData.id,
         validUserData.email,
-        validUserData.name,
         validUserData.passwordHash,
+        validUserData.role,
+        validUserData.refreshTokenHash,
+        false,
         validUserData.createdAt,
         validUserData.updatedAt,
       );
 
-      // Act & Assert
-      expect(() => {
-        user.updateProfile('');
-      }).toThrow('User name must be at least 2 characters long');
+      // Act
+      user.activate();
+
+      // Assert
+      expect(user.active).toBe(true);
     });
   });
 
@@ -212,8 +244,10 @@ describe('User Entity', () => {
       const user = new User(
         validUserData.id,
         validUserData.email,
-        validUserData.name,
         validUserData.passwordHash,
+        validUserData.role,
+        validUserData.refreshTokenHash,
+        validUserData.active,
         validUserData.createdAt,
         validUserData.updatedAt,
       );
@@ -230,8 +264,10 @@ describe('User Entity', () => {
       const user = new User(
         validUserData.id,
         validUserData.email,
-        validUserData.name,
         validUserData.passwordHash,
+        validUserData.role,
+        validUserData.refreshTokenHash,
+        validUserData.active,
         validUserData.createdAt,
         validUserData.updatedAt,
       );
@@ -250,8 +286,10 @@ describe('User Entity', () => {
       const user = new User(
         validUserData.id,
         validUserData.email,
-        validUserData.name,
         validUserData.passwordHash,
+        validUserData.role,
+        validUserData.refreshTokenHash,
+        validUserData.active,
         validUserData.createdAt,
         validUserData.updatedAt,
       );
@@ -276,8 +314,10 @@ describe('User Entity', () => {
       const user = new User(
         validUserData.id,
         validUserData.email,
-        validUserData.name,
         validUserData.passwordHash,
+        validUserData.role,
+        validUserData.refreshTokenHash,
+        validUserData.active,
         validUserData.createdAt,
         validUserData.updatedAt,
       );

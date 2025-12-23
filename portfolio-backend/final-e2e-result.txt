@@ -1,0 +1,657 @@
+
+> project-name@0.0.1 test:e2e
+> jest --config ./tests/e2e/jest-e2e.json
+
+  console.log
+    ✅ Redis client connected
+
+      at EventEmitter.<anonymous> (../src/infrastructure/cache/cache.module.ts:47:19)
+
+  console.log
+    Redis Client Connected
+
+      at EventEmitter.<anonymous> (../src/infrastructure/rate-limiter/redis.config.ts:50:13)
+
+  console.log
+    ✅ Redis client ready
+
+      at EventEmitter.<anonymous> (../src/infrastructure/cache/cache.module.ts:51:19)
+
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID non-existent-id not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:148:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementViewPessimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:139:5[90m)[39m
+    at IncrementProjectViewPessimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-pessimistic.usecase.ts:44:5[90m)[39m
+    at ProjectController.incrementViewPessimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:180:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'non-existent-id'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID non-existent-id not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:217:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'non-existent-id'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project e18494e6-57b7-4f95-98dc-804366322de9. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'e18494e6-57b7-4f95-98dc-804366322de9'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project e18494e6-57b7-4f95-98dc-804366322de9. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'e18494e6-57b7-4f95-98dc-804366322de9'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project e18494e6-57b7-4f95-98dc-804366322de9. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'e18494e6-57b7-4f95-98dc-804366322de9'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project e18494e6-57b7-4f95-98dc-804366322de9. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'e18494e6-57b7-4f95-98dc-804366322de9'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project e18494e6-57b7-4f95-98dc-804366322de9. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'e18494e6-57b7-4f95-98dc-804366322de9'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project e18494e6-57b7-4f95-98dc-804366322de9. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'e18494e6-57b7-4f95-98dc-804366322de9'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mError: Cannot use a pool after calling end on the pool
+    at BoundPool.connect [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4mpg-pool[24m\index.js:184:19[90m)[39m
+    at PrismaPgAdapter.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\adapter-pg\dist\index.js:726:36[90m)[39m
+    at Ft.#r [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:121:10[90m)[39m
+[90m    at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[90m    at listOnTimeout (node:internal/timers:555:9)[39m
+[90m    at processTimers (node:internal/timers:529:7)[39m
+    at Ft.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:99:12[90m)[39m
+    at e.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\LocalExecutor.ts:85:18[90m)[39m
+    at Dt.transaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:424:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mError: Cannot use a pool after calling end on the pool
+    at BoundPool.connect [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4mpg-pool[24m\index.js:184:19[90m)[39m
+    at PrismaPgAdapter.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\adapter-pg\dist\index.js:726:36[90m)[39m
+    at Ft.#r [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:121:10[90m)[39m
+    at Ft.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:99:12[90m)[39m
+    at e.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\LocalExecutor.ts:85:18[90m)[39m
+    at Dt.transaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:424:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327 not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:217:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mVersionConflictError: Version conflict occurred for project 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327. The project was modified by another process.
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:235:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mError: Cannot use a pool after calling end on the pool
+    at BoundPool.connect [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4mpg-pool[24m\index.js:184:19[90m)[39m
+    at PrismaPgAdapter.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\adapter-pg\dist\index.js:726:36[90m)[39m
+    at Ft.#r [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:121:10[90m)[39m
+[90m    at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[90m    at listOnTimeout (node:internal/timers:555:9)[39m
+[90m    at processTimers (node:internal/timers:529:7)[39m
+    at Ft.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:99:12[90m)[39m
+    at e.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\LocalExecutor.ts:85:18[90m)[39m
+    at Dt.transaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:424:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mError: Cannot use a pool after calling end on the pool
+    at BoundPool.connect [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4mpg-pool[24m\index.js:184:19[90m)[39m
+    at PrismaPgAdapter.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\adapter-pg\dist\index.js:726:36[90m)[39m
+    at Ft.#r [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:121:10[90m)[39m
+[90m    at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[90m    at listOnTimeout (node:internal/timers:555:9)[39m
+[90m    at processTimers (node:internal/timers:529:7)[39m
+    at Ft.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:99:12[90m)[39m
+    at e.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\LocalExecutor.ts:85:18[90m)[39m
+    at Dt.transaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:424:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mError: Cannot use a pool after calling end on the pool
+    at BoundPool.connect [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4mpg-pool[24m\index.js:184:19[90m)[39m
+    at PrismaPgAdapter.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\adapter-pg\dist\index.js:726:36[90m)[39m
+    at Ft.#r [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:121:10[90m)[39m
+[90m    at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[90m    at listOnTimeout (node:internal/timers:555:9)[39m
+[90m    at processTimers (node:internal/timers:529:7)[39m
+    at Ft.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:99:12[90m)[39m
+    at e.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\LocalExecutor.ts:85:18[90m)[39m
+    at Dt.transaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:424:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mError: Cannot use a pool after calling end on the pool
+    at BoundPool.connect [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4mpg-pool[24m\index.js:184:19[90m)[39m
+    at PrismaPgAdapter.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\adapter-pg\dist\index.js:726:36[90m)[39m
+    at Ft.#r [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:121:10[90m)[39m
+    at Ft.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:99:12[90m)[39m
+    at e.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\LocalExecutor.ts:85:18[90m)[39m
+    at Dt.transaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:424:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327 not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:217:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327 not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:217:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327 not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:217:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327 not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:217:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327 not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:217:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mError: Cannot use a pool after calling end on the pool
+    at BoundPool.connect [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4mpg-pool[24m\index.js:184:19[90m)[39m
+    at PrismaPgAdapter.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\adapter-pg\dist\index.js:726:36[90m)[39m
+    at Ft.#r [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:121:10[90m)[39m
+    at Ft.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client-engine-runtime\src\transaction-manager\transaction-manager.ts:99:12[90m)[39m
+    at e.startTransaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\LocalExecutor.ts:85:18[90m)[39m
+    at Dt.transaction [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:424:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mProjectNotFoundError: Project with ID 24c57a9f-e4dc-46e7-a2fc-dddf6ae31327 not found
+    at [90mD:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:217:15
+[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:694:18[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  projectId: [32m'24c57a9f-e4dc-46e7-a2fc-dddf6ae31327'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:47 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mPrismaClientKnownRequestError: Transaction API error: Unable to start a transaction in the given time.
+    at Dt.#a [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:286:14[90m)[39m
+    at Dt.#transformRequestError [as transaction] [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:438:18[90m)[39m
+[90m    at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[90m    at listOnTimeout (node:internal/timers:555:9)[39m
+[90m    at processTimers (node:internal/timers:529:7)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  code: [32m'P2028'[39m,
+  meta: {},
+  clientVersion: [32m'7.1.0'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:47 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mPrismaClientKnownRequestError: Transaction API error: Unable to start a transaction in the given time.
+    at Dt.#a [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:286:14[90m)[39m
+    at Dt.#transformRequestError [as transaction] [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:438:18[90m)[39m
+[90m    at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[90m    at listOnTimeout (node:internal/timers:555:9)[39m
+[90m    at processTimers (node:internal/timers:529:7)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  code: [32m'P2028'[39m,
+  meta: {},
+  clientVersion: [32m'7.1.0'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:47 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mPrismaClientKnownRequestError: Transaction API error: Unable to start a transaction in the given time.
+    at Dt.#a [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:286:14[90m)[39m
+    at Dt.#transformRequestError [as transaction] [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:438:18[90m)[39m
+[90m    at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[90m    at listOnTimeout (node:internal/timers:555:9)[39m
+[90m    at processTimers (node:internal/timers:529:7)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  code: [32m'P2028'[39m,
+  meta: {},
+  clientVersion: [32m'7.1.0'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:47 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mPrismaClientKnownRequestError: Transaction API error: Unable to start a transaction in the given time.
+    at Dt.#a [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:286:14[90m)[39m
+    at Dt.#transformRequestError [as transaction] [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:438:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  code: [32m'P2028'[39m,
+  meta: {},
+  clientVersion: [32m'7.1.0'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:47 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mPrismaClientKnownRequestError: Transaction API error: Unable to start a transaction in the given time.
+    at Dt.#a [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:286:14[90m)[39m
+    at Dt.#transformRequestError [as transaction] [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:438:18[90m)[39m
+[90m    at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[90m    at listOnTimeout (node:internal/timers:555:9)[39m
+[90m    at processTimers (node:internal/timers:529:7)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  code: [32m'P2028'[39m,
+  meta: {},
+  clientVersion: [32m'7.1.0'[39m
+}
+[31m[Nest] 18580  - [39m12/24/2025, 1:46:47 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mPrismaClientKnownRequestError: Transaction API error: Unable to start a transaction in the given time.
+    at Dt.#a [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:286:14[90m)[39m
+    at Dt.#transformRequestError [as transaction] [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\core\engines\client\ClientEngine.ts:438:18[90m)[39m
+    at Proxy._transactionWithCallback [90m(D:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@prisma[24m\client\src\runtime\getPrismaClient.ts:687:20[90m)[39m
+    at PrismaProjectRepository.incrementWithVersionCheck [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:209:5[90m)[39m
+    at PrismaProjectRepository.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\infrastructure\repositories\project.repository.ts:177:9[90m)[39m
+    at IncrementProjectViewOptimisticUseCase.execute [90m(D:\Project\portfolio\portfolio-backend\[39msrc\application\use-cases\increment-project-view-optimistic.usecase.ts:46:5[90m)[39m
+    at ProjectController.incrementViewOptimistic [90m(D:\Project\portfolio\portfolio-backend\[39msrc\interface\controllers\project.controller.ts:196:5[90m)[39m
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+    at [90mD:\Project\portfolio\portfolio-backend\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+  code: [32m'P2028'[39m,
+  meta: {},
+  clientVersion: [32m'7.1.0'[39m
+}
+FAIL tests/e2e/project-view-counter.e2e-spec.ts (5.758 s)
+  Project View Counter (e2e)
+    POST /projects/:id/view-pessimistic
+      √ should increment view count using pessimistic locking (79 ms)
+      √ should return 404 for non-existent project (156 ms)
+      √ should handle concurrent requests correctly (136 ms)
+    POST /projects/:id/view-optimistic
+      √ should increment view count using optimistic locking (22 ms)
+      √ should return 404 for non-existent project (12 ms)
+      × should handle concurrent requests with retries (265 ms)
+    Concurrency Comparison
+      × both strategies should produce same results under load (793 ms)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-optimistic › should handle concurrent requests with retries
+
+    expected 204 "No Content", got 500 "Internal Server Error"
+
+    [0m [90m 152 |[39m         request(app[33m.[39mgetHttpServer())
+     [90m 153 |[39m           [33m.[39mpost([32m`/projects/${testProjectId}/view-optimistic`[39m)
+    [31m[1m>[22m[39m[90m 154 |[39m           [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mNO_CONTENT[39m)[33m,[39m
+     [90m     |[39m            [31m[1m^[22m[39m
+     [90m 155 |[39m       )[33m;[39m
+     [90m 156 |[39m
+     [90m 157 |[39m       [36mawait[39m [33mPromise[39m[33m.[39mall(requests)[33m;[39m[0m
+
+      at e2e/project-view-counter.e2e-spec.ts:154:12
+          at Function.from (<anonymous>)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:151:30)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at ../node_modules/supertest/lib/test.js:156:7
+      at Test.fn [as callback] (../node_modules/superagent/src/node/index.js:904:3)
+      at callback (../node_modules/superagent/src/node/index.js:1183:18)
+      at IncomingMessage.fn (../node_modules/superagent/src/node/parsers/json.js:19:7)
+
+  ● Project View Counter (e2e) › Concurrency Comparison › both strategies should produce same results under load
+
+    expected 204 "No Content", got 500 "Internal Server Error"
+
+    [0m [90m 205 |[39m         request(app[33m.[39mgetHttpServer())
+     [90m 206 |[39m           [33m.[39mpost([32m`/projects/${optimisticProject.id}/view-optimistic`[39m)
+    [31m[1m>[22m[39m[90m 207 |[39m           [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mNO_CONTENT[39m)[33m,[39m
+     [90m     |[39m            [31m[1m^[22m[39m
+     [90m 208 |[39m       )[33m;[39m
+     [90m 209 |[39m
+     [90m 210 |[39m       [36mawait[39m [33mPromise[39m[33m.[39mall([[33m...[39mpessimisticRequests[33m,[39m [33m...[39moptimisticRequests])[33m;[39m[0m
+
+      at e2e/project-view-counter.e2e-spec.ts:207:12
+          at Function.from (<anonymous>)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:204:40)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at ../node_modules/supertest/lib/test.js:156:7
+      at Test.fn [as callback] (../node_modules/superagent/src/node/index.js:904:3)
+      at callback (../node_modules/superagent/src/node/index.js:1183:18)
+      at IncomingMessage.fn (../node_modules/superagent/src/node/parsers/json.js:19:7)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 5 passed, 7 total
+Snapshots:   0 total
+Time:        6.14 s
+Ran all test suites.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -99,8 +99,18 @@ import { COMMENT_REPOSITORY } from './domain/repositories/comment.repository.int
     
     // Cache Invalidation
     CacheInvalidationService,
-    // Infrastructure Layer - Rate Limiter
-    RateLimiterService,
+    // Infrastructure Layer - Rate Limiter with factory for proper config injection
+    {
+      provide: RateLimiterService,
+      useFactory: (configService: ConfigService) => {
+        const config = {
+          limit: configService.get<number>('RATE_LIMIT_MAX', 100),
+          windowSeconds: configService.get<number>('RATE_LIMIT_WINDOW_SECONDS', 900),
+        };
+        return new RateLimiterService(config);
+      },
+      inject: [ConfigService],
+    },
     // Infrastructure Layer - Bind interfaces to implementations
     {
       provide: USER_REPOSITORY,

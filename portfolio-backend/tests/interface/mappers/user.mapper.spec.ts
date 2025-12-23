@@ -1,5 +1,6 @@
 import { UserMapper } from 'src/interface/mappers/user.mapper';
 import { User } from 'src/domain/entities/user.entity';
+import { Role } from 'src/domain/enums/role.enum';
 
 describe('UserMapper', () => {
   const mockDate = new Date('2024-01-01');
@@ -9,8 +10,10 @@ describe('UserMapper', () => {
     user = new User(
       '123',
       'test@example.com',
-      'Test User',
       'hashed_password',
+      Role.VIEWER,
+      null, // refreshTokenHash
+      true, // active
       mockDate,
       mockDate,
     );
@@ -23,7 +26,7 @@ describe('UserMapper', () => {
       expect(dto).toEqual({
         id: '123',
         email: 'test@example.com',
-        name: 'Test User',
+        name: 'test', // Generated from email (test@example.com -> test)
         createdAt: mockDate,
         updatedAt: mockDate,
       });
@@ -51,8 +54,10 @@ describe('UserMapper', () => {
       const user2 = new User(
         '456',
         'test2@example.com',
-        'Test User 2',
         'hash2',
+        Role.VIEWER,
+        null,
+        true,
         mockDate,
         mockDate,
       );
