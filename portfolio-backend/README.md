@@ -1,98 +1,326 @@
+# Portfolio Backend API
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A production-ready REST API built with **NestJS**, following **Clean Architecture** principles. This backend powers the Portfolio application with authentication, project management, commenting system, and advanced caching mechanisms.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## ✨ Features
 
-## Description
+- 🏗️ **Clean Architecture** - Domain-driven design with clear separation of concerns
+- 🔐 **JWT Authentication** - Secure authentication with access & refresh tokens (HttpOnly cookies)
+- 👤 **Role-Based Access Control (RBAC)** - OWNER and VIEWER roles
+- 📦 **Project Management** - Full CRUD operations with optimistic/pessimistic locking
+- 💬 **Comments System** - Nested comments for projects
+- 🚀 **Redis Caching** - Automatic cache-aside pattern with intelligent invalidation
+- ⚡ **Rate Limiting** - Configurable request throttling per IP
+- 🗄️ **PostgreSQL + Prisma ORM** - Type-safe database operations
+- 🧪 **Comprehensive Testing** - Unit tests & E2E tests included
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📁 Project Structure
 
-## Project setup
-
-```bash
-$ yarn install
+```
+portfolio-backend/
+├── src/
+│   ├── domain/                 # Domain Layer (Business Entities & Interfaces)
+│   │   ├── entities/           # Pure domain entities (User, Project, Comment)
+│   │   ├── enums/              # Domain enums (Role)
+│   │   └── repositories/       # Repository interfaces (contracts)
+│   │
+│   ├── application/            # Application Layer (Use Cases & DTOs)
+│   │   ├── use-cases/          # Business logic orchestration
+│   │   ├── dtos/               # Data Transfer Objects
+│   │   └── dto/                # Auth-specific DTOs
+│   │
+│   ├── infrastructure/         # Infrastructure Layer (External Services)
+│   │   ├── database/           # Prisma service
+│   │   ├── repositories/       # Repository implementations
+│   │   ├── cache/              # Redis cache service & interceptor
+│   │   ├── auth/               # JWT strategies, guards, decorators
+│   │   └── rate-limiter/       # Rate limiting service
+│   │
+│   └── interface/              # Interface Layer (Controllers & Mappers)
+│       ├── controllers/        # HTTP endpoint handlers
+│       ├── mappers/            # Entity <-> DTO conversion
+│       └── modules/            # Feature modules (Auth, Admin)
+│
+├── prisma/
+│   ├── schema.prisma           # Database schema
+│   ├── migrations/             # Database migrations
+│   └── seed.ts                 # Seed data script
+│
+├── tests/
+│   ├── unit/                   # Unit tests
+│   └── e2e/                    # End-to-end tests
+│
+└── docker/                     # Docker configuration
 ```
 
-## Compile and run the project
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js** >= 18.x
+- **PostgreSQL** >= 14
+- **Redis** >= 6.x
+- **npm** or **yarn**
+
+### Installation
 
 ```bash
-# development
-$ yarn run start
+# Clone the repository
+cd portfolio-backend
 
-# watch mode
-$ yarn run start:dev
+# Install dependencies
+npm install
 
-# production mode
-$ yarn run start:prod
+# Copy environment variables
+cp .env.example .env
+
+# Configure your .env file with proper values (see Environment Variables section)
 ```
 
-## Run tests
+### Database Setup
 
 ```bash
-# unit tests
-$ yarn run test
+# Generate Prisma client
+npm run prisma:generate
 
-# e2e tests
-$ yarn run test:e2e
+# Run database migrations
+npm run prisma:migrate
 
-# test coverage
-$ yarn run test:cov
+# Seed initial data (creates default admin user)
+npm run prisma:seed
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Running the Application
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+# Development mode (with hot reload)
+npm run start:dev
+
+# Production mode
+npm run build
+npm run start:prod
+
+# Debug mode
+npm run start:debug
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The API will be available at `http://localhost:3000`.
 
-## Resources
+## 🔧 Environment Variables
 
-Check out a few resources that may come in handy when working with NestJS:
+Create a `.env` file based on `.env.example`:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```env
+# Database Configuration
+DATABASE_URL=postgresql://user:password@localhost:5432/portfolio
 
-## Support
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+JWT_EXPIRES_IN=15m
+REFRESH_TOKEN_SECRET=your-super-secret-refresh-token-key-change-this
+REFRESH_TOKEN_EXPIRES_IN=7d
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Cookie Configuration
+COOKIE_SECURE=false         # Set to true in production with HTTPS
+COOKIE_SAME_SITE=lax        # Options: strict | lax | none
 
-## Stay in touch
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Rate Limiting
+RATE_LIMIT_TTL=60000        # Time window in milliseconds
+RATE_LIMIT_MAX=100          # Max requests per time window
 
-## License
+# Application
+PORT=3000
+NODE_ENV=development
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Frontend URL (for CORS)
+FRONTEND_URL=http://localhost:3001
+```
+
+## 📡 API Endpoints
+
+### Authentication
+
+| Method | Endpoint        | Description                  | Auth Required    |
+| ------ | --------------- | ---------------------------- | ---------------- |
+| POST   | `/auth/login`   | Login with email & password  | ❌               |
+| POST   | `/auth/refresh` | Refresh access token         | ❌ (uses cookie) |
+| POST   | `/auth/logout`  | Logout and invalidate tokens | ✅               |
+| GET    | `/auth/me`      | Get current user profile     | ✅               |
+
+### Projects
+
+| Method | Endpoint                         | Description                       | Auth Required |
+| ------ | -------------------------------- | --------------------------------- | ------------- |
+| GET    | `/projects`                      | Get all projects                  | ❌            |
+| GET    | `/projects/:id`                  | Get project by ID                 | ❌            |
+| GET    | `/projects/user/:userId`         | Get projects by user              | ❌            |
+| POST   | `/projects`                      | Create new project                | ❌            |
+| PUT    | `/projects/:id`                  | Update project                    | ❌            |
+| DELETE | `/projects/:id`                  | Delete project                    | ❌            |
+| POST   | `/projects/:id/view-pessimistic` | Increment view (pessimistic lock) | ❌            |
+| POST   | `/projects/:id/view-optimistic`  | Increment view (optimistic lock)  | ❌            |
+
+### Comments
+
+| Method | Endpoint                       | Description             | Auth Required |
+| ------ | ------------------------------ | ----------------------- | ------------- |
+| POST   | `/comments`                    | Create a comment        | ❌            |
+| GET    | `/comments/project/:projectId` | Get comments by project | ❌            |
+
+### Users
+
+| Method | Endpoint | Description     | Auth Required |
+| ------ | -------- | --------------- | ------------- |
+| POST   | `/users` | Create new user | ❌            |
+
+### Admin (Protected)
+
+| Method | Endpoint              | Description      | Auth Required | Role         |
+| ------ | --------------------- | ---------------- | ------------- | ------------ |
+| GET    | `/admin/projects`     | Get all projects | ✅            | OWNER/VIEWER |
+| POST   | `/admin/projects`     | Create project   | ✅            | OWNER        |
+| PATCH  | `/admin/projects/:id` | Update project   | ✅            | OWNER        |
+| DELETE | `/admin/projects/:id` | Delete project   | ✅            | OWNER        |
+
+### Health Check
+
+| Method | Endpoint  | Description       | Auth Required |
+| ------ | --------- | ----------------- | ------------- |
+| GET    | `/health` | API health status | ❌            |
+
+## 🔐 Authentication Flow
+
+1. **Login** - `POST /auth/login` with email & password
+   - Returns `accessToken` in response body
+   - Sets `accessToken` and `refreshToken` as HttpOnly cookies
+
+2. **Access Protected Routes** - Include cookies or `Authorization: Bearer <token>`
+
+3. **Token Refresh** - `POST /auth/refresh`
+   - Uses `refreshToken` from cookies
+   - Returns new access token and rotates refresh token
+
+4. **Logout** - `POST /auth/logout`
+   - Clears cookies and invalidates refresh token in database
+
+### Default Users (after seeding)
+
+| Email              | Password  | Role   |
+| ------------------ | --------- | ------ |
+| admin@example.com  | admin123  | OWNER  |
+| viewer@example.com | viewer123 | VIEWER |
+
+## 🚀 Caching Strategy
+
+The API implements **cache-aside pattern** with automatic cache invalidation:
+
+- **GET endpoints** - Automatically cached with configurable TTL
+- **Write operations** - Trigger cache invalidation for related data
+
+### Cache TTL Configuration
+
+| Endpoint              | Cache TTL |
+| --------------------- | --------- |
+| GET /projects         | 60s       |
+| GET /projects/:id     | 120s      |
+| GET /projects/user/\* | 60s       |
+
+## 🧪 Testing
+
+```bash
+# Run unit tests
+npm run test
+
+# Run unit tests with watch mode
+npm run test:watch
+
+# Run E2E tests
+npm run test:e2e
+
+# Generate test coverage report
+npm run test:cov
+```
+
+## 🐳 Docker Support
+
+```bash
+# Build and run with Docker Compose (from root portfolio directory)
+docker compose up --build
+
+# Run only the backend service
+docker compose up backend
+```
+
+## 📜 Scripts Reference
+
+| Command                   | Description                     |
+| ------------------------- | ------------------------------- |
+| `npm run start`           | Start in development mode       |
+| `npm run start:dev`       | Start with hot reload           |
+| `npm run start:prod`      | Start in production mode        |
+| `npm run build`           | Build for production            |
+| `npm run lint`            | Run ESLint                      |
+| `npm run format`          | Format code with Prettier       |
+| `npm run test`            | Run unit tests                  |
+| `npm run test:e2e`        | Run E2E tests                   |
+| `npm run test:cov`        | Generate coverage report        |
+| `npm run prisma:generate` | Generate Prisma client          |
+| `npm run prisma:migrate`  | Run database migrations         |
+| `npm run prisma:studio`   | Open Prisma Studio (DB GUI)     |
+| `npm run prisma:seed`     | Seed database with initial data |
+
+## 🏗️ Architecture Overview
+
+This project follows **Clean Architecture** with 4 distinct layers:
+
+```
+┌─────────────────────────────────────────────┐
+│               Interface Layer               │
+│    (Controllers, Mappers, HTTP handling)    │
+├─────────────────────────────────────────────┤
+│             Application Layer               │
+│      (Use Cases, DTOs, Business Rules)      │
+├─────────────────────────────────────────────┤
+│            Infrastructure Layer             │
+│   (Database, Cache, Auth, External APIs)    │
+├─────────────────────────────────────────────┤
+│               Domain Layer                  │
+│     (Entities, Repository Interfaces)       │
+└─────────────────────────────────────────────┘
+```
+
+**Dependency Rule**: Dependencies point INWARD only. The Domain layer has NO knowledge of outer layers.
+
+## 📝 Database Schema
+
+### Models
+
+- **User** - Authentication & authorization
+- **Project** - Portfolio projects with view tracking
+- **ProjectStats** - Extended project statistics (views, likes)
+- **Comment** - Project comments
+- **AuditLog** - Activity logging
+
+### Roles
+
+- **OWNER** - Full access to all resources
+- **VIEWER** - Read-only access
+
+## 🤝 Contributing
+
+1. Follow the Clean Architecture patterns
+2. Write tests for new features
+3. Run `npm run lint` before committing
+4. Use meaningful commit messages
+
+## 📄 License
+
+This project is [MIT licensed](LICENSE).

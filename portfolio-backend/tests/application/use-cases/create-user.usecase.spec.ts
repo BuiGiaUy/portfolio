@@ -7,6 +7,8 @@ import {
 import { User } from 'src/domain/entities/user.entity';
 import { CreateUserDto } from 'src/application/dtos/user.dto';
 
+import { Role } from 'src/domain/enums/role.enum';
+
 describe('CreateUserUseCase', () => {
   let useCase: CreateUserUseCase;
   let mockRepository: jest.Mocked<IUserRepository>;
@@ -60,7 +62,7 @@ describe('CreateUserUseCase', () => {
       expect(mockRepository.save).toHaveBeenCalled();
       expect(result).toBeInstanceOf(User);
       expect(result.email).toBe(createUserDto.email);
-      expect(result.name).toBe(createUserDto.name);
+      // Note: User entity doesn't have name field - name is generated from email in DTOs
     });
 
     it('should throw error if user already exists', async () => {
@@ -68,8 +70,10 @@ describe('CreateUserUseCase', () => {
       const existingUser = new User(
         '123',
         createUserDto.email,
-        'Existing User',
         'hash',
+        Role.VIEWER,
+        null,
+        true,
         new Date(),
         new Date(),
       );

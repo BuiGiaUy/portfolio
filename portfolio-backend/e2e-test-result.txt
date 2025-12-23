@@ -1,0 +1,172 @@
+
+> project-name@0.0.1 test:e2e
+> jest --config ./tests/e2e/jest-e2e.json
+
+  console.log
+    ✅ Redis client connected
+
+      at EventEmitter.<anonymous> (../src/infrastructure/cache/cache.module.ts:47:19)
+
+  console.log
+    Redis Client Connected
+
+      at EventEmitter.<anonymous> (../src/infrastructure/rate-limiter/redis.config.ts:50:13)
+
+  console.log
+    ✅ Redis client ready
+
+      at EventEmitter.<anonymous> (../src/infrastructure/cache/cache.module.ts:51:19)
+
+  console.log
+    prisma:error 
+    Invalid `prisma.user.deleteMany()` invocation in
+    D:\Project\portfolio\portfolio-backend\tests\e2e\project-view-counter.e2e-spec.ts:50:23
+    
+      47 if (testProjectId) {
+      48   await prisma.project.delete({ where: { id: testProjectId } });
+      49 }
+    → 50 await prisma.user.deleteMany(
+    Foreign key constraint violated on the constraint: `Project_userId_fkey`
+
+      at Object.Kl (../node_modules/@prisma/internals/src/logger.ts:13:11)
+
+FAIL tests/e2e/project-view-counter.e2e-spec.ts
+  ● Project View Counter (e2e) › POST /projects/:id/view-pessimistic › should increment view count using pessimistic locking
+
+    TypeError: request is not a function
+
+    [0m [90m 64 |[39m
+     [90m 65 |[39m       [90m// Increment view[39m
+    [31m[1m>[22m[39m[90m 66 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m request(app[33m.[39mgetHttpServer())
+     [90m    |[39m                              [31m[1m^[22m[39m
+     [90m 67 |[39m         [33m.[39mpost([32m`/projects/${testProjectId}/view-pessimistic`[39m)
+     [90m 68 |[39m         [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mNO_CONTENT[39m)[33m;[39m
+     [90m 69 |[39m[0m
+
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:66:30)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-pessimistic › should return 404 for non-existent project
+
+    TypeError: request is not a function
+
+    [0m [90m 78 |[39m
+     [90m 79 |[39m     it([32m'should return 404 for non-existent project'[39m[33m,[39m [36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 80 |[39m       [36mawait[39m request(app[33m.[39mgetHttpServer())
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 81 |[39m         [33m.[39mpost([32m'/projects/non-existent-id/view-pessimistic'[39m)
+     [90m 82 |[39m         [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mINTERNAL_SERVER_ERROR[39m)[33m;[39m [90m// Will throw error, adjust based on your error handling[39m
+     [90m 83 |[39m     })[33m;[39m[0m
+
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:80:13)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-pessimistic › should handle concurrent requests correctly
+
+    TypeError: request is not a function
+
+    [0m [90m 93 |[39m       [90m// Send 10 concurrent requests[39m
+     [90m 94 |[39m       [36mconst[39m requests [33m=[39m [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m [35m10[39m }[33m,[39m () [33m=>[39m
+    [31m[1m>[22m[39m[90m 95 |[39m         request(app[33m.[39mgetHttpServer())
+     [90m    |[39m         [31m[1m^[22m[39m
+     [90m 96 |[39m           [33m.[39mpost([32m`/projects/${testProjectId}/view-pessimistic`[39m)
+     [90m 97 |[39m           [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mNO_CONTENT[39m)[33m,[39m
+     [90m 98 |[39m       )[33m;[39m[0m
+
+      at e2e/project-view-counter.e2e-spec.ts:95:9
+          at Function.from (<anonymous>)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:94:30)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-optimistic › should increment view count using optimistic locking
+
+    TypeError: request is not a function
+
+    [0m [90m 119 |[39m
+     [90m 120 |[39m       [90m// Increment view[39m
+    [31m[1m>[22m[39m[90m 121 |[39m       [36mawait[39m request(app[33m.[39mgetHttpServer())
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 122 |[39m         [33m.[39mpost([32m`/projects/${testProjectId}/view-optimistic`[39m)
+     [90m 123 |[39m         [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mNO_CONTENT[39m)[33m;[39m
+     [90m 124 |[39m[0m
+
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:121:13)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-optimistic › should return 404 for non-existent project
+
+    TypeError: request is not a function
+
+    [0m [90m 134 |[39m
+     [90m 135 |[39m     it([32m'should return 404 for non-existent project'[39m[33m,[39m [36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 136 |[39m       [36mawait[39m request(app[33m.[39mgetHttpServer())
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 137 |[39m         [33m.[39mpost([32m'/projects/non-existent-id/view-optimistic'[39m)
+     [90m 138 |[39m         [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mINTERNAL_SERVER_ERROR[39m)[33m;[39m [90m// Will throw error, adjust based on your error handling[39m
+     [90m 139 |[39m     })[33m;[39m[0m
+
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:136:13)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-optimistic › should handle concurrent requests with retries
+
+    TypeError: request is not a function
+
+    [0m [90m 150 |[39m       [90m// Some may retry due to version conflicts, but all should eventually succeed[39m
+     [90m 151 |[39m       [36mconst[39m requests [33m=[39m [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m [35m10[39m }[33m,[39m () [33m=>[39m
+    [31m[1m>[22m[39m[90m 152 |[39m         request(app[33m.[39mgetHttpServer())
+     [90m     |[39m         [31m[1m^[22m[39m
+     [90m 153 |[39m           [33m.[39mpost([32m`/projects/${testProjectId}/view-optimistic`[39m)
+     [90m 154 |[39m           [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mNO_CONTENT[39m)[33m,[39m
+     [90m 155 |[39m       )[33m;[39m[0m
+
+      at e2e/project-view-counter.e2e-spec.ts:152:9
+          at Function.from (<anonymous>)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:151:30)
+
+  ● Project View Counter (e2e) › Concurrency Comparison › both strategies should produce same results under load
+
+    TypeError: request is not a function
+
+    [0m [90m 197 |[39m       [90m// Send 50 concurrent requests to each[39m
+     [90m 198 |[39m       [36mconst[39m pessimisticRequests [33m=[39m [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m [35m50[39m }[33m,[39m () [33m=>[39m
+    [31m[1m>[22m[39m[90m 199 |[39m         request(app[33m.[39mgetHttpServer())
+     [90m     |[39m         [31m[1m^[22m[39m
+     [90m 200 |[39m           [33m.[39mpost([32m`/projects/${pessimisticProject.id}/view-pessimistic`[39m)
+     [90m 201 |[39m           [33m.[39mexpect([33mHttpStatus[39m[33m.[39m[33mNO_CONTENT[39m)[33m,[39m
+     [90m 202 |[39m       )[33m;[39m[0m
+
+      at e2e/project-view-counter.e2e-spec.ts:199:9
+          at Function.from (<anonymous>)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:198:41)
+
+
+  ● Test suite failed to run
+
+    PrismaClientKnownRequestError: 
+    Invalid `prisma.user.deleteMany()` invocation in
+    D:\Project\portfolio\portfolio-backend\tests\e2e\project-view-counter.e2e-spec.ts:50:23
+
+      47 if (testProjectId) {
+      48   await prisma.project.delete({ where: { id: testProjectId } });
+      49 }
+    → 50 await prisma.user.deleteMany(
+    Foreign key constraint violated on the constraint: `Project_userId_fkey`
+
+    [0m [90m 48 |[39m       [36mawait[39m prisma[33m.[39mproject[33m.[39m[36mdelete[39m({ where[33m:[39m { id[33m:[39m testProjectId } })[33m;[39m
+     [90m 49 |[39m     }
+    [31m[1m>[22m[39m[90m 50 |[39m     [36mawait[39m prisma[33m.[39muser[33m.[39mdeleteMany({
+     [90m    |[39m     [31m[1m^[22m[39m
+     [90m 51 |[39m       where[33m:[39m { email[33m:[39m { contains[33m:[39m [32m'test-'[39m } }[33m,[39m
+     [90m 52 |[39m     })[33m;[39m
+     [90m 53 |[39m[0m
+
+      at qr.handleRequestError (../node_modules/@prisma/client/src/runtime/RequestHandler.ts:228:13)
+      at qr.handleAndLogRequestError (../node_modules/@prisma/client/src/runtime/RequestHandler.ts:174:12)
+      at qr.request (../node_modules/@prisma/client/src/runtime/RequestHandler.ts:143:12)
+      at a (../node_modules/@prisma/client/src/runtime/getPrismaClient.ts:805:24)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:50:5)
+
+Test Suites: 1 failed, 1 total
+Tests:       7 failed, 7 total
+Snapshots:   0 total
+Time:        3.136 s
+Ran all test suites.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

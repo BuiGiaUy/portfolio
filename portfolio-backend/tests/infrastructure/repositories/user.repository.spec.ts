@@ -3,17 +3,20 @@ import { PrismaUserRepository } from 'src/infrastructure/repositories/user.repos
 import { PrismaService } from 'src/infrastructure/database/prisma.service';
 import { User } from 'src/domain/entities/user.entity';
 import { UserPersistenceMapper } from 'src/infrastructure/mappers/user-persistence.mapper';
+import { Role } from 'src/domain/enums/role.enum';
 
 describe('PrismaUserRepository', () => {
   let repository: PrismaUserRepository;
   let prismaService: PrismaService;
 
-  // Mock data
+  // Mock Prisma data matching actual schema (no name field)
   const mockPrismaUser = {
     id: '123e4567-e89b-12d3-a456-426614174000',
     email: 'test@example.com',
-    name: 'Test User',
     passwordHash: 'hashed_password_123',
+    role: 'VIEWER' as const,
+    refreshTokenHash: null,
+    active: true,
     createdAt: new Date('2024-01-01T00:00:00Z'),
     updatedAt: new Date('2024-01-01T00:00:00Z'),
   };
@@ -21,8 +24,10 @@ describe('PrismaUserRepository', () => {
   const mockDomainUser = new User(
     mockPrismaUser.id,
     mockPrismaUser.email,
-    mockPrismaUser.name,
     mockPrismaUser.passwordHash,
+    Role.VIEWER,
+    mockPrismaUser.refreshTokenHash,
+    mockPrismaUser.active,
     mockPrismaUser.createdAt,
     mockPrismaUser.updatedAt,
   );
@@ -137,15 +142,19 @@ describe('PrismaUserRepository', () => {
       expect(prismaService.user.upsert).toHaveBeenCalledWith({
         where: { id: mockDomainUser.id },
         update: {
-          name: mockDomainUser.name,
           passwordHash: mockDomainUser.passwordHash,
+          role: mockDomainUser.role,
+          refreshTokenHash: mockDomainUser.refreshTokenHash,
+          active: mockDomainUser.active,
           updatedAt: mockDomainUser.updatedAt,
         },
         create: {
           id: mockDomainUser.id,
           email: mockDomainUser.email,
-          name: mockDomainUser.name,
           passwordHash: mockDomainUser.passwordHash,
+          role: mockDomainUser.role,
+          refreshTokenHash: mockDomainUser.refreshTokenHash,
+          active: mockDomainUser.active,
           createdAt: mockDomainUser.createdAt,
           updatedAt: mockDomainUser.updatedAt,
         },
@@ -158,14 +167,16 @@ describe('PrismaUserRepository', () => {
       // Arrange
       const updatedPrismaUser = {
         ...mockPrismaUser,
-        name: 'Updated Name',
+        passwordHash: 'new_password_hash',
         updatedAt: new Date('2024-01-02T00:00:00Z'),
       };
       const updatedDomainUser = new User(
         mockDomainUser.id,
         mockDomainUser.email,
-        'Updated Name',
-        mockDomainUser.passwordHash,
+        'new_password_hash',
+        mockDomainUser.role,
+        mockDomainUser.refreshTokenHash,
+        mockDomainUser.active,
         mockDomainUser.createdAt,
         new Date('2024-01-02T00:00:00Z'),
       );
@@ -180,7 +191,7 @@ describe('PrismaUserRepository', () => {
       // Assert
       expect(prismaService.user.upsert).toHaveBeenCalled();
       expect(result).toBeInstanceOf(User);
-      expect(result.name).toBe('Updated Name');
+      expect(result.passwordHash).toBe('new_password_hash');
     });
 
     it('should return a User domain entity', async () => {

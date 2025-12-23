@@ -1,0 +1,352 @@
+
+> project-name@0.0.1 test:e2e
+> jest --config ./tests/e2e/jest-e2e.json
+
+FAIL tests/e2e/project-view-counter.e2e-spec.ts
+  ● Project View Counter (e2e) › POST /projects/:id/view-pessimistic › should increment view count using pessimistic locking
+
+    Nest can't resolve dependencies of the RateLimiterService (?, Object). Please make sure that the argument dependency at index [0] is available in the current context.
+
+    Potential solutions:
+    - The dependency at index [0] appears to be undefined at runtime
+    - This commonly occurs when using 'import type' instead of 'import' for injectable classes
+    - Check your imports and change:
+      ❌ import type { SomeService } from './some.service';
+      ✅ import { SomeService } from './some.service';
+    - Ensure the imported class is decorated with @Injectable() or is a valid provider
+    - If using dynamic imports, ensure the class is available at runtime, not just for type checking
+
+    For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+
+    [0m [90m 11 |[39m
+     [90m 12 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 13 |[39m     [36mconst[39m moduleFixture[33m:[39m [33mTestingModule[39m [33m=[39m [36mawait[39m [33mTest[39m[33m.[39mcreateTestingModule({
+     [90m    |[39m                                          [31m[1m^[22m[39m
+     [90m 14 |[39m       imports[33m:[39m [[33mAppModule[39m][33m,[39m
+     [90m 15 |[39m     })[33m.[39mcompile()[33m;[39m
+     [90m 16 |[39m[0m
+
+      at TestingInjector.lookupComponentInParentModules (../node_modules/@nestjs/core/injector/injector.js:286:19)
+      at TestingInjector.resolveComponentWrapper (../node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (../node_modules/@nestjs/core/injector/injector.js:140:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (../node_modules/@nestjs/core/injector/injector.js:169:27)
+      at TestingInjector.loadInstance (../node_modules/@nestjs/core/injector/injector.js:75:13)
+      at TestingInjector.loadProvider (../node_modules/@nestjs/core/injector/injector.js:103:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 17)
+      at TestingInstanceLoader.createInstancesOfProviders (../node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 2)
+      at TestingInstanceLoader.createInstances (../node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (../node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:13:42)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-pessimistic › should return 404 for non-existent project
+
+    Nest can't resolve dependencies of the RateLimiterService (?, Object). Please make sure that the argument dependency at index [0] is available in the current context.
+
+    Potential solutions:
+    - The dependency at index [0] appears to be undefined at runtime
+    - This commonly occurs when using 'import type' instead of 'import' for injectable classes
+    - Check your imports and change:
+      ❌ import type { SomeService } from './some.service';
+      ✅ import { SomeService } from './some.service';
+    - Ensure the imported class is decorated with @Injectable() or is a valid provider
+    - If using dynamic imports, ensure the class is available at runtime, not just for type checking
+
+    For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+
+    [0m [90m 11 |[39m
+     [90m 12 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 13 |[39m     [36mconst[39m moduleFixture[33m:[39m [33mTestingModule[39m [33m=[39m [36mawait[39m [33mTest[39m[33m.[39mcreateTestingModule({
+     [90m    |[39m                                          [31m[1m^[22m[39m
+     [90m 14 |[39m       imports[33m:[39m [[33mAppModule[39m][33m,[39m
+     [90m 15 |[39m     })[33m.[39mcompile()[33m;[39m
+     [90m 16 |[39m[0m
+
+      at TestingInjector.lookupComponentInParentModules (../node_modules/@nestjs/core/injector/injector.js:286:19)
+      at TestingInjector.resolveComponentWrapper (../node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (../node_modules/@nestjs/core/injector/injector.js:140:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (../node_modules/@nestjs/core/injector/injector.js:169:27)
+      at TestingInjector.loadInstance (../node_modules/@nestjs/core/injector/injector.js:75:13)
+      at TestingInjector.loadProvider (../node_modules/@nestjs/core/injector/injector.js:103:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 17)
+      at TestingInstanceLoader.createInstancesOfProviders (../node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 2)
+      at TestingInstanceLoader.createInstances (../node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (../node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:13:42)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-pessimistic › should handle concurrent requests correctly
+
+    Nest can't resolve dependencies of the RateLimiterService (?, Object). Please make sure that the argument dependency at index [0] is available in the current context.
+
+    Potential solutions:
+    - The dependency at index [0] appears to be undefined at runtime
+    - This commonly occurs when using 'import type' instead of 'import' for injectable classes
+    - Check your imports and change:
+      ❌ import type { SomeService } from './some.service';
+      ✅ import { SomeService } from './some.service';
+    - Ensure the imported class is decorated with @Injectable() or is a valid provider
+    - If using dynamic imports, ensure the class is available at runtime, not just for type checking
+
+    For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+
+    [0m [90m 11 |[39m
+     [90m 12 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 13 |[39m     [36mconst[39m moduleFixture[33m:[39m [33mTestingModule[39m [33m=[39m [36mawait[39m [33mTest[39m[33m.[39mcreateTestingModule({
+     [90m    |[39m                                          [31m[1m^[22m[39m
+     [90m 14 |[39m       imports[33m:[39m [[33mAppModule[39m][33m,[39m
+     [90m 15 |[39m     })[33m.[39mcompile()[33m;[39m
+     [90m 16 |[39m[0m
+
+      at TestingInjector.lookupComponentInParentModules (../node_modules/@nestjs/core/injector/injector.js:286:19)
+      at TestingInjector.resolveComponentWrapper (../node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (../node_modules/@nestjs/core/injector/injector.js:140:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (../node_modules/@nestjs/core/injector/injector.js:169:27)
+      at TestingInjector.loadInstance (../node_modules/@nestjs/core/injector/injector.js:75:13)
+      at TestingInjector.loadProvider (../node_modules/@nestjs/core/injector/injector.js:103:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 17)
+      at TestingInstanceLoader.createInstancesOfProviders (../node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 2)
+      at TestingInstanceLoader.createInstances (../node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (../node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:13:42)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-optimistic › should increment view count using optimistic locking
+
+    Nest can't resolve dependencies of the RateLimiterService (?, Object). Please make sure that the argument dependency at index [0] is available in the current context.
+
+    Potential solutions:
+    - The dependency at index [0] appears to be undefined at runtime
+    - This commonly occurs when using 'import type' instead of 'import' for injectable classes
+    - Check your imports and change:
+      ❌ import type { SomeService } from './some.service';
+      ✅ import { SomeService } from './some.service';
+    - Ensure the imported class is decorated with @Injectable() or is a valid provider
+    - If using dynamic imports, ensure the class is available at runtime, not just for type checking
+
+    For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+
+    [0m [90m 11 |[39m
+     [90m 12 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 13 |[39m     [36mconst[39m moduleFixture[33m:[39m [33mTestingModule[39m [33m=[39m [36mawait[39m [33mTest[39m[33m.[39mcreateTestingModule({
+     [90m    |[39m                                          [31m[1m^[22m[39m
+     [90m 14 |[39m       imports[33m:[39m [[33mAppModule[39m][33m,[39m
+     [90m 15 |[39m     })[33m.[39mcompile()[33m;[39m
+     [90m 16 |[39m[0m
+
+      at TestingInjector.lookupComponentInParentModules (../node_modules/@nestjs/core/injector/injector.js:286:19)
+      at TestingInjector.resolveComponentWrapper (../node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (../node_modules/@nestjs/core/injector/injector.js:140:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (../node_modules/@nestjs/core/injector/injector.js:169:27)
+      at TestingInjector.loadInstance (../node_modules/@nestjs/core/injector/injector.js:75:13)
+      at TestingInjector.loadProvider (../node_modules/@nestjs/core/injector/injector.js:103:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 17)
+      at TestingInstanceLoader.createInstancesOfProviders (../node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 2)
+      at TestingInstanceLoader.createInstances (../node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (../node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:13:42)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-optimistic › should return 404 for non-existent project
+
+    Nest can't resolve dependencies of the RateLimiterService (?, Object). Please make sure that the argument dependency at index [0] is available in the current context.
+
+    Potential solutions:
+    - The dependency at index [0] appears to be undefined at runtime
+    - This commonly occurs when using 'import type' instead of 'import' for injectable classes
+    - Check your imports and change:
+      ❌ import type { SomeService } from './some.service';
+      ✅ import { SomeService } from './some.service';
+    - Ensure the imported class is decorated with @Injectable() or is a valid provider
+    - If using dynamic imports, ensure the class is available at runtime, not just for type checking
+
+    For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+
+    [0m [90m 11 |[39m
+     [90m 12 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 13 |[39m     [36mconst[39m moduleFixture[33m:[39m [33mTestingModule[39m [33m=[39m [36mawait[39m [33mTest[39m[33m.[39mcreateTestingModule({
+     [90m    |[39m                                          [31m[1m^[22m[39m
+     [90m 14 |[39m       imports[33m:[39m [[33mAppModule[39m][33m,[39m
+     [90m 15 |[39m     })[33m.[39mcompile()[33m;[39m
+     [90m 16 |[39m[0m
+
+      at TestingInjector.lookupComponentInParentModules (../node_modules/@nestjs/core/injector/injector.js:286:19)
+      at TestingInjector.resolveComponentWrapper (../node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (../node_modules/@nestjs/core/injector/injector.js:140:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (../node_modules/@nestjs/core/injector/injector.js:169:27)
+      at TestingInjector.loadInstance (../node_modules/@nestjs/core/injector/injector.js:75:13)
+      at TestingInjector.loadProvider (../node_modules/@nestjs/core/injector/injector.js:103:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 17)
+      at TestingInstanceLoader.createInstancesOfProviders (../node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 2)
+      at TestingInstanceLoader.createInstances (../node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (../node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:13:42)
+
+  ● Project View Counter (e2e) › POST /projects/:id/view-optimistic › should handle concurrent requests with retries
+
+    Nest can't resolve dependencies of the RateLimiterService (?, Object). Please make sure that the argument dependency at index [0] is available in the current context.
+
+    Potential solutions:
+    - The dependency at index [0] appears to be undefined at runtime
+    - This commonly occurs when using 'import type' instead of 'import' for injectable classes
+    - Check your imports and change:
+      ❌ import type { SomeService } from './some.service';
+      ✅ import { SomeService } from './some.service';
+    - Ensure the imported class is decorated with @Injectable() or is a valid provider
+    - If using dynamic imports, ensure the class is available at runtime, not just for type checking
+
+    For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+
+    [0m [90m 11 |[39m
+     [90m 12 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 13 |[39m     [36mconst[39m moduleFixture[33m:[39m [33mTestingModule[39m [33m=[39m [36mawait[39m [33mTest[39m[33m.[39mcreateTestingModule({
+     [90m    |[39m                                          [31m[1m^[22m[39m
+     [90m 14 |[39m       imports[33m:[39m [[33mAppModule[39m][33m,[39m
+     [90m 15 |[39m     })[33m.[39mcompile()[33m;[39m
+     [90m 16 |[39m[0m
+
+      at TestingInjector.lookupComponentInParentModules (../node_modules/@nestjs/core/injector/injector.js:286:19)
+      at TestingInjector.resolveComponentWrapper (../node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (../node_modules/@nestjs/core/injector/injector.js:140:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (../node_modules/@nestjs/core/injector/injector.js:169:27)
+      at TestingInjector.loadInstance (../node_modules/@nestjs/core/injector/injector.js:75:13)
+      at TestingInjector.loadProvider (../node_modules/@nestjs/core/injector/injector.js:103:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 17)
+      at TestingInstanceLoader.createInstancesOfProviders (../node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 2)
+      at TestingInstanceLoader.createInstances (../node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (../node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:13:42)
+
+  ● Project View Counter (e2e) › Concurrency Comparison › both strategies should produce same results under load
+
+    Nest can't resolve dependencies of the RateLimiterService (?, Object). Please make sure that the argument dependency at index [0] is available in the current context.
+
+    Potential solutions:
+    - The dependency at index [0] appears to be undefined at runtime
+    - This commonly occurs when using 'import type' instead of 'import' for injectable classes
+    - Check your imports and change:
+      ❌ import type { SomeService } from './some.service';
+      ✅ import { SomeService } from './some.service';
+    - Ensure the imported class is decorated with @Injectable() or is a valid provider
+    - If using dynamic imports, ensure the class is available at runtime, not just for type checking
+
+    For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+
+    [0m [90m 11 |[39m
+     [90m 12 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 13 |[39m     [36mconst[39m moduleFixture[33m:[39m [33mTestingModule[39m [33m=[39m [36mawait[39m [33mTest[39m[33m.[39mcreateTestingModule({
+     [90m    |[39m                                          [31m[1m^[22m[39m
+     [90m 14 |[39m       imports[33m:[39m [[33mAppModule[39m][33m,[39m
+     [90m 15 |[39m     })[33m.[39mcompile()[33m;[39m
+     [90m 16 |[39m[0m
+
+      at TestingInjector.lookupComponentInParentModules (../node_modules/@nestjs/core/injector/injector.js:286:19)
+      at TestingInjector.resolveComponentWrapper (../node_modules/@nestjs/testing/testing-injector.js:19:45)
+      at resolveParam (../node_modules/@nestjs/core/injector/injector.js:140:38)
+          at async Promise.all (index 0)
+      at TestingInjector.resolveConstructorParams (../node_modules/@nestjs/core/injector/injector.js:169:27)
+      at TestingInjector.loadInstance (../node_modules/@nestjs/core/injector/injector.js:75:13)
+      at TestingInjector.loadProvider (../node_modules/@nestjs/core/injector/injector.js:103:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:56:13
+          at async Promise.all (index 17)
+      at TestingInstanceLoader.createInstancesOfProviders (../node_modules/@nestjs/core/injector/instance-loader.js:55:9)
+      at ../node_modules/@nestjs/core/injector/instance-loader.js:40:13
+          at async Promise.all (index 2)
+      at TestingInstanceLoader.createInstances (../node_modules/@nestjs/core/injector/instance-loader.js:39:9)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/core/injector/instance-loader.js:22:13)
+      at TestingInstanceLoader.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-instance-loader.js:9:9)
+      at TestingModuleBuilder.createInstancesOfDependencies (../node_modules/@nestjs/testing/testing-module.builder.js:118:9)
+      at TestingModuleBuilder.compile (../node_modules/@nestjs/testing/testing-module.builder.js:74:9)
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:13:42)
+
+
+  ● Test suite failed to run
+
+    TypeError: Cannot read properties of undefined (reading 'user')
+
+    [0m [90m 48 |[39m       [36mawait[39m prisma[33m.[39mproject[33m.[39m[36mdelete[39m({ where[33m:[39m { id[33m:[39m testProjectId } })[33m;[39m
+     [90m 49 |[39m     }
+    [31m[1m>[22m[39m[90m 50 |[39m     [36mawait[39m prisma[33m.[39muser[33m.[39mdeleteMany({
+     [90m    |[39m                  [31m[1m^[22m[39m
+     [90m 51 |[39m       where[33m:[39m { email[33m:[39m { contains[33m:[39m [32m'test-'[39m } }[33m,[39m
+     [90m 52 |[39m     })[33m;[39m
+     [90m 53 |[39m[0m
+
+      at Object.<anonymous> (e2e/project-view-counter.e2e-spec.ts:50:18)
+
+Test Suites: 1 failed, 1 total
+Tests:       7 failed, 7 total
+Snapshots:   0 total
+Time:        2.379 s
+Ran all test suites.
+
+  ●  Cannot log after tests are done. Did you forget to wait for something async in your test?
+    Attempted to log "✅ Redis client connected".
+
+    [0m [90m 59 |[39m           console[33m.[39mlog([32m'🔌 Redis client connection closed'[39m)[33m;[39m
+     [90m 60 |[39m         })[33m;[39m
+    [31m[1m>[22m[39m[90m 61 |[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 62 |[39m         redis[33m.[39mon([32m'reconnecting'[39m[33m,[39m () [33m=>[39m {
+     [90m 63 |[39m           console[33m.[39mlog([32m'🔄 Redis client reconnecting...'[39m)[33m;[39m
+     [90m 64 |[39m         })[33m;[39m[0m
+
+      at console.log (../node_modules/@jest/console/build/index.js:311:10)
+      at EventEmitter.<anonymous> (../src/infrastructure/cache/cache.module.ts:61:33)
+
+
+  ●  Cannot log after tests are done. Did you forget to wait for something async in your test?
+    Attempted to log "✅ Redis client ready".
+
+    [0m [90m 62 |[39m         redis[33m.[39mon([32m'reconnecting'[39m[33m,[39m () [33m=>[39m {
+     [90m 63 |[39m           console[33m.[39mlog([32m'🔄 Redis client reconnecting...'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 64 |[39m         })[33m;[39m
+     [90m    |[39m                      [31m[1m^[22m[39m
+     [90m 65 |[39m
+     [90m 66 |[39m         [36mreturn[39m redis[33m;[39m
+     [90m 67 |[39m       }[33m,[39m[0m
+
+      at console.log (../node_modules/@jest/console/build/index.js:311:10)
+      at EventEmitter.<anonymous> (../src/infrastructure/cache/cache.module.ts:64:33)
+
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

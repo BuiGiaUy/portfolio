@@ -32,8 +32,13 @@ export class RateLimiterService implements OnModuleDestroy {
   private readonly limit: number = 100;
   private readonly windowSeconds: number = 900; // 15 minutes
 
-  constructor() {
-    this.redis = createRedisClient();
+  constructor(config?: RateLimiterConfig, redis?: Redis) {
+    // Allow dependency injection for testing
+    if (config) {
+      this.limit = config.limit;
+      this.windowSeconds = config.windowSeconds;
+    }
+    this.redis = redis || createRedisClient();
   }
 
   /**
