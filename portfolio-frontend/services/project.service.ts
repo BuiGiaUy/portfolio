@@ -19,7 +19,8 @@ class ProjectService {
    */
   async getProjects(): Promise<Project[]> {
     const response = await apiClient.get<ProjectListResponse>(this.baseUrl);
-    return response.data;
+    // apiClient.get already returns response.data, so response is ProjectListResponse
+    return response.data || [];
   }
 
   /**

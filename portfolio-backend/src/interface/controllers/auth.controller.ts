@@ -46,6 +46,7 @@ export class AuthController {
       secure: process.env.COOKIE_SECURE === 'true',
       sameSite:
         (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      path: '/',
       maxAge: 15 * 60 * 1000, // 15 minutes (same as JWT expiry)
     });
 
@@ -55,6 +56,7 @@ export class AuthController {
       secure: process.env.COOKIE_SECURE === 'true',
       sameSite:
         (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -84,6 +86,7 @@ export class AuthController {
       secure: process.env.COOKIE_SECURE === 'true',
       sameSite:
         (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      path: '/',
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
@@ -93,6 +96,7 @@ export class AuthController {
       secure: process.env.COOKIE_SECURE === 'true',
       sameSite:
         (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -100,19 +104,61 @@ export class AuthController {
   }
 
   @Post('logout')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   async logout(
-    @CurrentUser() user: RequestUser,
+    @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.logoutUseCase.execute(user.userId);
+    // Try to get userId from refresh token (if available)
+    // Logout should work even if access token is expired
+    const refreshToken = request.cookies?.refreshToken as string | undefined;
 
-    // Clear both auth cookies
-    response.clearCookie('accessToken');
-    response.clearCookie('refreshToken');
+    if (refreshToken) {
+      try {
+        // Extract userId from refresh token to invalidate it in database
+        const decoded = this.decodeToken(refreshToken);
+        await this.logoutUseCase.execute(decoded.sub);
+        console.log('🔓 Logout: User logged out:', decoded.sub);
+      } catch {
+        // Token might be invalid, but still clear cookies
+        console.log(
+          '⚠️ Logout: Could not decode token, clearing cookies anyway',
+        );
+      }
+    }
 
-    return { message: 'Logged out successfully' };
+    // Cookie options must match EXACTLY with the options used when setting cookies
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.COOKIE_SECURE === 'true',
+      sameSite:
+        (process.env.COOKIE_SAME_SITE as 'strict' | 'lax' | 'none') || 'lax',
+      path: '/',
+    };
+
+    // Clear both cookies (always, even if token is invalid)
+    response.clearCookie('accessToken', cookieOptions);
+    response.clearCookie('refreshToken', cookieOptions);
+
+    console.log('🔓 Logout: Cookies cleared');
+
+    return {
+      message: 'Logged out successfully',
+      cleared: ['accessToken', 'refreshToken'],
+    };
+  }
+
+  /**
+   * Helper to decode JWT token without verification
+   * Used for logout to extract userId even from expired tokens
+   */
+  private decodeToken(token: string): { sub: string; email: string } {
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      throw new Error('Invalid token format');
+    }
+    const payload = Buffer.from(parts[1], 'base64').toString('utf-8');
+    return JSON.parse(payload) as { sub: string; email: string };
   }
 
   @Get('me')

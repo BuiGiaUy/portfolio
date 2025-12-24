@@ -6,6 +6,7 @@
 import { apiClient } from './client';
 import { tokenManager } from './token-manager';
 import { API_CONFIG } from './config';
+import { clearAuthCookies } from './cookie-utils';
 import {
   LoginCredentials,
   RegisterData,
@@ -85,6 +86,9 @@ class AuthService {
     } finally {
       // Clear local auth data
       tokenManager.clearAuthData();
+
+      // Clear all auth cookies (frontend fallback)
+      clearAuthCookies();
 
       // Emit logout event
       if (typeof window !== 'undefined') {
