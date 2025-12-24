@@ -12,6 +12,16 @@ export { authService } from './auth.service';
 // Token management
 export { tokenManager } from './token-manager';
 
+// Cookie utilities
+export {
+  getAllCookies,
+  getCookie,
+  deleteCookie,
+  clearAuthCookies,
+  hasAuthCookies,
+  logCookies,
+} from './cookie-utils';
+
 // Configuration
 export { API_CONFIG, getApiBaseUrl, getEndpointUrl } from './config';
 

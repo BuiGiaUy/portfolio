@@ -1,6 +1,0 @@
-
-D:\Project\profolio\portfolio-backend\src\interface\controllers\user.controller.ts
-  26:3  error  Async method 'findOne' has no 'await' expression  @typescript-eslint/require-await
-
-✖ 1 problem (1 error, 0 warnings)
-
