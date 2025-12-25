@@ -8,6 +8,7 @@ import { HealthController } from './interface/controllers/health.controller';
 import { UserController } from './interface/controllers/user.controller';
 import { ProjectController } from './interface/controllers/project.controller';
 import { CommentController } from './interface/controllers/comment.controller';
+import { UploadController } from './interface/controllers/upload.controller';
 import { AuthModule } from './interface/modules/auth.module';
 import { AdminModule } from './interface/modules/admin.module';
 
@@ -23,12 +24,17 @@ import { DeleteProjectUseCase } from './application/use-cases/delete-project.use
 import { UpdateProjectDetailsUseCase } from './application/use-cases/update-project-details.usecase';
 import { IncrementProjectViewPessimisticUseCase } from './application/use-cases/increment-project-view-pessimistic.usecase';
 import { IncrementProjectViewOptimisticUseCase } from './application/use-cases/increment-project-view-optimistic.usecase';
+import { CreateUploadUseCase } from './application/use-cases/create-upload.usecase';
+import { GetUploadByIdUseCase } from './application/use-cases/get-upload-by-id.usecase';
+import { DeleteUploadUseCase } from './application/use-cases/delete-upload.usecase';
 
 // Infrastructure Layer
 import { PrismaService } from './infrastructure/database/prisma.service';
 import { PrismaUserRepository } from './infrastructure/repositories/user.repository';
 import { PrismaProjectRepository } from './infrastructure/repositories/project.repository';
 import { PrismaCommentRepository } from './infrastructure/repositories/comment.repository';
+import { PrismaUploadRepository } from './infrastructure/repositories/upload.repository';
+import { StorageService } from './infrastructure/storage/storage.service';
 import { CacheModule } from './infrastructure/cache/cache.module';
 import { RateLimiterService } from './infrastructure/rate-limiter/rate-limiter.service';
 import { CacheInvalidationService } from './infrastructure/cache/cache-invalidation.service';
@@ -37,6 +43,7 @@ import { CacheInvalidationService } from './infrastructure/cache/cache-invalidat
 import { USER_REPOSITORY } from './domain/repositories/user.repository.interface';
 import { PROJECT_REPOSITORY } from './domain/repositories/project.repository.interface';
 import { COMMENT_REPOSITORY } from './domain/repositories/comment.repository.interface';
+import { UPLOAD_REPOSITORY } from './domain/repositories/upload.repository.interface';
 
 /**
  * Root Application Module
@@ -80,6 +87,7 @@ import { COMMENT_REPOSITORY } from './domain/repositories/comment.repository.int
     UserController,
     ProjectController,
     CommentController,
+    UploadController,
   ],
   providers: [
     AppService,
@@ -96,8 +104,12 @@ import { COMMENT_REPOSITORY } from './domain/repositories/comment.repository.int
     DeleteProjectUseCase,
     IncrementProjectViewPessimisticUseCase,
     IncrementProjectViewOptimisticUseCase,
+    CreateUploadUseCase,
+    GetUploadByIdUseCase,
+    DeleteUploadUseCase,
     
-    // Cache Invalidation
+    // Infrastructure Services
+    StorageService,
     CacheInvalidationService,
     // Infrastructure Layer - Rate Limiter with factory for proper config injection
     {
@@ -123,6 +135,10 @@ import { COMMENT_REPOSITORY } from './domain/repositories/comment.repository.int
     {
       provide: COMMENT_REPOSITORY,
       useClass: PrismaCommentRepository,
+    },
+    {
+      provide: UPLOAD_REPOSITORY,
+      useClass: PrismaUploadRepository,
     },
   ],
 })

@@ -25,6 +25,7 @@ model User {
   comments         Comment[]
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+  uploads          Upload[]
 }
 
 model Project {
@@ -84,4 +85,21 @@ model Comment {
   @@index([projectId])
   @@index([userId])
   @@index([projectId, createdAt(sort: Desc)])
+}
+
+model Upload {
+  id           String   @id @default(uuid())
+  key          String   @unique
+  filename     String
+  contentType  String
+  size         BigInt
+  uploadedById String
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+  context      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Indexes for query optimization
+  @@index([uploadedById])
+  @@index([uploadedById, createdAt(sort: Desc)])
 }
