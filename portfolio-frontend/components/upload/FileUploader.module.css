@@ -1,0 +1,173 @@
+.container {
+  width: 100%;
+}
+
+.dropzone {
+  border: 2px dashed hsl(220, 13%, 69%);
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: hsl(220, 13%, 98%);
+}
+
+.dropzone:hover {
+  border-color: hsl(221, 83%, 53%);
+  background: hsl(221, 100%, 98%);
+}
+
+.dropzone:focus {
+  outline: 2px solid hsl(221, 83%, 53%);
+  outline-offset: 2px;
+}
+
+.dropzone.dragging {
+  border-color: hsl(221, 83%, 53%);
+  background: hsl(221, 100%, 95%);
+  transform: scale(1.02);
+}
+
+.fileInput {
+  display: none;
+}
+
+.dropzoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.uploadIcon {
+  width: 48px;
+  height: 48px;
+  color: hsl(220, 13%, 69%);
+}
+
+.dropzone:hover .uploadIcon {
+  color: hsl(221, 83%, 53%);
+}
+
+.dropzoneText {
+  margin: 0;
+  font-size: 16px;
+  color: hsl(220, 9%, 46%);
+}
+
+.dropzoneAction {
+  color: hsl(221, 83%, 53%);
+  font-weight: 600;
+}
+
+.dropzoneHint {
+  margin: 0;
+  font-size: 14px;
+  color: hsl(220, 9%, 60%);
+}
+
+.uploadList {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.uploadItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid hsl(220, 13%, 91%);
+  border-radius: 8px;
+  background: white;
+  transition: box-shadow 0.2s ease;
+}
+
+.uploadItem:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.uploadInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.uploadHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.filename {
+  font-weight: 500;
+  color: hsl(220, 9%, 20%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filesize {
+  font-size: 14px;
+  color: hsl(220, 9%, 60%);
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: hsl(0, 65%, 51%);
+  font-size: 14px;
+}
+
+.retryButton {
+  padding: 4px 12px;
+  background: hsl(0, 65%, 51%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.retryButton:hover {
+  background: hsl(0, 65%, 45%);
+}
+
+.success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: hsl(142, 71%, 45%);
+  font-size: 14px;
+}
+
+.successIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.removeButton {
+  padding: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: hsl(220, 9%, 60%);
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.removeButton:hover {
+  color: hsl(0, 65%, 51%);
+}
+
+.removeButton svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
