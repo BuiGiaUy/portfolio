@@ -19,6 +19,8 @@ import { GetMeUseCase } from 'src/application/use-cases/auth/get-me.usecase';
 import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
 import { CurrentUser } from 'src/infrastructure/auth/decorators/current-user.decorator';
 import { RequestUser } from 'src/infrastructure/auth/strategies/jwt.strategy';
+import { StructuredLogger } from 'src/infrastructure/logging/structured-logger.service';
+import { setSentryUser, clearSentryUser } from 'src/infrastructure/observability/sentry.config';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +29,7 @@ export class AuthController {
     private readonly refreshTokenUseCase: RefreshTokenUseCase,
     private readonly logoutUseCase: LogoutUseCase,
     private readonly getMeUseCase: GetMeUseCase,
+    private readonly logger: StructuredLogger,
   ) {}
 
   @Post('login')
@@ -60,6 +63,19 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
+    // Log successful login (no PII)
+    this.logger.logWithMetadata(
+      'User logged in successfully',
+      {
+        userId: authResponse.user.id,
+        email: authResponse.user.email,
+      },
+      'AuthController',
+    );
+
+    // Set Sentry user context
+    setSentryUser(authResponse.user.id);
+
     return authResponse;
   }
 
@@ -72,6 +88,7 @@ export class AuthController {
     const refreshToken = request.cookies?.refreshToken as string | undefined;
 
     if (!refreshToken) {
+      this.logger.warn('Refresh token not found in cookies');
       throw new UnauthorizedException(
         'Refresh token not found. Please login again.',
       );
@@ -100,6 +117,14 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
+    this.logger.logWithMetadata(
+      'Token refreshed successfully',
+      {
+        userId: authResponse.user.id,
+      },
+      'AuthController',
+    );
+
     return authResponse;
   }
 
@@ -118,12 +143,19 @@ export class AuthController {
         // Extract userId from refresh token to invalidate it in database
         const decoded = this.decodeToken(refreshToken);
         await this.logoutUseCase.execute(decoded.sub);
-        console.log('🔓 Logout: User logged out:', decoded.sub);
-      } catch {
-        // Token might be invalid, but still clear cookies
-        console.log(
-          '⚠️ Logout: Could not decode token, clearing cookies anyway',
+        
+        this.logger.logWithMetadata(
+          'User logged out successfully',
+          {
+            userId: decoded.sub,
+          },
+          'AuthController',
         );
+
+        // Clear Sentry user context
+        clearSentryUser();
+      } catch {
+        this.logger.warn('Could not decode token during logout, clearing cookies anyway');
       }
     }
 
@@ -139,8 +171,6 @@ export class AuthController {
     // Clear both cookies (always, even if token is invalid)
     response.clearCookie('accessToken', cookieOptions);
     response.clearCookie('refreshToken', cookieOptions);
-
-    console.log('🔓 Logout: Cookies cleared');
 
     return {
       message: 'Logged out successfully',
