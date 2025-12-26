@@ -38,6 +38,7 @@ import { StorageService } from './infrastructure/storage/storage.service';
 import { CacheModule } from './infrastructure/cache/cache.module';
 import { RateLimiterService } from './infrastructure/rate-limiter/rate-limiter.service';
 import { CacheInvalidationService } from './infrastructure/cache/cache-invalidation.service';
+import { LoggingModule } from './infrastructure/logging/logging.module';
 
 // Domain Layer
 import { USER_REPOSITORY } from './domain/repositories/user.repository.interface';
@@ -77,6 +78,7 @@ import { UPLOAD_REPOSITORY } from './domain/repositories/upload.repository.inter
       isGlobal: true,
       envFilePath: '.env',
     }),
+    LoggingModule,
     CacheModule,
     AuthModule,
     AdminModule,
