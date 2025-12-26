@@ -12,6 +12,7 @@ export interface PresignedUrlRequest {
 }
 
 export interface PresignedUrlResponse {
+  data: PresignedUrlResponse | PromiseLike<PresignedUrlResponse>;
   uploadUrl: string;
   key: string;
   expiresIn: number;
@@ -26,6 +27,7 @@ export interface ConfirmUploadRequest {
 }
 
 export interface UploadRecord {
+  data: UploadRecord | PromiseLike<UploadRecord>;
   id: string;
   key: string;
   filename: string;
@@ -134,7 +136,9 @@ export class UploadService {
 
   static async getDownloadUrl(uploadId: string): Promise<string> {
     const response = await apiClient.get<{
-      data: { downloadUrl: string; expiresIn: number };
+      data: {
+        data: any; downloadUrl: string; expiresIn: number 
+      };
     }>(`/upload/${uploadId}/download-url`);
     return response.data.data.downloadUrl;
   }
