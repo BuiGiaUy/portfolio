@@ -4,10 +4,16 @@ describe('Project Entity', () => {
   const validProjectData = {
     id: 'project-123',
     title: 'My Project',
-    description: 'This is a test project description',
+    slug: 'my-project',
+    shortDescription: 'A short description',
+    content: 'This is the full content of the project',
+    techStack: ['NestJS', 'PostgreSQL'],
     userId: 'user-123',
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
+    thumbnailUrl: 'https://example.com/thumbnail.jpg',
+    githubUrl: 'https://github.com/user/project',
+    demoUrl: 'https://demo.example.com',
   };
 
   describe('Constructor Validation', () => {
@@ -16,19 +22,31 @@ describe('Project Entity', () => {
       const project = new Project(
         validProjectData.id,
         validProjectData.title,
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
+        validProjectData.thumbnailUrl,
+        validProjectData.githubUrl,
+        validProjectData.demoUrl,
       );
 
       // Assert
       expect(project.id).toBe(validProjectData.id);
       expect(project.title).toBe(validProjectData.title);
-      expect(project.description).toBe(validProjectData.description);
+      expect(project.slug).toBe(validProjectData.slug);
+      expect(project.shortDescription).toBe(validProjectData.shortDescription);
+      expect(project.content).toBe(validProjectData.content);
+      expect(project.techStack).toEqual(validProjectData.techStack);
       expect(project.userId).toBe(validProjectData.userId);
       expect(project.createdAt).toBe(validProjectData.createdAt);
       expect(project.updatedAt).toBe(validProjectData.updatedAt);
+      expect(project.thumbnailUrl).toBe(validProjectData.thumbnailUrl);
+      expect(project.githubUrl).toBe(validProjectData.githubUrl);
+      expect(project.demoUrl).toBe(validProjectData.demoUrl);
     });
 
     it('should throw error when id is missing', () => {
@@ -37,7 +55,10 @@ describe('Project Entity', () => {
         new Project(
           '',
           validProjectData.title,
-          validProjectData.description,
+          validProjectData.slug,
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
           validProjectData.userId,
           validProjectData.createdAt,
           validProjectData.updatedAt,
@@ -51,7 +72,10 @@ describe('Project Entity', () => {
         new Project(
           validProjectData.id,
           '',
-          validProjectData.description,
+          validProjectData.slug,
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
           validProjectData.userId,
           validProjectData.createdAt,
           validProjectData.updatedAt,
@@ -65,7 +89,10 @@ describe('Project Entity', () => {
         new Project(
           validProjectData.id,
           'AB',
-          validProjectData.description,
+          validProjectData.slug,
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
           validProjectData.userId,
           validProjectData.createdAt,
           validProjectData.updatedAt,
@@ -80,7 +107,10 @@ describe('Project Entity', () => {
         new Project(
           validProjectData.id,
           longTitle,
-          validProjectData.description,
+          validProjectData.slug,
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
           validProjectData.userId,
           validProjectData.createdAt,
           validProjectData.updatedAt,
@@ -88,18 +118,90 @@ describe('Project Entity', () => {
       }).toThrow('Project title must not exceed 100 characters');
     });
 
-    it('should throw error when description is missing', () => {
+    it('should throw error when slug is missing', () => {
       // Act & Assert
       expect(() => {
         new Project(
           validProjectData.id,
           validProjectData.title,
           '',
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
           validProjectData.userId,
           validProjectData.createdAt,
           validProjectData.updatedAt,
         );
-      }).toThrow('Project description is required');
+      }).toThrow('Project slug is required');
+    });
+
+    it('should throw error when slug is not URL-friendly', () => {
+      // Act & Assert
+      expect(() => {
+        new Project(
+          validProjectData.id,
+          validProjectData.title,
+          'Invalid Slug With Spaces',
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
+          validProjectData.userId,
+          validProjectData.createdAt,
+          validProjectData.updatedAt,
+        );
+      }).toThrow('Project slug must be URL-friendly');
+    });
+
+    it('should throw error when shortDescription is missing', () => {
+      // Act & Assert
+      expect(() => {
+        new Project(
+          validProjectData.id,
+          validProjectData.title,
+          validProjectData.slug,
+          '',
+          validProjectData.content,
+          validProjectData.techStack,
+          validProjectData.userId,
+          validProjectData.createdAt,
+          validProjectData.updatedAt,
+        );
+      }).toThrow('Project short description is required');
+    });
+
+    it('should throw error when shortDescription exceeds 200 characters', () => {
+      // Act & Assert
+      const longDesc = 'A'.repeat(201);
+      expect(() => {
+        new Project(
+          validProjectData.id,
+          validProjectData.title,
+          validProjectData.slug,
+          longDesc,
+          validProjectData.content,
+          validProjectData.techStack,
+          validProjectData.userId,
+          validProjectData.createdAt,
+          validProjectData.updatedAt,
+        );
+      }).toThrow('Project short description must not exceed 200 characters');
+    });
+
+    it('should throw error when content is missing', () => {
+      // Act & Assert
+      expect(() => {
+        new Project(
+          validProjectData.id,
+          validProjectData.title,
+          validProjectData.slug,
+          validProjectData.shortDescription,
+          '',
+          validProjectData.techStack,
+          validProjectData.userId,
+          validProjectData.createdAt,
+          validProjectData.updatedAt,
+        );
+      }).toThrow('Project content is required');
     });
 
     it('should throw error when userId is missing', () => {
@@ -108,7 +210,10 @@ describe('Project Entity', () => {
         new Project(
           validProjectData.id,
           validProjectData.title,
-          validProjectData.description,
+          validProjectData.slug,
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
           '',
           validProjectData.createdAt,
           validProjectData.updatedAt,
@@ -122,7 +227,10 @@ describe('Project Entity', () => {
         new Project(
           validProjectData.id,
           validProjectData.title,
-          validProjectData.description,
+          validProjectData.slug,
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
           validProjectData.userId,
           null as any,
           validProjectData.updatedAt,
@@ -136,7 +244,10 @@ describe('Project Entity', () => {
         new Project(
           validProjectData.id,
           validProjectData.title,
-          validProjectData.description,
+          validProjectData.slug,
+          validProjectData.shortDescription,
+          validProjectData.content,
+          validProjectData.techStack,
           validProjectData.userId,
           validProjectData.createdAt,
           null as any,
@@ -149,7 +260,10 @@ describe('Project Entity', () => {
       const project = new Project(
         validProjectData.id,
         'ABC',
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
@@ -167,7 +281,10 @@ describe('Project Entity', () => {
       const project = new Project(
         validProjectData.id,
         maxTitle,
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
@@ -184,7 +301,10 @@ describe('Project Entity', () => {
       const project = new Project(
         validProjectData.id,
         validProjectData.title,
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
@@ -210,7 +330,10 @@ describe('Project Entity', () => {
       const project = new Project(
         validProjectData.id,
         validProjectData.title,
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
@@ -227,7 +350,10 @@ describe('Project Entity', () => {
       const project = new Project(
         validProjectData.id,
         validProjectData.title,
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
@@ -244,7 +370,10 @@ describe('Project Entity', () => {
       const project = new Project(
         validProjectData.id,
         validProjectData.title,
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
@@ -258,39 +387,45 @@ describe('Project Entity', () => {
     });
   });
 
-  describe('updateDescription', () => {
-    it('should update description and timestamp when valid', () => {
+  describe('updateContent', () => {
+    it('should update content and timestamp when valid', () => {
       // Arrange
       const project = new Project(
         validProjectData.id,
         validProjectData.title,
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
       );
       const originalUpdatedAt = project.updatedAt;
-      const newDescription = 'This is an updated description for the project';
+      const newContent = 'This is an updated content for the project';
 
       // Wait to ensure timestamp changes
       setTimeout(() => {}, 1);
 
       // Act
-      project.updateDescription(newDescription);
+      project.updateContent(newContent);
 
       // Assert
-      expect(project.description).toBe(newDescription);
+      expect(project.content).toBe(newContent);
       expect(project.updatedAt.getTime()).toBeGreaterThanOrEqual(
         originalUpdatedAt.getTime(),
       );
     });
 
-    it('should throw error when new description is empty', () => {
+    it('should throw error when new content is empty', () => {
       // Arrange
       const project = new Project(
         validProjectData.id,
         validProjectData.title,
-        validProjectData.description,
+        validProjectData.slug,
+        validProjectData.shortDescription,
+        validProjectData.content,
+        validProjectData.techStack,
         validProjectData.userId,
         validProjectData.createdAt,
         validProjectData.updatedAt,
@@ -298,8 +433,22 @@ describe('Project Entity', () => {
 
       // Act & Assert
       expect(() => {
-        project.updateDescription('');
-      }).toThrow('Project description is required');
+        project.updateContent('');
+      }).toThrow('Project content is required');
+    });
+  });
+
+  describe('generateSlug', () => {
+    it('should generate slug from title', () => {
+      expect(Project.generateSlug('My First Project')).toBe('my-first-project');
+    });
+
+    it('should handle diacritics', () => {
+      expect(Project.generateSlug('Dự án Việt Nam')).toBe('du-an-viet-nam');
+    });
+
+    it('should remove special characters', () => {
+      expect(Project.generateSlug('Project@2024!')).toBe('project2024');
     });
   });
 });
