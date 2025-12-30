@@ -15,10 +15,14 @@ describe('CreateProjectUseCase', () => {
     // Create mock repository
     mockRepository = {
       findById: jest.fn(),
+      findBySlug: jest.fn(),
       findByUserId: jest.fn(),
       save: jest.fn(),
       delete: jest.fn(),
       findAll: jest.fn(),
+      updateProjectDetails: jest.fn(),
+      incrementViewPessimistic: jest.fn(),
+      incrementViewOptimistic: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -41,8 +45,14 @@ describe('CreateProjectUseCase', () => {
   describe('execute', () => {
     const createProjectDto: CreateProjectDto = {
       title: 'Test Project',
-      description: 'This is a test project description',
+      slug: 'test-project',
+      shortDescription: 'A short description for testing',
+      content: 'This is the full content of the test project',
+      techStack: ['NestJS', 'PostgreSQL'],
       userId: 'user-123',
+      thumbnailUrl: 'https://example.com/thumbnail.jpg',
+      githubUrl: 'https://github.com/user/project',
+      demoUrl: 'https://demo.example.com',
     };
 
     it('should create a new project successfully', async () => {
@@ -58,7 +68,10 @@ describe('CreateProjectUseCase', () => {
       expect(mockRepository.save).toHaveBeenCalled();
       expect(result).toBeInstanceOf(Project);
       expect(result.title).toBe(createProjectDto.title);
-      expect(result.description).toBe(createProjectDto.description);
+      expect(result.slug).toBe(createProjectDto.slug);
+      expect(result.shortDescription).toBe(createProjectDto.shortDescription);
+      expect(result.content).toBe(createProjectDto.content);
+      expect(result.techStack).toEqual(createProjectDto.techStack);
       expect(result.userId).toBe(createProjectDto.userId);
     });
 
@@ -75,6 +88,27 @@ describe('CreateProjectUseCase', () => {
       expect(result.id).toBeDefined();
       expect(typeof result.id).toBe('string');
       expect(result.id.length).toBeGreaterThan(0);
+    });
+
+    it('should auto-generate slug from title if not provided', async () => {
+      // Arrange
+      const dtoWithoutSlug: CreateProjectDto = {
+        title: 'My Awesome Project',
+        slug: '',
+        shortDescription: 'A short description',
+        content: 'Full content here',
+        techStack: ['NestJS'],
+        userId: 'user-123',
+      };
+      mockRepository.save.mockImplementation((project) =>
+        Promise.resolve(project),
+      );
+
+      // Act
+      const result = await useCase.execute(dtoWithoutSlug);
+
+      // Assert
+      expect(result.slug).toBe('my-awesome-project');
     });
 
     it('should set createdAt and updatedAt timestamps', async () => {
@@ -117,7 +151,7 @@ describe('CreateProjectUseCase', () => {
       const savedProject = mockRepository.save.mock.calls[0][0];
       expect(savedProject).toBeInstanceOf(Project);
       expect(savedProject.title).toBe(createProjectDto.title);
-      expect(savedProject.description).toBe(createProjectDto.description);
+      expect(savedProject.slug).toBe(createProjectDto.slug);
       expect(savedProject.userId).toBe(createProjectDto.userId);
     });
 
@@ -125,7 +159,10 @@ describe('CreateProjectUseCase', () => {
       // Arrange
       const invalidDto: CreateProjectDto = {
         title: 'AB', // Too short
-        description: 'Valid description',
+        slug: 'ab',
+        shortDescription: 'Valid description',
+        content: 'Valid content',
+        techStack: [],
         userId: 'user-123',
       };
       mockRepository.save.mockImplementation((project) =>
@@ -143,7 +180,10 @@ describe('CreateProjectUseCase', () => {
       // Arrange
       const invalidDto: CreateProjectDto = {
         title: 'A'.repeat(101), // Too long
-        description: 'Valid description',
+        slug: 'valid-slug',
+        shortDescription: 'Valid description',
+        content: 'Valid content',
+        techStack: [],
         userId: 'user-123',
       };
       mockRepository.save.mockImplementation((project) =>
@@ -157,11 +197,14 @@ describe('CreateProjectUseCase', () => {
       expect(mockRepository.save).not.toHaveBeenCalled();
     });
 
-    it('should throw error when description is empty (entity validation)', async () => {
+    it('should throw error when content is empty (entity validation)', async () => {
       // Arrange
       const invalidDto: CreateProjectDto = {
         title: 'Valid Title',
-        description: '', // Empty
+        slug: 'valid-slug',
+        shortDescription: 'Valid description',
+        content: '', // Empty
+        techStack: [],
         userId: 'user-123',
       };
       mockRepository.save.mockImplementation((project) =>
@@ -170,7 +213,7 @@ describe('CreateProjectUseCase', () => {
 
       // Act & Assert
       await expect(useCase.execute(invalidDto)).rejects.toThrow(
-        'Project description is required',
+        'Project content is required',
       );
       expect(mockRepository.save).not.toHaveBeenCalled();
     });

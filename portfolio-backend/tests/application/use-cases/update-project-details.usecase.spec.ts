@@ -16,6 +16,7 @@ describe('UpdateProjectDetailsUseCase', () => {
     // Create mock repository with all required methods
     mockRepository = {
       findById: jest.fn(),
+      findBySlug: jest.fn(),
       findByUserId: jest.fn(),
       findAll: jest.fn(),
       save: jest.fn(),
@@ -51,7 +52,7 @@ describe('UpdateProjectDetailsUseCase', () => {
         id: 'project-123',
         projectData: {
           title: 'Updated Title',
-          description: 'Updated Description',
+          shortDescription: 'Updated Description',
         },
         statsData: {
           views: 100,
@@ -62,12 +63,13 @@ describe('UpdateProjectDetailsUseCase', () => {
       const expectedProject = new Project(
         'project-123',
         'Updated Title',
+        'updated-title',
         'Updated Description',
+        'Full content here',
+        ['NestJS', 'PostgreSQL'],
         'user-456',
         new Date('2024-01-01'),
         new Date('2024-01-02'),
-        100,
-        1,
       );
 
       mockRepository.updateProjectDetails.mockResolvedValue(expectedProject);
@@ -80,7 +82,7 @@ describe('UpdateProjectDetailsUseCase', () => {
       expect(mockRepository.updateProjectDetails).toHaveBeenCalledWith(input);
       expect(result).toBe(expectedProject);
       expect(result.title).toBe('Updated Title');
-      expect(result.description).toBe('Updated Description');
+      expect(result.shortDescription).toBe('Updated Description');
     });
 
     it('should wrap repository error and throw UpdateProjectDetailsError', async () => {
@@ -160,8 +162,9 @@ describe('UpdateProjectDetailsUseCase', () => {
         id: 'project-abc',
         projectData: {
           title: 'Clean Architecture Project',
-          description: 'A project following clean architecture principles',
-          status: 'active',
+          shortDescription: 'A project following clean architecture principles',
+          content: 'Full markdown content here',
+          techStack: ['NestJS', 'PostgreSQL', 'Redis'],
         },
         statsData: {
           views: 500,
@@ -172,13 +175,13 @@ describe('UpdateProjectDetailsUseCase', () => {
       const project = new Project(
         'project-abc',
         'Clean Architecture Project',
+        'clean-architecture-project',
         'A project following clean architecture principles',
+        'Full markdown content here',
+        ['NestJS', 'PostgreSQL', 'Redis'],
         'user-xyz',
         new Date(),
         new Date(),
-        500,
-        1,
-        'active',
       );
 
       mockRepository.updateProjectDetails.mockResolvedValue(project);
@@ -191,8 +194,9 @@ describe('UpdateProjectDetailsUseCase', () => {
         id: 'project-abc',
         projectData: {
           title: 'Clean Architecture Project',
-          description: 'A project following clean architecture principles',
-          status: 'active',
+          shortDescription: 'A project following clean architecture principles',
+          content: 'Full markdown content here',
+          techStack: ['NestJS', 'PostgreSQL', 'Redis'],
         },
         statsData: {
           views: 500,
@@ -237,6 +241,7 @@ describe('UpdateProjectDetailsUseCase', () => {
       // Verify that use-case can work with ANY implementation of IProjectRepository
       const alternativeMockRepo: IProjectRepository = {
         findById: jest.fn(),
+        findBySlug: jest.fn(),
         findByUserId: jest.fn(),
         findAll: jest.fn(),
         save: jest.fn(),
@@ -245,7 +250,10 @@ describe('UpdateProjectDetailsUseCase', () => {
           new Project(
             'test-id',
             'Test',
-            'Description',
+            'test',
+            'Short desc',
+            'Content',
+            [],
             'user-1',
             new Date(),
             new Date(),

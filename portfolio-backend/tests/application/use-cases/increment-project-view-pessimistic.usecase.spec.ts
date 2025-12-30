@@ -14,6 +14,7 @@ describe('IncrementProjectViewPessimisticUseCase', () => {
     // Create mock repository with all required methods
     mockRepository = {
       findById: jest.fn(),
+      findBySlug: jest.fn(),
       findByUserId: jest.fn(),
       findAll: jest.fn(),
       save: jest.fn(),

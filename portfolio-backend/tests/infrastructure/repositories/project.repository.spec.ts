@@ -20,6 +20,11 @@ describe('PrismaProjectRepository', () => {
               update: jest.fn(),
               updateMany: jest.fn(),
             },
+            projectStats: {
+              findUnique: jest.fn(),
+              create: jest.fn(),
+              update: jest.fn(),
+            },
             $transaction: jest.fn((cb) => cb(prismaService)),
             $queryRawUnsafe: jest.fn(),
             $executeRawUnsafe: jest.fn(),
@@ -33,41 +38,70 @@ describe('PrismaProjectRepository', () => {
   });
 
   describe('incrementViewOptimistic', () => {
-    it('should retry on version conflict and succeed', async () => {
-      // Mock findUnique to return project with version 1
+    it('should create stats if they do not exist', async () => {
+      // Mock findUnique to return project exists
       (prismaService.project.findUnique as jest.Mock).mockResolvedValue({
         id: '123',
-        views: 10,
-        version: 1,
       });
 
-      // Mock updateMany to fail once (count: 0) then succeed (count: 1)
-      (prismaService.project.updateMany as jest.Mock)
-        .mockResolvedValueOnce({ count: 0 }) // Fail 1st attempt
-        .mockResolvedValueOnce({ count: 1 }); // Succeed 2nd attempt
+      // Mock projectStats findUnique to return null (stats don't exist)
+      (prismaService.projectStats.findUnique as jest.Mock).mockResolvedValue(null);
+
+      // Mock create
+      (prismaService.projectStats.create as jest.Mock).mockResolvedValue({
+        id: 'stats-123',
+        projectId: '123',
+        views: 1,
+        likes: 0,
+      });
 
       await repository.incrementViewOptimistic('123');
 
-      expect(prismaService.project.updateMany).toHaveBeenCalledTimes(2);
+      expect(prismaService.projectStats.create).toHaveBeenCalledWith({
+        data: {
+          projectId: '123',
+          views: 1,
+          likes: 0,
+        },
+      });
     });
 
-    it('should throw VersionConflictError after max retries', async () => {
+    it('should increment views if stats exist', async () => {
+      // Mock findUnique to return project exists
       (prismaService.project.findUnique as jest.Mock).mockResolvedValue({
         id: '123',
+      });
+
+      // Mock projectStats findUnique to return existing stats
+      (prismaService.projectStats.findUnique as jest.Mock).mockResolvedValue({
+        id: 'stats-123',
         views: 10,
-        version: 1,
       });
 
-      // Always fail
-      (prismaService.project.updateMany as jest.Mock).mockResolvedValue({
-        count: 0,
+      // Mock update
+      (prismaService.projectStats.update as jest.Mock).mockResolvedValue({
+        id: 'stats-123',
+        projectId: '123',
+        views: 11,
       });
 
-      await expect(repository.incrementViewOptimistic('123')).rejects.toThrow(
-        VersionConflictError,
+      await repository.incrementViewOptimistic('123');
+
+      expect(prismaService.projectStats.update).toHaveBeenCalledWith({
+        where: { projectId: '123' },
+        data: {
+          views: 11,
+          updatedAt: expect.any(Date),
+        },
+      });
+    });
+
+    it('should throw ProjectNotFoundError if project does not exist', async () => {
+      (prismaService.project.findUnique as jest.Mock).mockResolvedValue(null);
+
+      await expect(repository.incrementViewOptimistic('999')).rejects.toThrow(
+        ProjectNotFoundError,
       );
-      // 3 retries = 3 calls
-      expect(prismaService.project.updateMany).toHaveBeenCalledTimes(3);
     });
   });
 });
