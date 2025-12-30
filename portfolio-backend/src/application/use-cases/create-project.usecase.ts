@@ -18,14 +18,23 @@ export class CreateProjectUseCase {
   ) {}
 
   async execute(dto: CreateProjectDto): Promise<Project> {
+    // Generate slug from title if not provided
+    const slug = dto.slug || Project.generateSlug(dto.title);
+
     // Create new project entity (domain logic)
     const project = new Project(
       this.generateId(), // In real app, use UUID library
       dto.title,
-      dto.description,
+      slug,
+      dto.shortDescription,
+      dto.content,
+      dto.techStack || [],
       dto.userId,
       new Date(),
       new Date(),
+      dto.thumbnailUrl,
+      dto.githubUrl,
+      dto.demoUrl,
     );
 
     // Persist using repository

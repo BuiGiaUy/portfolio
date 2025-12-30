@@ -1,4 +1,4 @@
-import type { Prisma } from '../../generated/prisma/client/client';
+import type { Prisma } from '../../generated/prisma/client';
 import { Project } from '../../domain/entities/project.entity';
 
 /**
@@ -16,13 +16,16 @@ export class ProjectPersistenceMapper {
     return new Project(
       prismaProject.id,
       prismaProject.title,
-      prismaProject.description,
+      prismaProject.slug,
+      prismaProject.shortDescription,
+      prismaProject.content,
+      prismaProject.techStack,
       prismaProject.userId,
       prismaProject.createdAt,
       prismaProject.updatedAt,
-      prismaProject.views ?? 0,
-      prismaProject.version ?? 1,
-      prismaProject.status ?? undefined,
+      prismaProject.thumbnailUrl ?? undefined,
+      prismaProject.githubUrl ?? undefined,
+      prismaProject.demoUrl ?? undefined,
     );
   }
 
@@ -34,24 +37,30 @@ export class ProjectPersistenceMapper {
   static toPersistence(project: Project): {
     id: string;
     title: string;
-    description: string;
+    slug: string;
+    shortDescription: string;
+    content: string;
+    techStack: string[];
     userId: string;
     createdAt: Date;
     updatedAt: Date;
-    views: number;
-    version: number;
-    status?: string;
+    thumbnailUrl?: string;
+    githubUrl?: string;
+    demoUrl?: string;
   } {
     return {
       id: project.id,
       title: project.title,
-      description: project.description,
+      slug: project.slug,
+      shortDescription: project.shortDescription,
+      content: project.content,
+      techStack: project.techStack,
       userId: project.userId,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
-      views: project.views,
-      version: project.version,
-      status: project.status,
+      thumbnailUrl: project.thumbnailUrl,
+      githubUrl: project.githubUrl,
+      demoUrl: project.demoUrl,
     };
   }
 

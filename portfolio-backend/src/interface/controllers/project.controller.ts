@@ -139,8 +139,13 @@ export class ProjectController {
       id,
       projectData: {
         title: dto.title,
-        description: dto.description,
-        status: dto.status,
+        slug: dto.slug,
+        shortDescription: dto.shortDescription,
+        content: dto.content,
+        techStack: dto.techStack,
+        thumbnailUrl: dto.thumbnailUrl,
+        githubUrl: dto.githubUrl,
+        demoUrl: dto.demoUrl,
       },
       statsData: dto.stats,
     });

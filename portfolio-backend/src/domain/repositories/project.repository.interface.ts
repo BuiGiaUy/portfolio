@@ -17,8 +17,13 @@ export interface UpdateProjectInput {
   id: string;
   projectData?: {
     title?: string;
-    description?: string;
-    status?: string;
+    slug?: string;
+    shortDescription?: string;
+    content?: string;
+    techStack?: string[];
+    thumbnailUrl?: string;
+    githubUrl?: string;
+    demoUrl?: string;
   };
   statsData?: {
     views?: number;
@@ -31,6 +36,7 @@ export interface IProjectRepository {
   // BASIC CRUD METHODS
   // ─────────────────────────────────────────────────────────────
   findById(id: string): Promise<Project | null>;
+  findBySlug(slug: string): Promise<Project | null>;
   findByUserId(userId: string): Promise<Project[]>;
   findAll(): Promise<Project[]>;
   save(project: Project): Promise<Project>;

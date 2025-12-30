@@ -6,20 +6,38 @@
  */
 export class CreateProjectDto {
   title!: string;
-  description!: string;
+  slug!: string;
+  shortDescription!: string;
+  content!: string;
+  techStack!: string[];
   userId!: string;
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  demoUrl?: string;
 }
 
 export class UpdateProjectDto {
   title?: string;
-  description?: string;
+  slug?: string;
+  shortDescription?: string;
+  content?: string;
+  techStack?: string[];
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  demoUrl?: string;
 }
 
 export class ProjectResponseDto {
   id!: string;
   title!: string;
-  description!: string;
+  slug!: string;
+  shortDescription!: string;
+  content!: string;
+  techStack!: string[];
   userId!: string;
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  demoUrl?: string;
   createdAt!: Date;
   updatedAt!: Date;
 }

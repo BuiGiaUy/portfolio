@@ -35,15 +35,24 @@ export class PrismaProjectRepository implements IProjectRepository {
     return ProjectPersistenceMapper.toDomain(project);
   }
 
+  async findBySlug(slug: string): Promise<Project | null> {
+    const project = await this.prisma.project.findUnique({ where: { slug } });
+    if (!project) return null;
+    return ProjectPersistenceMapper.toDomain(project);
+  }
+
   async findByUserId(userId: string): Promise<Project[]> {
     const projects = await this.prisma.project.findMany({
       where: { userId },
+      orderBy: { createdAt: 'desc' },
     });
     return ProjectPersistenceMapper.toDomainList(projects);
   }
 
   async findAll(): Promise<Project[]> {
-    const projects = await this.prisma.project.findMany();
+    const projects = await this.prisma.project.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
     return ProjectPersistenceMapper.toDomainList(projects);
   }
 
@@ -52,20 +61,28 @@ export class PrismaProjectRepository implements IProjectRepository {
       where: { id: project.id },
       update: {
         title: project.title,
-        description: project.description,
+        slug: project.slug,
+        shortDescription: project.shortDescription,
+        content: project.content,
+        techStack: project.techStack,
+        thumbnailUrl: project.thumbnailUrl,
+        githubUrl: project.githubUrl,
+        demoUrl: project.demoUrl,
         updatedAt: project.updatedAt,
-        views: project.views,
-        version: project.version,
       },
       create: {
         id: project.id,
         title: project.title,
-        description: project.description,
+        slug: project.slug,
+        shortDescription: project.shortDescription,
+        content: project.content,
+        techStack: project.techStack,
+        thumbnailUrl: project.thumbnailUrl,
+        githubUrl: project.githubUrl,
+        demoUrl: project.demoUrl,
         userId: project.userId,
         createdAt: project.createdAt,
         updatedAt: project.updatedAt,
-        views: project.views,
-        version: project.version,
       },
     });
     return ProjectPersistenceMapper.toDomain(savedProject);
@@ -137,21 +154,39 @@ export class PrismaProjectRepository implements IProjectRepository {
    */
   async incrementViewPessimistic(projectId: string): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
-      // Step 1: Acquire pessimistic write lock on the project row
-      const project = await tx.$queryRawUnsafe<Array<{ id: string; views: number }>>(
-        `SELECT id, views FROM "Project" WHERE id = $1 FOR UPDATE`,
+      // Step 1: Acquire pessimistic write lock - update ProjectStats views
+      const projectStats = await tx.$queryRawUnsafe<Array<{ id: string; views: number }>>(
+        `SELECT id, views FROM "ProjectStats" WHERE "projectId" = $1 FOR UPDATE`,
         projectId,
       );
 
-      // Step 2: Check if project exists
-      if (!project || project.length === 0) {
-        throw new ProjectNotFoundError(projectId);
+      // If no stats exist, create them with pessimistic lock
+      if (!projectStats || projectStats.length === 0) {
+        // Check if project exists first
+        const project = await tx.project.findUnique({
+          where: { id: projectId },
+          select: { id: true },
+        });
+
+        if (!project) {
+          throw new ProjectNotFoundError(projectId);
+        }
+
+        // Create new stats
+        await tx.projectStats.create({
+          data: {
+            projectId,
+            views: 1,
+            likes: 0,
+          },
+        });
+        return;
       }
 
-      // Step 3: Increment the views count
-      const currentViews = project[0].views;
+      // Step 2: Increment the views count
+      const currentViews = projectStats[0].views;
       await tx.$executeRawUnsafe(
-        `UPDATE "Project" SET views = $1, "updatedAt" = $2 WHERE id = $3`,
+        `UPDATE "ProjectStats" SET views = $1, "updatedAt" = $2 WHERE "projectId" = $3`,
         currentViews + 1,
         new Date(),
         projectId,
@@ -207,33 +242,42 @@ export class PrismaProjectRepository implements IProjectRepository {
    */
   private async incrementWithVersionCheck(projectId: string): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
-      // Step 1: Read current project state
+      // Step 1: Check if project exists
       const project = await tx.project.findUnique({
         where: { id: projectId },
-        select: { id: true, views: true, version: true },
+        select: { id: true },
       });
 
       if (!project) {
         throw new ProjectNotFoundError(projectId);
       }
 
-      // Step 2: Attempt update with version check
-      const updateResult = await tx.project.updateMany({
-        where: {
-          id: projectId,
-          version: project.version, // Only update if version matches
-        },
+      // Step 2: Get or create project stats
+      let stats = await tx.projectStats.findUnique({
+        where: { projectId },
+        select: { id: true, views: true },
+      });
+
+      if (!stats) {
+        // Create stats if they don't exist
+        await tx.projectStats.create({
+          data: {
+            projectId,
+            views: 1,
+            likes: 0,
+          },
+        });
+        return;
+      }
+
+      // Step 3: Increment views
+      await tx.projectStats.update({
+        where: { projectId },
         data: {
-          views: project.views + 1,
-          version: project.version + 1, // Increment version
+          views: stats.views + 1,
           updatedAt: new Date(),
         },
       });
-
-      // Step 3: Check if update succeeded
-      if (updateResult.count === 0) {
-        throw new VersionConflictError(projectId);
-      }
     });
   }
 
