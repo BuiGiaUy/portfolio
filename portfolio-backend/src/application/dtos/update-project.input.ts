@@ -10,13 +10,23 @@
  */
 export interface ProjectDataUpdate {
   title?: string;
-  description?: string;
-  status?: string;
+  slug?: string;
+  shortDescription?: string;
+  content?: string;
+  techStack?: string[];
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  demoUrl?: string;
 }
 export interface UpdateProjectDetailsDto {
   title?: string;
-  description?: string;
-  status?: string;
+  slug?: string;
+  shortDescription?: string;
+  content?: string;
+  techStack?: string[];
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  demoUrl?: string;
   stats?: StatsDataUpdate;
 }
 /**
