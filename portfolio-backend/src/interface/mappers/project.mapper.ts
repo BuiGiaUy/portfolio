@@ -12,8 +12,14 @@ export class ProjectMapper {
     return {
       id: project.id,
       title: project.title,
-      description: project.description,
+      slug: project.slug,
+      shortDescription: project.shortDescription,
+      content: project.content,
+      techStack: project.techStack,
       userId: project.userId,
+      thumbnailUrl: project.thumbnailUrl,
+      githubUrl: project.githubUrl,
+      demoUrl: project.demoUrl,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
     };
