@@ -40,4 +40,5 @@ export class ProjectResponseDto {
   demoUrl?: string;
   createdAt!: Date;
   updatedAt!: Date;
+  views?: number; // View count from ProjectStats
 }

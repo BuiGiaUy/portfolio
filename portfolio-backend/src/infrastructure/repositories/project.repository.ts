@@ -30,13 +30,19 @@ export class PrismaProjectRepository implements IProjectRepository {
   // ─────────────────────────────────────────────────────────────
 
   async findById(id: string): Promise<Project | null> {
-    const project = await this.prisma.project.findUnique({ where: { id } });
+    const project = await this.prisma.project.findUnique({ 
+      where: { id },
+      include: { stats: true }
+    });
     if (!project) return null;
     return ProjectPersistenceMapper.toDomain(project);
   }
 
   async findBySlug(slug: string): Promise<Project | null> {
-    const project = await this.prisma.project.findUnique({ where: { slug } });
+    const project = await this.prisma.project.findUnique({ 
+      where: { slug },
+      include: { stats: true }
+    });
     if (!project) return null;
     return ProjectPersistenceMapper.toDomain(project);
   }
@@ -44,6 +50,7 @@ export class PrismaProjectRepository implements IProjectRepository {
   async findByUserId(userId: string): Promise<Project[]> {
     const projects = await this.prisma.project.findMany({
       where: { userId },
+      include: { stats: true },
       orderBy: { createdAt: 'desc' },
     });
     return ProjectPersistenceMapper.toDomainList(projects);
@@ -51,6 +58,7 @@ export class PrismaProjectRepository implements IProjectRepository {
 
   async findAll(): Promise<Project[]> {
     const projects = await this.prisma.project.findMany({
+      include: { stats: true },
       orderBy: { createdAt: 'desc' },
     });
     return ProjectPersistenceMapper.toDomainList(projects);
@@ -84,6 +92,7 @@ export class PrismaProjectRepository implements IProjectRepository {
         createdAt: project.createdAt,
         updatedAt: project.updatedAt,
       },
+      include: { stats: true }, // Include stats for mapper
     });
     return ProjectPersistenceMapper.toDomain(savedProject);
   }
@@ -106,9 +115,9 @@ export class PrismaProjectRepository implements IProjectRepository {
    * If any operation fails, entire transaction rolls back.
    */
   async updateProjectDetails(input: UpdateProjectInput): Promise<Project> {
-    const updatedProject = await this.prisma.$transaction(async (tx) => {
+    await this.prisma.$transaction(async (tx) => {
       // 1. Update project row
-      const project = await tx.project.update({
+      await tx.project.update({
         where: { id: input.id },
         data: input.projectData || {},
       });
@@ -135,9 +144,17 @@ export class PrismaProjectRepository implements IProjectRepository {
           createdAt: new Date(),
         },
       });
-
-      return project;
     });
+
+    // Fetch updated project with stats
+    const updatedProject = await this.prisma.project.findUnique({
+      where: { id: input.id },
+      include: { stats: true },
+    });
+
+    if (!updatedProject) {
+      throw new ProjectNotFoundError(input.id);
+    }
 
     // Map Prisma result to domain entity
     return ProjectPersistenceMapper.toDomain(updatedProject);

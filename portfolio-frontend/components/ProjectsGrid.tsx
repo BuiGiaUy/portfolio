@@ -52,9 +52,12 @@ export const ProjectsGrid: React.FC<ProjectsGridProps> = ({
           key={project.id}
           id={project.id}
           title={project.title}
-          description={project.description}
-          tags={project.tags}
+          shortDescription={project.shortDescription}
+          techStack={project.techStack}
           views={project.views}
+          slug={project.slug}
+          githubUrl={project.githubUrl}
+          demoUrl={project.demoUrl}
           onViewDetails={() => onProjectView?.(project)}
         />
       ))}

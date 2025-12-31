@@ -12,6 +12,7 @@ export class Project {
     public thumbnailUrl?: string,
     public githubUrl?: string,
     public demoUrl?: string,
+    public views?: number, // Computed from ProjectStats
   ) {
     this.validate();
   }

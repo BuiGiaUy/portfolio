@@ -6,7 +6,7 @@
 'use client';
 
 import { apiClient } from '@/lib/api';
-import { Project, ProjectListResponse, ViewMode, ViewIncrementResponse } from '@/types/project';
+import { Project, ViewMode, ViewIncrementResponse } from '@/types/project';
 
 /**
  * Project Service Class
@@ -18,9 +18,10 @@ class ProjectService {
    * Fetch all projects
    */
   async getProjects(): Promise<Project[]> {
-    const response = await apiClient.get<ProjectListResponse>(this.baseUrl);
-    // apiClient.get already returns response.data, so response is ProjectListResponse
-    return response.data || [];
+    // apiClient.get already returns response.data
+    // Backend returns Project[] directly (not wrapped in { data: [] })
+    const projects = await apiClient.get<Project[]>(this.baseUrl);
+    return Array.isArray(projects) ? projects : [];
   }
 
   /**
@@ -178,4 +179,58 @@ export function useProjectView(
   );
 
   return { incrementView, viewCount, isIncrementing };
+}
+
+/**
+ * Hook for fetching a single project by slug
+ */
+export interface UseProjectBySlugResult {
+  project: Project | null;
+  isLoading: boolean;
+  error: Error | null;
+  refetch: () => Promise<void>;
+}
+
+export function useProjectBySlug(slug: string): UseProjectBySlugResult {
+  const [project, setProject] = React.useState<Project | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState<Error | null>(null);
+
+  const fetchData = React.useCallback(async () => {
+    if (!slug) {
+      setProject(null);
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // Fetch all projects and find by slug
+      const projects = await projectService.getProjects();
+      const foundProject = projects.find(p => p.slug === slug);
+      
+      setProject(foundProject || null);
+      
+      if (!foundProject) {
+        setError(new Error('Project not found'));
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Failed to fetch project'));
+      setProject(null);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [slug]);
+
+  React.useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return {
+    project,
+    isLoading,
+    error,
+    refetch: fetchData,
+  };
 }

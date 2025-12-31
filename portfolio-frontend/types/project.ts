@@ -1,7 +1,47 @@
 /**
  * Core Project interface used across the application
+ * Updated to match backend schema
  */
 export interface Project {
+  id: string;
+  title: string;
+  slug: string;
+  shortDescription: string;
+  content: string;
+  techStack: string[];
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  demoUrl?: string;
+  userId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  // Computed/joined fields
+  views?: number;
+}
+
+/**
+ * API response shape for a single project
+ */
+export interface ProjectResponse {
+  id: string;
+  title: string;
+  slug: string;
+  shortDescription: string;
+  content: string;
+  techStack: string[];
+  thumbnailUrl?: string;
+  githubUrl?: string;
+  demoUrl?: string;
+  userId?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Legacy Project interface for compatibility
+ * Maps old fields to new schema
+ */
+export interface LegacyProject {
   id: string;
   title: string;
   description: string;
@@ -11,31 +51,6 @@ export interface Project {
   userId?: string;
   createdAt?: string;
   updatedAt?: string;
-}
-
-/**
- * API response shape for a single project
- */
-export interface ProjectResponse {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  tags: string[];
-  views: number;
-  userId?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-/**
- * API response shape for project list
- */
-export interface ProjectListResponse {
-  data: ProjectResponse[];
-  total: number;
-  page?: number;
-  pageSize?: number;
 }
 
 /**

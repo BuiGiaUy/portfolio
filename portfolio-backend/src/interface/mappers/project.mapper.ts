@@ -22,6 +22,7 @@ export class ProjectMapper {
       demoUrl: project.demoUrl,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
+      views: project.views, // Include views from domain entity
     };
   }
 
