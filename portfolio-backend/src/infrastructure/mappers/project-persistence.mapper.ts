@@ -9,10 +9,10 @@ import { Project } from '../../domain/entities/project.entity';
 export class ProjectPersistenceMapper {
   /**
    * Convert Prisma Project model to Domain Project entity
-   * @param prismaProject - The Prisma project object from database
+   * @param prismaProject - The Prisma project object from database (with stats relation)
    * @returns Domain Project entity
    */
-  static toDomain(prismaProject: Prisma.ProjectGetPayload<object>): Project {
+  static toDomain(prismaProject: Prisma.ProjectGetPayload<{ include: { stats: true } }>): Project {
     return new Project(
       prismaProject.id,
       prismaProject.title,
@@ -26,6 +26,7 @@ export class ProjectPersistenceMapper {
       prismaProject.thumbnailUrl ?? undefined,
       prismaProject.githubUrl ?? undefined,
       prismaProject.demoUrl ?? undefined,
+      prismaProject.stats?.views ?? 0, // Extract views from stats relation
     );
   }
 
@@ -66,11 +67,11 @@ export class ProjectPersistenceMapper {
 
   /**
    * Convert an array of Prisma projects to Domain entities
-   * @param prismaProjects - Array of Prisma project objects
+   * @param prismaProjects - Array of Prisma project objects (with stats relation)
    * @returns Array of Domain Project entities
    */
   static toDomainList(
-    prismaProjects: Prisma.ProjectGetPayload<object>[],
+    prismaProjects: Prisma.ProjectGetPayload<{ include: { stats: true } }>[],
   ): Project[] {
     return prismaProjects.map((project) => this.toDomain(project));
   }
