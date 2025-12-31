@@ -27,15 +27,31 @@ export const MinimalProjectCard: React.FC<MinimalProjectCardProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleDetailsClick = () => {
+  const handleCardClick = () => {
     if (slug) {
       router.push(`/projects/${slug}`);
     }
     onViewDetails?.();
   };
 
+  const handleLinkClick = (e: React.MouseEvent) => {
+    // Prevent card click when clicking on links
+    e.stopPropagation();
+  };
+
   return (
-    <article className="project-card">
+    <article
+      className="project-card cursor-pointer"
+      onClick={handleCardClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+    >
       <h3 className="project-title">{title}</h3>
       <p className="project-description line-clamp-2">{shortDescription}</p>
 
@@ -59,6 +75,7 @@ export const MinimalProjectCard: React.FC<MinimalProjectCardProps> = ({
               rel="noopener noreferrer"
               className="project-link"
               aria-label="View GitHub repository"
+              onClick={handleLinkClick}
             >
               GitHub
             </a>
@@ -70,17 +87,11 @@ export const MinimalProjectCard: React.FC<MinimalProjectCardProps> = ({
               rel="noopener noreferrer"
               className="project-link"
               aria-label="View live demo"
+              onClick={handleLinkClick}
             >
               Demo
             </a>
           )}
-          <button
-            onClick={handleDetailsClick}
-            className="project-link"
-            aria-label={`View details of ${title}`}
-          >
-            Details →
-          </button>
         </div>
       </div>
     </article>

@@ -14,17 +14,23 @@ export default function ProjectDetailPage() {
   const t = translations[language];
   const slug = params.slug as string;
 
-  const { project, isLoading, error } = useProjectBySlug(slug);
+  const { project, isLoading, error, refetch } = useProjectBySlug(slug);
   const [isContentVisible, setIsContentVisible] = useState(false);
 
-  // Increment view count on mount
+  // Increment view count on mount and refetch to get updated count
   useEffect(() => {
     if (project?.id) {
-      projectService.incrementViews(project.id, "optimistic").catch((err) => {
-        console.error("Failed to increment view:", err);
-      });
+      projectService
+        .incrementViews(project.id, "optimistic")
+        .then(() => {
+          // Refetch project to get updated view count from backend
+          setTimeout(() => refetch(), 500);
+        })
+        .catch((err) => {
+          console.error("Failed to increment view:", err);
+        });
     }
-  }, [project?.id]);
+  }, [project?.id, refetch]);
 
   // Fade in content after data loads
   useEffect(() => {
