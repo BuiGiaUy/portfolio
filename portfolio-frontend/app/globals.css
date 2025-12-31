@@ -12,6 +12,7 @@
   /* Accent */
   --accent: #22d3d1;
   --accent-muted: #0d9488;
+  --accent-primary: #0d9488;
 
   /* Neutral Scale (Dark) */
   --neutral-50: #fafafa;
@@ -23,8 +24,13 @@
   --neutral-600: #525252;
   --neutral-700: #404040;
   --neutral-800: #262626;
+  --neutral-850: #1a1a1a;
   --neutral-900: #171717;
   --neutral-950: #0a0a0a;
+
+  /* Background variants */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #171717;
 
   /* Borders */
   --border-subtle: #262626;
@@ -37,6 +43,10 @@
     rgba(13, 148, 136, 0.05) 0%,
     rgba(10, 10, 10, 0) 100%
   );
+
+  /* Glass effect */
+  --glass-bg: rgba(38, 38, 38, 0.5);
+  --glass-border: rgba(64, 64, 64, 0.5);
 }
 
 /* Light Theme */
