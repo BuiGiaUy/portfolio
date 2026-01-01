@@ -7,6 +7,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { translations } from "@/lib/translations";
 import { useProjects } from "@/services/project.service";
 import type { Project } from "@/types/project";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export default function Home() {
   const { language } = useLanguage();
@@ -40,6 +41,9 @@ export default function Home() {
 
     return () => observerRef.current?.disconnect();
   }, []);
+
+  // Fade-in on scroll animation
+  useScrollAnimation();
 
   if (error) {
     return (
@@ -142,7 +146,7 @@ export default function Home() {
 
           {/* Avatar */}
           <div className="flex justify-center md:justify-end animate-slide-up animation-delay-200">
-            <div className="avatar-container">
+            <div className="avatar-container floating">
               <img
                 src="images/avatar.jpg"
                 alt={t.hero.name}
@@ -159,7 +163,7 @@ export default function Home() {
       <section id="about" className="section container-custom scroll-reveal">
         <h2 className="section-title-premium">{t.about.title}</h2>
 
-        <div className="max-w-3xl mt-8 space-y-6">
+        <div className="max-w-3xl mt-8 space-y-6 fade-in">
           <p
             className="text-lg leading-relaxed"
             style={{ color: "var(--neutral-400)" }}
@@ -185,7 +189,7 @@ export default function Home() {
       <section id="skills" className="section container-custom scroll-reveal">
         <h2 className="section-title-premium">{t.skills.title}</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 fade-in">
           {/* Backend */}
           <div className="skill-card">
             <div className="skill-card-title">
@@ -288,7 +292,7 @@ export default function Home() {
       >
         <h2 className="section-title-premium">{t.experience.title}</h2>
 
-        <div className="max-w-3xl mt-12">
+        <div className="max-w-3xl mt-12 fade-in">
           <div className="timeline">
             <div className="timeline-item">
               <div className="timeline-dot"></div>
@@ -308,7 +312,7 @@ export default function Home() {
 
       {/* ==================== CONTACT SECTION ==================== */}
       <section id="contact" className="section container-custom scroll-reveal">
-        <div className="contact-cta">
+        <div className="contact-cta fade-in">
           <h2 className="contact-title">{t.contact.title}</h2>
           <p className="contact-subtitle">
             {language === "vi"

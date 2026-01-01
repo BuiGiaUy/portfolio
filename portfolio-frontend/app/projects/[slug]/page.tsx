@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { Navbar } from "@/components/Navbar";
 import { useLanguage } from "@/components/LanguageProvider";
 import { translations } from "@/lib/translations";
 import { useProjectBySlug } from "@/services/project.service";
@@ -162,27 +163,29 @@ export default function ProjectDetailPage() {
   const sections = parseContent(project.content);
 
   return (
-    <div
-      className={`min-h-screen bg-[var(--bg-primary)] transition-opacity duration-500 ${
-        isContentVisible ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {/* Gradient Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20"
-          style={{
-            background:
-              "radial-gradient(circle, var(--accent-primary) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-[100px] opacity-10"
-          style={{
-            background: "radial-gradient(circle, #818cf8 0%, transparent 70%)",
-          }}
-        />
-      </div>
+    <>
+      <Navbar />
+      <div
+        className={`min-h-screen bg-[var(--bg-primary)] transition-opacity duration-500 pt-20 ${
+          isContentVisible ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {/* Gradient Background */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div
+            className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20"
+            style={{
+              background:
+                "radial-gradient(circle, var(--accent-primary) 0%, transparent 70%)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-[100px] opacity-10"
+            style={{
+              background: "radial-gradient(circle, #818cf8 0%, transparent 70%)",
+            }}
+          />
+        </div>
 
       {/* Header */}
       <div className="relative border-b border-[var(--neutral-800)] backdrop-blur-sm bg-[var(--bg-primary)]/80">
@@ -368,5 +371,6 @@ export default function ProjectDetailPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
