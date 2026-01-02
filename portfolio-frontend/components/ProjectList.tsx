@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { ProjectCard, ProjectCardProps } from './ProjectCard';
-import { SkeletonCard } from './SkeletonCard';
-import type { Project } from '@/types/project';
+import React from "react";
+import { ProjectCard, ProjectCardProps } from "./ProjectCard";
+import { SkeletonCard } from "./SkeletonCard";
+import type { Project } from "@/types/project";
 
 export interface ProjectListProps {
   projects: Project[];
@@ -17,13 +17,13 @@ export const ProjectList: React.FC<ProjectListProps> = ({
   projects,
   isLoading = false,
   skeletonCount = 6,
-  emptyMessage = 'No projects found.',
+  emptyMessage = "No projects found.",
   onProjectView,
 }) => {
   // Show skeleton loading state
   if (isLoading) {
     return (
-      <section 
+      <section
         className="container mx-auto px-4 py-8 sm:px-6 lg:px-8"
         aria-label="Loading projects"
         aria-busy="true"
@@ -40,7 +40,7 @@ export const ProjectList: React.FC<ProjectListProps> = ({
   // Show empty state
   if (!projects || projects.length === 0) {
     return (
-      <section 
+      <section
         className="container mx-auto px-4 py-16 text-center sm:px-6 lg:px-8"
         aria-label="Empty state"
       >
@@ -88,7 +88,7 @@ export const ProjectList: React.FC<ProjectListProps> = ({
 
   // Show project grid
   return (
-    <section 
+    <section
       className="container mx-auto px-4 py-8 sm:px-6 lg:px-8"
       aria-label="Projects list"
     >
@@ -98,10 +98,10 @@ export const ProjectList: React.FC<ProjectListProps> = ({
             key={project.id}
             id={project.id}
             title={project.title}
-            description={project.description}
-            imageUrl={project.imageUrl}
-            tags={project.tags}
-            views={project.views}
+            description={project.shortDescription}
+            imageUrl={project.thumbnailUrl || ""}
+            tags={project.techStack || []}
+            views={project.views || 0}
             onView={() => onProjectView?.(project)}
           />
         ))}

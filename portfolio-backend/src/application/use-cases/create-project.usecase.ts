@@ -1,7 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import * as projectRepositoryInterface from '../../domain/repositories/project.repository.interface';
 import { Project } from '../../domain/entities/project.entity';
 import { CreateProjectDto } from '../dtos/project.dto';
+
+/**
+ * Input for CreateProjectUseCase - userId is required
+ * (injected by controller from authenticated user)
+ */
+export interface CreateProjectInput extends CreateProjectDto {
+  userId: string;
+}
 
 /**
  * Application Layer Use Case
@@ -17,24 +25,28 @@ export class CreateProjectUseCase {
     private readonly projectRepository: projectRepositoryInterface.IProjectRepository,
   ) {}
 
-  async execute(dto: CreateProjectDto): Promise<Project> {
+  async execute(input: CreateProjectInput): Promise<Project> {
+    if (!input.userId) {
+      throw new BadRequestException('userId is required');
+    }
+
     // Generate slug from title if not provided
-    const slug = dto.slug || Project.generateSlug(dto.title);
+    const slug = input.slug || Project.generateSlug(input.title);
 
     // Create new project entity (domain logic)
     const project = new Project(
       this.generateId(), // In real app, use UUID library
-      dto.title,
+      input.title,
       slug,
-      dto.shortDescription,
-      dto.content,
-      dto.techStack || [],
-      dto.userId,
+      input.shortDescription,
+      input.content,
+      input.techStack || [],
+      input.userId,
       new Date(),
       new Date(),
-      dto.thumbnailUrl,
-      dto.githubUrl,
-      dto.demoUrl,
+      input.thumbnailUrl,
+      input.githubUrl,
+      input.demoUrl,
     );
 
     // Persist using repository
@@ -45,3 +57,4 @@ export class CreateProjectUseCase {
     return Math.random().toString(36).substring(7);
   }
 }
+

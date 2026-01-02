@@ -56,7 +56,9 @@ export default function ExampleUsage() {
               {!isLoading && projects.length > 0 && (
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">
                   {projects.length} projects •{" "}
-                  {projects.reduce((s, p) => s + p.views, 0).toLocaleString()}{" "}
+                  {projects
+                    .reduce((s, p) => s + (p.views || 0), 0)
+                    .toLocaleString()}{" "}
                   views
                 </p>
               )}

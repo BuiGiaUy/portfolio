@@ -12,7 +12,6 @@ export interface PresignedUrlRequest {
 }
 
 export interface PresignedUrlResponse {
-  data: PresignedUrlResponse | PromiseLike<PresignedUrlResponse>;
   uploadUrl: string;
   key: string;
   expiresIn: number;
@@ -27,7 +26,6 @@ export interface ConfirmUploadRequest {
 }
 
 export interface UploadRecord {
-  data: UploadRecord | PromiseLike<UploadRecord>;
   id: string;
   key: string;
   filename: string;
@@ -37,64 +35,78 @@ export interface UploadRecord {
   createdAt: string;
 }
 
+// Backend response wrapper
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+}
+
 export class UploadService {
   static async requestPresignedUrl(
     request: PresignedUrlRequest,
   ): Promise<PresignedUrlResponse> {
-    const response = await apiClient.post<{ data: PresignedUrlResponse }>(
+    // apiClient.post already returns response.data, which is { success, data }
+    const response = await apiClient.post<ApiResponse<PresignedUrlResponse>>(
       '/upload/presigned-url',
       request,
     );
-    return response.data.data;
+    return response.data;
   }
 
-  static async uploadToStorage(
-    file: File,
-    uploadUrl: string,
-    onProgress?: (progress: number) => void,
-  ): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
+static async uploadToStorage(
+  file: File,
+  uploadUrl: string,
+  onProgress?: (progress: number) => void,
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
 
-      xhr.upload.addEventListener('progress', (event) => {
-        if (event.lengthComputable && onProgress) {
-          const percentComplete = Math.round(
-            (event.loaded / event.total) * 100,
-          );
-          onProgress(percentComplete);
-        }
-      });
-
-      xhr.addEventListener('load', () => {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve();
-        } else {
-          reject(new Error(`Upload failed with status ${xhr.status}`));
-        }
-      });
-
-      xhr.addEventListener('error', () => {
-        reject(new Error('Upload failed due to network error'));
-      });
-
-      xhr.addEventListener('abort', () => {
-        reject(new Error('Upload was aborted'));
-      });
-
-      xhr.open('PUT', uploadUrl);
-      xhr.setRequestHeader('Content-Type', file.type);
-      xhr.send(file);
+    xhr.upload.addEventListener('progress', (event) => {
+      if (event.lengthComputable && onProgress) {
+        const percentComplete = Math.round(
+          (event.loaded / event.total) * 100,
+        );
+        onProgress(percentComplete);
+      }
     });
-  }
+
+    xhr.addEventListener('load', () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve();
+      } else {
+        console.error('Upload failed:', xhr.status, xhr.responseText);
+        reject(new Error(`Upload failed with status ${xhr.status}`));
+      }
+    });
+
+    xhr.addEventListener('error', (e) => {
+      console.error('XHR Error:', e);
+      reject(new Error('Upload failed due to network error'));
+    });
+
+    xhr.addEventListener('abort', () => {
+      reject(new Error('Upload was aborted'));
+    });
+
+    xhr.open('PUT', uploadUrl);
+    
+    // CHỈ set Content-Type header
+    xhr.setRequestHeader('Content-Type', file.type);
+    
+    // Send file directly as binary
+    xhr.send(file);
+  });
+}
 
   static async confirmUpload(
     request: ConfirmUploadRequest,
   ): Promise<UploadRecord> {
-    const response = await apiClient.post<{ data: UploadRecord }>(
+    // apiClient.post already returns response.data, which is { success, data }
+    const response = await apiClient.post<ApiResponse<UploadRecord>>(
       '/upload/confirm',
       request,
     );
-    return response.data.data;
+    return response.data;
   }
 
   static async uploadFile(
@@ -135,12 +147,10 @@ export class UploadService {
   }
 
   static async getDownloadUrl(uploadId: string): Promise<string> {
-    const response = await apiClient.get<{
-      data: {
-        data: any; downloadUrl: string; expiresIn: number 
-      };
-    }>(`/upload/${uploadId}/download-url`);
-    return response.data.data.downloadUrl;
+    const response = await apiClient.get<ApiResponse<{ downloadUrl: string; expiresIn: number }>>(
+      `/upload/${uploadId}/download-url`
+    );
+    return response.data.downloadUrl;
   }
 
   static async deleteUpload(uploadId: string): Promise<void> {

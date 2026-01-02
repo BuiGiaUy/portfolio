@@ -170,7 +170,7 @@ export function useIncrementViews(
 
       // Optimistically update the view count
       queryClient.setQueryData<Project>(projectKeys.detail(projectId), (old) => {
-        return old ? { ...old, views: old.views + 1 } : old;
+        return old ? { ...old, views: (old.views || 0) + 1 } : old;
       });
 
       // Also update in the list if present
@@ -178,7 +178,7 @@ export function useIncrementViews(
         if (!old) return old;
         return old.map((project) =>
           project.id === projectId
-            ? { ...project, views: project.views + 1 }
+            ? { ...project, views: (project.views || 0) + 1 }
             : project
         );
       });
