@@ -3,6 +3,7 @@ import "./globals.css";
 import { QueryProvider } from "@/lib/query";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { ToastProvider } from "@/components/Toast";
 
 export const metadata: Metadata = {
   title: "Bùi Gia Uy | Fullstack / Backend Engineer",
@@ -50,7 +51,9 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <LanguageProvider>
-            <QueryProvider>{children}</QueryProvider>
+            <QueryProvider>
+              <ToastProvider>{children}</ToastProvider>
+            </QueryProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

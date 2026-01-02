@@ -45,17 +45,37 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
-      <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-8 w-full max-w-md border border-white/20">
+    <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
+      style={{ background: "var(--background)" }}
+    >
+      {/* Gradient blobs for ambient effect */}
+      <div className="gradient-blob absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-accent/20 to-transparent"></div>
+      <div className="gradient-blob absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-br from-accent-muted/20 to-transparent"></div>
+
+      <div className="skill-card w-full max-w-md animate-scale-in relative z-10">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-gray-300">Sign in to access your dashboard</p>
+          {/* Badge */}
+          <div className="hero-badge inline-flex mb-4">
+            <span className="hero-badge-dot"></span>
+            <span>Secure Login</span>
+          </div>
+
+          <h1 className="gradient-text-animated text-3xl font-bold mb-2">
+            Welcome Back
+          </h1>
+          <p className="text-muted" style={{ color: "var(--neutral-400)" }}>
+            Sign in to access your dashboard
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Email
+          <div className="animate-fade-in-up animation-delay-100">
+            <label
+              className="block text-sm font-medium mb-2"
+              style={{ color: "var(--neutral-300)" }}
+            >
+              Email Address
             </label>
             <input
               type="email"
@@ -63,12 +83,24 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full px-4 py-3 rounded-lg border transition-all duration-300"
+              style={{
+                background: "var(--glass-bg)",
+                borderColor: "var(--border-default)",
+                color: "var(--foreground)",
+              }}
+              onFocus={(e) => (e.target.style.borderColor = "var(--accent)")}
+              onBlur={(e) =>
+                (e.target.style.borderColor = "var(--border-default)")
+              }
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+          <div className="animate-fade-in-up animation-delay-200">
+            <label
+              className="block text-sm font-medium mb-2"
+              style={{ color: "var(--neutral-300)" }}
+            >
               Password
             </label>
             <input
@@ -77,20 +109,37 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full px-4 py-3 rounded-lg border transition-all duration-300"
+              style={{
+                background: "var(--glass-bg)",
+                borderColor: "var(--border-default)",
+                color: "var(--foreground)",
+              }}
+              onFocus={(e) => (e.target.style.borderColor = "var(--accent)")}
+              onBlur={(e) =>
+                (e.target.style.borderColor = "var(--border-default)")
+              }
             />
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-3">
-              <p className="text-red-400 text-sm">{error}</p>
+            <div
+              className="animate-bounce-in p-3 rounded-lg border"
+              style={{
+                background: "rgba(239, 68, 68, 0.1)",
+                borderColor: "rgba(239, 68, 68, 0.3)",
+              }}
+            >
+              <p className="text-sm" style={{ color: "#ef4444" }}>
+                {error}
+              </p>
             </div>
           )}
 
           <button
             type="submit"
             disabled={authLoading}
-            className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-glow w-full py-3 font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed animate-fade-in-up animation-delay-300"
           >
             {authLoading ? (
               <span className="flex items-center justify-center gap-2">
@@ -118,12 +167,19 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 text-center">
-          <p className="text-gray-400 text-sm">
+        <div className="mt-6 text-center animate-fade-in-up animation-delay-400">
+          <p className="text-sm" style={{ color: "var(--neutral-400)" }}>
             Don&apos;t have an account?{" "}
             <a
               href="/register"
-              className="text-purple-400 hover:text-purple-300 font-medium"
+              className="font-medium transition-colors"
+              style={{ color: "var(--accent)" }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = "var(--accent-muted)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = "var(--accent)")
+              }
             >
               Sign up
             </a>
@@ -131,11 +187,23 @@ export default function LoginPage() {
         </div>
 
         {/* Demo credentials (remove in production) */}
-        <div className="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-          <p className="text-xs text-yellow-300 mb-2">
-            <strong>Demo Credentials:</strong>
+        <div
+          className="mt-6 p-4 rounded-lg border animate-fade-in-up animation-delay-500"
+          style={{
+            background: "rgba(234, 179, 8, 0.1)",
+            borderColor: "rgba(234, 179, 8, 0.3)",
+          }}
+        >
+          <p
+            className="text-xs font-semibold mb-2"
+            style={{ color: "#fbbf24" }}
+          >
+            Demo Credentials:
           </p>
-          <div className="text-xs text-yellow-200 space-y-1 font-mono">
+          <div
+            className="text-xs space-y-1 font-mono"
+            style={{ color: "#fde047" }}
+          >
             <div>Email: admin@example.com</div>
             <div>Password: Admin123!@#</div>
           </div>
