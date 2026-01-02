@@ -8,7 +8,10 @@ import {
   Param,
   HttpCode,
   UseInterceptors,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../infrastructure/auth/guards/jwt-auth.guard';
 import { CreateProjectUseCase } from '../../application/use-cases/create-project.usecase';
 import { GetAllProjectsUseCase } from '../../application/use-cases/get-all-projects.usecase';
 import { GetProjectsByUserUseCase } from '../../application/use-cases/get-projects-by-user.usecase';
@@ -65,11 +68,17 @@ export class ProjectController {
    * - Ensures GET endpoints return fresh data including the new project
    */
   @Post()
-  async create(@Body() dto: CreateProjectDto): Promise<ProjectResponseDto> {
-    const project = await this.createProjectUseCase.execute(dto);
+  @UseGuards(JwtAuthGuard)
+  async create(@Body() dto: CreateProjectDto, @Request() req: any): Promise<ProjectResponseDto> {
+    const userId = req.user.userId;
+    
+    const project = await this.createProjectUseCase.execute({
+      ...dto,
+      userId,
+    });
 
     // Invalidate project list caches
-    await this.cacheInvalidationService.invalidateOnCreate(dto.userId);
+    await this.cacheInvalidationService.invalidateOnCreate(userId);
 
     return ProjectMapper.toDto(project);
   }
@@ -131,6 +140,7 @@ export class ProjectController {
    * - Invalidates user's project list cache
    */
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() dto: UpdateProjectDetailsDto,
@@ -164,6 +174,7 @@ export class ProjectController {
    * - Invalidates user's project list cache
    */
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
   async delete(@Param('id') id: string): Promise<void> {
     const { userId } = await this.deleteProjectUseCase.execute(id);
