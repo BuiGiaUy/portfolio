@@ -20,6 +20,7 @@ import { GetAllProjectsUseCase } from './application/use-cases/get-all-projects.
 import { GetProjectsByUserUseCase } from './application/use-cases/get-projects-by-user.usecase';
 import { GetCommentsByProjectUseCase } from './application/use-cases/get-comments-by-project.usecase';
 import { GetProjectUseCase } from './application/use-cases/get-project.usecase';
+import { GetProjectBySlugUseCase } from './application/use-cases/get-project-by-slug.usecase';
 import { DeleteProjectUseCase } from './application/use-cases/delete-project.usecase';
 import { UpdateProjectDetailsUseCase } from './application/use-cases/update-project-details.usecase';
 import { IncrementProjectViewPessimisticUseCase } from './application/use-cases/increment-project-view-pessimistic.usecase';
@@ -100,6 +101,7 @@ import { UPLOAD_REPOSITORY } from './domain/repositories/upload.repository.inter
     CreateCommentUseCase,
     GetAllProjectsUseCase,
     GetProjectUseCase,
+    GetProjectBySlugUseCase,
     GetProjectsByUserUseCase,
     GetCommentsByProjectUseCase,
     UpdateProjectDetailsUseCase,
