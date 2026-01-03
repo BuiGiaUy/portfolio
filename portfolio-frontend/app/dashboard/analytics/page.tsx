@@ -63,7 +63,7 @@ export default function AnalyticsPage() {
 
       <main className="container-custom py-8 animate-slide-up">
         {/* Time Range Selector */}
-        <div className="flex gap-3 mb-6">
+        <div className="flex gap-3 mb-6 mt-32">
           {(["7d", "30d", "90d", "all"] as const).map((range) => (
             <button
               key={range}

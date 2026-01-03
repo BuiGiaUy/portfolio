@@ -70,7 +70,7 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="container-custom py-8 animate-slide-up">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 mt-32">
           <div className="skill-card animate-fade-in-up animation-delay-100">
             <div className="flex items-center justify-between">
               <div>
