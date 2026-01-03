@@ -139,7 +139,7 @@ export default function DashboardProjectsPage() {
         {viewMode === "list" ? (
           <>
             {/* Action Bar */}
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-8 mt-32">
               <div>
                 <h2 className="section-title-premium text-xl">All Projects</h2>
                 <p className="text-sm" style={{ color: "var(--neutral-400)" }}>
@@ -411,7 +411,7 @@ export default function DashboardProjectsPage() {
           </>
         ) : (
           /* Create/Edit Form */
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto mt-32">
             <div className="skill-card">
               <div className="mb-6">
                 <h2 className="section-title-premium text-xl">

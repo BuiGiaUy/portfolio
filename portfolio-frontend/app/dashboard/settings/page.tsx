@@ -104,7 +104,7 @@ export default function SettingsPage() {
 
       {/* Main Content */}
       <main className="container-custom py-8 animate-slide-up">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-32">
           {/* Sidebar */}
           <aside className="lg:col-span-1">
             <div className="skill-card sticky top-24">

@@ -107,7 +107,7 @@ export default function PermissionsPage() {
       </header>
 
       <main className="container-custom py-8 animate-slide-up">
-        <div className="skill-card mb-6">
+        <div className="skill-card mb-6 mt-32">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-teal-500 to-purple-600 flex items-center justify-center">

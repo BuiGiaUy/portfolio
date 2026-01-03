@@ -16,6 +16,7 @@ import { CreateProjectUseCase } from '../../application/use-cases/create-project
 import { GetAllProjectsUseCase } from '../../application/use-cases/get-all-projects.usecase';
 import { GetProjectsByUserUseCase } from '../../application/use-cases/get-projects-by-user.usecase';
 import { GetProjectUseCase } from '../../application/use-cases/get-project.usecase';
+import { GetProjectBySlugUseCase } from '../../application/use-cases/get-project-by-slug.usecase';
 import { UpdateProjectDetailsUseCase } from '../../application/use-cases/update-project-details.usecase';
 import { DeleteProjectUseCase } from '../../application/use-cases/delete-project.usecase';
 import { IncrementProjectViewPessimisticUseCase } from '../../application/use-cases/increment-project-view-pessimistic.usecase';
@@ -53,6 +54,7 @@ export class ProjectController {
     private readonly getAllProjectsUseCase: GetAllProjectsUseCase,
     private readonly getProjectsByUserUseCase: GetProjectsByUserUseCase,
     private readonly getProjectUseCase: GetProjectUseCase,
+    private readonly getProjectBySlugUseCase: GetProjectBySlugUseCase,
     private readonly updateProjectDetailsUseCase: UpdateProjectDetailsUseCase,
     private readonly deleteProjectUseCase: DeleteProjectUseCase,
     private readonly incrementProjectViewPessimisticUseCase: IncrementProjectViewPessimisticUseCase,
@@ -97,6 +99,22 @@ export class ProjectController {
   async findAll(): Promise<ProjectResponseDto[]> {
     const projects = await this.getAllProjectsUseCase.execute();
     return ProjectMapper.toDtoArray(projects);
+  }
+
+  /**
+   * Get a single project by slug (SEO-friendly URL)
+   *
+   * Cache Strategy:
+   * - Automatically cached by CacheInterceptor for 120 seconds
+   * - Cache key format: cache:/projects/slug/{slug}
+   * - Used for server-side metadata generation (SEO, OG images)
+   */
+  @Get('slug/:slug')
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(120)
+  async findBySlug(@Param('slug') slug: string): Promise<ProjectResponseDto> {
+    const project = await this.getProjectBySlugUseCase.execute(slug);
+    return ProjectMapper.toDto(project);
   }
 
   /**
