@@ -42,26 +42,7 @@ import { CacheInvalidationService } from './cache-invalidation.service';
           lazyConnect: false,
         });
 
-        // Log connection events
-        redis.on('connect', () => {
-          console.log('✅ Redis client connected');
-        });
-
-        redis.on('ready', () => {
-          console.log('✅ Redis client ready');
-        });
-
-        redis.on('error', (err) => {
-          console.error('❌ Redis client error:', err);
-        });
-
-        redis.on('close', () => {
-          console.log('🔌 Redis client connection closed');
-        });
-
-        redis.on('reconnecting', () => {
-          console.log('🔄 Redis client reconnecting...');
-        });
+        // Connection event handlers removed - use monitoring tools instead
 
         return redis;
       },
