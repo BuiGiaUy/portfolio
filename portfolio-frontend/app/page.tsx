@@ -1,46 +1,19 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import React from "react";
 import { ProjectsGrid } from "@/components/ProjectsGrid";
 import { Navbar } from "@/components/Navbar";
 import { useLanguage } from "@/components/LanguageProvider";
 import { translations } from "@/lib/translations";
 import { useProjects } from "@/services/project.service";
-import type { Project } from "@/types/project";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useHomePageLogic } from "@/hooks/useHomePageLogic";
 
 export default function Home() {
   const { language } = useLanguage();
   const t = translations[language];
   const { projects, isLoading, error, refetch } = useProjects();
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  const handleProjectView = useCallback((project: Project) => {
-    console.log(`Viewing project: ${project.id} - ${project.title}`);
-  }, []);
-
-  const scrollToSection = useCallback((id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  }, []);
-
-  // Scroll-triggered animation
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = document.querySelectorAll(".scroll-reveal");
-    elements.forEach((el) => observerRef.current?.observe(el));
-
-    return () => observerRef.current?.disconnect();
-  }, []);
+  const { handleProjectView, scrollToSection } = useHomePageLogic();
 
   // Fade-in on scroll animation
   useScrollAnimation();

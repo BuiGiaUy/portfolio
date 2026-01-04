@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface MinimalProjectCardProps {
   id: string;
@@ -25,33 +25,13 @@ export const MinimalProjectCard: React.FC<MinimalProjectCardProps> = ({
   demoUrl,
   onViewDetails,
 }) => {
-  const router = useRouter();
-
-  const handleCardClick = () => {
-    if (slug) {
-      router.push(`/projects/${slug}`);
-    }
-    onViewDetails?.();
-  };
-
   const handleLinkClick = (e: React.MouseEvent) => {
-    // Prevent card click when clicking on links
+    // Prevent card click when clicking on external links
     e.stopPropagation();
   };
 
-  return (
-    <article
-      className="project-card cursor-pointer"
-      onClick={handleCardClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          handleCardClick();
-        }
-      }}
-    >
+  const cardContent = (
+    <>
       <h3 className="project-title">{title}</h3>
       <p className="project-description line-clamp-2">{shortDescription}</p>
 
@@ -66,7 +46,9 @@ export const MinimalProjectCard: React.FC<MinimalProjectCardProps> = ({
 
       {/* Meta: Views + Links */}
       <div className="project-meta">
-        <span className="project-views">{views.toLocaleString()} views</span>
+        <span data-testid="view-count" className="project-views">
+          {views.toLocaleString()} views
+        </span>
         <div className="flex gap-2">
           {githubUrl && (
             <a
@@ -94,6 +76,25 @@ export const MinimalProjectCard: React.FC<MinimalProjectCardProps> = ({
           )}
         </div>
       </div>
-    </article>
+    </>
+  );
+
+  if (!slug) {
+    return (
+      <article data-testid="project-card" className="project-card">
+        {cardContent}
+      </article>
+    );
+  }
+
+  return (
+    <Link
+      href={`/projects/${slug}`}
+      data-testid="project-card"
+      className="project-card cursor-pointer"
+      onClick={() => onViewDetails?.()}
+    >
+      {cardContent}
+    </Link>
   );
 };

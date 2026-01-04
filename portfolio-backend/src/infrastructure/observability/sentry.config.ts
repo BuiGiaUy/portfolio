@@ -19,7 +19,6 @@ export function initSentry() {
 
   // Skip Sentry in development unless explicitly enabled
   if (!dsn || environment === 'development') {
-    console.log('⚠️  Sentry disabled (no DSN or development mode)');
     return;
   }
 
@@ -64,7 +63,7 @@ export function initSentry() {
     },
   });
 
-  console.log('✅ Sentry initialized:', { environment, dsn: dsn.substring(0, 30) + '...' });
+
 }
 
 /**

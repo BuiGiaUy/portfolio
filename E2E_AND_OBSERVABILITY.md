@@ -1,87 +1,58 @@
-# E2E Testing & Observability - Implementation Guide
+# E2E Testing & Observability
 
 ## Overview
 
-This document provides implementation details for the E2E testing (Playwright) and observability (Sentry + structured logging) added to the portfolio system.
+This document covers the E2E testing suite (Playwright) and observability implementation (Sentry + structured logging).
 
----
+## Part 1: End-to-End Testing
 
-## PART 1: END-TO-END TESTING
-
-### Architecture
-
-**Location**: `portfolio-frontend/e2e/`
-
-**Structure**:
+### Test Suite Structure
 
 ```
-e2e/
+portfolio-frontend/e2e/
 ├── tests/
-│   ├── auth.spec.ts              # Auth flow tests
-│   ├── protected-routes.spec.ts  # Route protection tests
-│   └── projects.spec.ts          # Business logic tests
+│   ├── auth.spec.ts              # Authentication flow
+│   ├── protected-routes.spec.ts  # Route protection
+│   └── projects.spec.ts          # Business logic
 ├── fixtures/
 │   ├── test-users.ts             # Test data
 │   └── auth.ts                   # Auth helpers
 └── utils/
-    └── helpers.ts                # Reusable utilities
+    └── helpers.ts                # Utilities
 ```
 
-### Why These Tests Exist
+### Test Coverage
 
-#### 1. **auth.spec.ts** - Authentication Flow
+#### 1. Authentication (auth.spec.ts)
 
-- **What**: Tests login, logout, session persistence, cookie handling
-- **Why**: Auth is the security foundation. Must work perfectly.
-- **Coverage**:
-  - Valid login → HttpOnly cookies set → redirect works
-  - Invalid credentials → stays on login page → no cookies
-  - Logout → clears cookies → blocks protected access
-  - Session persistence across page reloads
+- ✅ Valid login → HttpOnly cookies → redirect
+- ✅ Invalid credentials → error message
+- ✅ Logout → clears cookies
+- ✅ Session persistence across reloads
 
-#### 2. **protected-routes.spec.ts** - Authorization
+#### 2. Protected Routes (protected-routes.spec.ts)
 
-- **What**: Tests middleware-based route protection
-- **Why**: Ensures unauthorized users can't access sensitive pages
-- **Coverage**:
-  - Unauthenticated → redirect to /login?redirect=/dashboard
-  - Authenticated → can access protected routes
-  - Session expiry → redirect to login
-  - Security headers applied correctly
+- ✅ Unauthenticated → redirect to `/login?redirect=/dashboard`
+- ✅ Authenticated → access granted
+- ✅ Session expiry → redirect to login
 
-#### 3. **projects.spec.ts** - Business Logic
+#### 3. Business Logic (projects.spec.ts)
 
-- **What**: Tests CRUD operations end-to-end
-- **Why**: Verifies main app functionality works from UI → API → Database
-- **Coverage**:
-  - Create project → appears in list
-  - Edit project → changes persist
-  - Delete project → removed from UI and database
-  - View count increment → optimistic update works
-  - Error handling → shows user-friendly messages
+- ✅ Create project → appears in list
+- ✅ Edit project → changes persist
+- ✅ Delete project → removed from UI
+- ✅ View count increment → optimistic update
 
-### Test Data Strategy
+### Test Data
 
-**Option 1: Database Seeding (Recommended)**
-
-```bash
-# Backend - create test seed
-cd portfolio-backend
-npm run prisma:seed
-```
-
-Test users defined in `e2e/fixtures/test-users.ts`:
-
-- `admin@example.com` / `Admin123!@#` (admin role)
-- `user@example.com` / `User123!@#` (user role)
-
-**Option 2: API Setup in beforeEach**
+Default test users (from seed):
 
 ```typescript
-test.beforeEach(async ({ context }) => {
-  // Create test user via API
-  await context.request.post('/api/users', { ... });
-});
+{
+  email: 'admin@example.com',
+  password: 'Admin123!@#',
+  role: 'OWNER'
+}
 ```
 
 ### Running Tests
@@ -110,14 +81,15 @@ npm run test:e2e:report
 
 ### CI/CD Integration
 
-The tests are CI-ready:
+Tests are CI-ready with:
 
-- Set `CI=true` environment variable
-- Runs in single worker (no parallelism)
-- Retries failures 2x
-- Outputs JUnit XML for test reporting
+- Single worker (no parallelism)
+- 2x retry on failure
+- JUnit XML output
+- Screenshots on failure
+- Video recording
 
-**GitHub Actions Example**:
+**GitHub Actions:**
 
 ```yaml
 - name: Install Playwright
@@ -127,80 +99,78 @@ The tests are CI-ready:
   run: npm run test:e2e
   env:
     CI: true
-    E2E_BASE_URL: http://localhost:3001
-    E2E_BACKEND_URL: http://localhost:3000
 ```
 
-### Debugging Failed Tests
+### Debugging
 
-1. **Check screenshots**: `test-results/screenshots/`
-2. **Watch videos**: `test-results/videos/`
-3. **Read traces**: `playwright show-trace trace.zip`
-4. **Use debug mode**: `npm run test:e2e:debug`
+1. **Screenshots**: `test-results/screenshots/`
+2. **Videos**: `test-results/videos/`
+3. **Traces**: `playwright show-trace trace.zip`
+4. **Debug mode**: `npm run test:e2e:debug`
 
 ### Best Practices
 
-✅ **DO**:
+✅ **DO:**
 
-- Use semantic selectors (`getByRole`, `getByLabel`, `getByText`)
+- Use semantic selectors (`getByRole`, `getByLabel`)
 - Test user behavior, not implementation
 - Clean up test data in `afterEach`
-- Use `data-testid` for complex selectors
-- Keep tests independent (no shared state)
+- Keep tests independent
 
-❌ **DON'T**:
+❌ **DON'T:**
 
-- Mock auth or cookies (test the real thing)
+- Mock auth or cookies
 - Use brittle CSS selectors
-- Test styling or pixel-perfect layouts
-- Leave orphaned test data in database
+- Test styling details
 - Run tests against production
 
----
-
-## PART 2: OBSERVABILITY
+## Part 2: Observability
 
 ### Architecture
 
-**Backend**: `src/infrastructure/`
+**Backend:**
 
 ```
 infrastructure/
 ├── logging/
 │   ├── structured-logger.service.ts  # JSON logger
-│   └── logging.module.ts             # Global module
+│   └── logging.module.ts
 └── observability/
-    ├── sentry.config.ts              # Sentry init
-    └── global-exception.filter.ts    # Error handler
+    ├── sentry.config.ts
+    └── global-exception.filter.ts
 ```
 
-**Frontend**: `lib/sentry.ts`, `components/SentryProvider.tsx`
+**Frontend:**
 
-### Why This Approach
+```
+lib/sentry.ts
+components/SentryProvider.tsx
+```
 
-1. **Structured Logging** (Backend Only)
+### Structured Logging (Backend)
 
-   - **Production**: JSON output → easy to parse by log aggregators
-   - **Development**: Human-readable console logs
-   - **Security**: Auto-sanitizes PII (tokens, passwords, emails)
-   - **Context**: Attaches userId, requestId, statusCode, etc.
+**Production**: JSON output for log aggregators
 
-2. **Sentry** (Backend + Frontend)
-   - **Error Tracking**: Captures unhandled exceptions
-   - **Performance**: Monitors slow requests
-   - **User Context**: Attaches userId (no PII)
-   - **Filtering**: Skips 404s, validation errors
+```json
+{
+  "timestamp": "2025-12-26T10:30:00.000Z",
+  "level": "info",
+  "message": "Project created",
+  "userId": "usr_123",
+  "projectId": "prj_456"
+}
+```
 
-### Logging Usage
+**Development**: Human-readable console logs
 
-**In Controllers or Use Cases**:
+**Usage:**
 
 ```typescript
-import { StructuredLogger } from "src/infrastructure/logging/structured-logger.service";
+import { StructuredLogger } from "@/infrastructure/logging";
 
 @Injectable()
 export class SomeUseCase {
-  constructor(private readonly logger: StructuredLogger) {}
+  constructor(private logger: StructuredLogger) {}
 
   async execute() {
     this.logger.log("Operation started", { userId: "123" });
@@ -209,43 +179,41 @@ export class SomeUseCase {
       // Business logic
       this.logger.log("Operation successful");
     } catch (error) {
-      this.logger.error("Operation failed", error.stack, { userId: "123" });
+      this.logger.error("Operation failed", error.stack);
       throw error;
     }
   }
 }
 ```
 
-**Log Levels**:
+**Log Levels:**
 
 - `log()` - Info (successful operations)
-- `warn()` - Warnings (degraded performance, fallbacks)
-- `error()` - Errors (failures requiring attention)
-- `debug()` / `verbose()` - Only in development
+- `warn()` - Warnings (degraded performance)
+- `error()` - Errors (failures)
+- `debug()` / `verbose()` - Development only
 
-**What Gets Logged**:
-✅ Auth events (login, logout, refresh)  
-✅ Critical API failures (500 errors)  
-✅ Database connection issues  
-✅ Cache failures (when degrading to DB)
+**Security:**
 
-❌ Passwords or tokens  
-❌ Full email addresses (masked)  
-❌ Cookie values  
-❌ Request bodies with PII
+- ✅ Auto-sanitizes passwords, tokens, cookies
+- ✅ Masks email addresses
+- ✅ Removes PII from logs
+- ❌ Never logs sensitive data
 
-### Sentry Configuration
+### Sentry Error Tracking
 
-**Backend** (`main.ts`):
+**Backend Configuration:**
 
 ```typescript
+// main.ts
 import { initSentry } from "./infrastructure/observability/sentry.config";
-initSentry(); // MUST be first import
+initSentry(); // MUST be first
 ```
 
-**Frontend** (root layout):
+**Frontend Configuration:**
 
 ```tsx
+// app/layout.tsx
 import { SentryProvider } from "@/components/SentryProvider";
 
 export default function RootLayout({ children }) {
@@ -259,12 +227,12 @@ export default function RootLayout({ children }) {
 }
 ```
 
-**User Context** (set after login):
+**User Context:**
 
 ```typescript
 import { setSentryUser, clearSentryUser } from "@/lib/sentry";
 
-// After successful login
+// After login
 setSentryUser(userId);
 
 // After logout
@@ -275,59 +243,55 @@ clearSentryUser();
 
 **Backend** (`.env`):
 
-```bash
-# Sentry
-SENTRY_DSN=https://your-dsn@sentry.io/project-id
+```env
+SENTRY_DSN=https://xxx@sentry.io/project-id
 NODE_ENV=production
-
-# Logging (optional)
-LOG_LEVEL=info  # info, warn, error
 ```
 
 **Frontend** (`.env.local`):
 
-```bash
-# Sentry
-NEXT_PUBLIC_SENTRY_DSN=https://your-dsn@sentry.io/project-id
+```env
+NEXT_PUBLIC_SENTRY_DSN=https://xxx@sentry.io/project-id
 NEXT_PUBLIC_ENV=production
 ```
 
-### What Gets Sent to Sentry
+### What Gets Tracked
 
-**Backend**:
-✅ 500 Internal Server Errors  
-✅ Unhandled exceptions  
-✅ Database failures  
-❌ 400 Bad Request (validation errors)  
-❌ 404 Not Found
+**Backend:**
 
-**Frontend**:
-✅ Unhandled React errors  
-✅ Network failures (API down)  
-✅ Runtime JavaScript errors  
-❌ 404 page not found  
-❌ Console logs
+- ✅ 500 Internal Server Errors
+- ✅ Unhandled exceptions
+- ✅ Database failures
+- ❌ 400 Bad Request (validation)
+- ❌ 404 Not Found
+
+**Frontend:**
+
+- ✅ Unhandled React errors
+- ✅ Network failures
+- ✅ Runtime errors
+- ❌ 404 page not found
+- ❌ Console logs
 
 ### Production Checklist
 
 Before deploying:
 
-1. **Add Sentry DSN** to environment variables
-2. **Test error tracking**: Throw test error, verify it appears in Sentry
-3. **Verify PII sanitization**: Check logs don't contain tokens/passwords
-4. **Set up alerts**: Configure Sentry to notify on high error rates
-5. **Test structured logs**: Verify JSON format in production environment
+1. ✅ Add Sentry DSN to environment
+2. ✅ Test error tracking
+3. ✅ Verify PII sanitization
+4. ✅ Set up alerts in Sentry
+5. ✅ Test structured logs format
 
 ### Monitoring Dashboard
 
-**Sentry** (errors, performance):
+**Sentry:**
 
-- Go to your Sentry project dashboard
-- Check "Issues" for errors
-- Check "Performance" for slow requests
-- Set up alerts for critical errors
+- Issues → Error tracking
+- Performance → Slow requests
+- Alerts → Email/Slack notifications
 
-**Logs** (if using aggregator like Datadog, CloudWatch):
+**Logs** (aggregator like Datadog):
 
 ```json
 {
@@ -339,11 +303,9 @@ Before deploying:
 }
 ```
 
----
-
 ## Testing the Implementation
 
-### 1. Test E2E Suite
+### 1. E2E Tests
 
 ```bash
 cd portfolio-frontend
@@ -354,87 +316,82 @@ npm run test:e2e
 
 Expected: All tests pass ✅
 
-### 2. Test Structured Logging
+### 2. Structured Logging
 
 ```bash
 cd portfolio-backend
-npm install
-
-# Start app
 npm run start:dev
 
 # Make API call
-curl http://localhost:3000/api/auth/login -X POST \
+curl http://localhost:3000/auth/login -X POST \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"wrong"}'
 
-# Check console - should see structured log:
-# {"timestamp":"...","level":"warn","message":"Invalid credentials",...}
+# Check console for structured log
 ```
 
-### 3. Test Sentry Integration
+### 3. Sentry Integration
 
-**Backend**:
+**Backend:**
 
 1. Add `SENTRY_DSN` to `.env`
 2. Start app: `npm run start:dev`
-3. Trigger error: Visit `/api/test-error` (create test endpoint)
-4. Check Sentry dashboard - should see error appear
+3. Trigger error
+4. Check Sentry dashboard
 
-**Frontend**:
+**Frontend:**
 
 1. Add `NEXT_PUBLIC_SENTRY_DSN` to `.env.local`
 2. Start app: `npm run dev`
-3. Trigger error: Click button that throws error
-4. Check Sentry dashboard - should see error appear
-
----
+3. Trigger error
+4. Check Sentry dashboard
 
 ## Troubleshooting
 
 ### E2E Tests Fail
 
-**Problem**: Tests timeout or fail unexpectedly  
+**Problem**: Tests timeout or fail
+
 **Solution**:
 
 - Check both backend and frontend are running
 - Verify test users exist in database
-- Use `npm run test:e2e:headed` to watch execution
+- Use `npm run test:e2e:headed` to watch
 - Check `test-results/` for screenshots/videos
 
 ### "Sentry disabled" in logs
 
-**Problem**: Sentry not initializing  
+**Problem**: Sentry not initializing
+
 **Solution**:
 
-- Verify `SENTRY_DSN` is set in environment
-- Check DSN format: `https://xxx@xxx.ingest.sentry.io/xxx`
-- Ensure `NODE_ENV=production` or staging (not development)
+- Verify `SENTRY_DSN` is set
+- Check DSN format
+- Ensure `NODE_ENV=production` or staging
 
 ### Logs missing in production
 
-**Problem**: No logs appearing  
+**Problem**: No logs appearing
+
 **Solution**:
 
 - Check `NODE_ENV=production` is set
-- Verify logs are JSON format: `{"timestamp":...}`
+- Verify JSON format
 - Configure log aggregator to parse JSON
-- Check stdout/stderr are being captured
-
----
+- Check stdout/stderr capture
 
 ## Next Steps
 
-1. **Extend E2E coverage**: Add tests for edge cases
-2. **Add performance tests**: Use Playwright to measure page load times
-3. **Set up log aggregation**: Connect to Datadog, CloudWatch, or similar
-4. **Configure Sentry alerts**: Email/Slack on critical errors
-5. **Add custom metrics**: Track business KPIs (signups, projects created)
+1. **Extend E2E coverage** - Add edge case tests
+2. **Add performance tests** - Measure page load times
+3. **Set up log aggregation** - Datadog, CloudWatch
+4. **Configure Sentry alerts** - Email/Slack on errors
+5. **Add custom metrics** - Track business KPIs
 
 ---
 
-## Questions?
+**For more details:**
 
-- **E2E tests**: See Playwright docs https://playwright.dev
-- **Sentry**: See docs https://docs.sentry.io
-- **Structured logging**: See NestJS logging docs
+- Playwright docs: https://playwright.dev
+- Sentry docs: https://docs.sentry.io
+- NestJS logging: https://docs.nestjs.com

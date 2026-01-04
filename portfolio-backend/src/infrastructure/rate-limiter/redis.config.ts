@@ -42,13 +42,7 @@ export const createRedisClient = (): RedisClient => {
     maxRetriesPerRequest: 3,
   });
 
-  client.on('error', (err) => {
-    console.error('Redis Client Error:', err);
-  });
 
-  client.on('connect', () => {
-    console.log('Redis Client Connected');
-  });
 
   return client;
 };

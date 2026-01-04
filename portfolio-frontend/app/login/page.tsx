@@ -72,12 +72,14 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="animate-fade-in-up animation-delay-100">
             <label
+              htmlFor="email"
               className="block text-sm font-medium mb-2"
               style={{ color: "var(--neutral-300)" }}
             >
               Email Address
             </label>
             <input
+              id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -98,12 +100,14 @@ export default function LoginPage() {
 
           <div className="animate-fade-in-up animation-delay-200">
             <label
+              htmlFor="password"
               className="block text-sm font-medium mb-2"
               style={{ color: "var(--neutral-300)" }}
             >
               Password
             </label>
             <input
+              id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

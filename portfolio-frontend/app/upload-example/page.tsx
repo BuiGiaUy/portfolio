@@ -7,7 +7,7 @@ export default function UploadExamplePage() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadResult[]>([]);
 
   const handleUploadSuccess = (result: UploadResult) => {
-    console.log("✅ File uploaded successfully:", result);
+    // Upload completed successfully
     setUploadedFiles((prev) => [...prev, result]);
   };
 
