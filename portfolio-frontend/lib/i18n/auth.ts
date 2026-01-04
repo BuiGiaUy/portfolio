@@ -1,0 +1,38 @@
+export const authTranslations = {
+  en: {
+    login: {
+      title: "Welcome Back",
+      subtitle: "Sign in to access your dashboard",
+      badge: "Secure Login",
+      email: "Email Address",
+      emailPlaceholder: "you@example.com",
+      password: "Password",
+      passwordPlaceholder: "••••••••",
+      signIn: "Sign In",
+      signingIn: "Signing in...",
+      noAccount: "Don't have an account?",
+      signUp: "Sign up",
+      demoTitle: "Demo Credentials:",
+      demoEmail: "Email: admin@example.com",
+      demoPassword: "Password: Admin123!@#",
+    },
+  },
+  vi: {
+    login: {
+      title: "Chào Mừng Trở Lại",
+      subtitle: "Đăng nhập để truy cập bảng điều khiển",
+      badge: "Đăng Nhập An Toàn",
+      email: "Địa Chỉ Email",
+      emailPlaceholder: "you@example.com",
+      password: "Mật Khẩu",
+      passwordPlaceholder: "••••••••",
+      signIn: "Đăng Nhập",
+      signingIn: "Đang đăng nhập...",
+      noAccount: "Chưa có tài khoản?",
+      signUp: "Đăng ký",
+      demoTitle: "Thông Tin Demo:",
+      demoEmail: "Email: admin@example.com",
+      demoPassword: "Mật khẩu: Admin123!@#",
+    },
+  },
+};
