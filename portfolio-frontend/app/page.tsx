@@ -108,7 +108,11 @@ export default function Home() {
               >
                 {t.hero.cta}
               </button>
-              <a href="/cv.pdf" download className="btn-outline-premium">
+              <a
+                href="/CV-Bui-Gia-Uy.pdf"
+                download
+                className="btn-outline-premium"
+              >
                 {t.hero.downloadCV}
               </a>
               <a href="#contact" className="btn-outline-premium">
@@ -281,6 +285,22 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="max-w-3xl mt-12 fade-in">
+          <div className="timeline">
+            <div className="timeline-item">
+              <div className="timeline-dot"></div>
+              <p className="timeline-date">{t.experience.job_2.period}</p>
+              <h3 className="timeline-role">{t.experience.job_2.title}</h3>
+              <p className="timeline-company">{t.experience.job_2.company}</p>
+
+              <ul className="timeline-responsibilities">
+                {t.experience.job_2.responsibilities.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ==================== CONTACT SECTION ==================== */}
@@ -295,18 +315,22 @@ export default function Home() {
 
           <div className="contact-buttons">
             <a
-              href="https://github.com"
+              href="https://github.com/BuiGiaUy"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-glow"
             >
               {t.contact.github}
             </a>
-            <a href="/cv.pdf" download className="btn-outline-premium">
+            <a
+              href="/CV-Bui-Gia-Uy.pdf"
+              download
+              className="btn-outline-premium"
+            >
               {t.contact.cv}
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/uy-gia/"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline-premium"
@@ -321,7 +345,7 @@ export default function Home() {
       <footer className="footer-premium container-custom">
         <div className="footer-links">
           <a
-            href="https://github.com"
+            href="https://github.com/BuiGiaUy"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link"
@@ -329,14 +353,18 @@ export default function Home() {
             GitHub
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/uy-gia/"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link"
           >
             LinkedIn
           </a>
-          <a href="mailto:contact@example.com" className="footer-link">
+          <a
+            href="mailto:giauy0987@gmail.com"
+            className="footer-link"
+            aria-label="Send email to Bui Gia Uy"
+          >
             Email
           </a>
         </div>

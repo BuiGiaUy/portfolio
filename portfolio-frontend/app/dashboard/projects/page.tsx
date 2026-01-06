@@ -12,7 +12,8 @@ type ViewMode = "list" | "create" | "edit";
 
 export default function DashboardProjectsPage() {
   const router = useRouter();
-  const { user, logout, isLoading: authLoading } = useAuth();
+  const { user, logout, isLoading: authLoading, hasRole } = useAuth();
+  const isOwner = hasRole("OWNER");
   const { data: projects, isLoading: projectsLoading } = useProjects();
   const deleteProject = useDeleteProject();
   const { success, error: showError } = useToast();
@@ -148,9 +149,14 @@ export default function DashboardProjectsPage() {
                     : `${projects?.length || 0} projects total`}
                 </p>
               </div>
-              <button onClick={handleCreateNew} className="btn-glow px-6 py-3">
-                + Create New Project
-              </button>
+              {isOwner && (
+                <button
+                  onClick={handleCreateNew}
+                  className="btn-glow px-6 py-3"
+                >
+                  + Create New Project
+                </button>
+              )}
             </div>
 
             {/* Projects List */}
@@ -297,63 +303,20 @@ export default function DashboardProjectsPage() {
                               />
                             </svg>
                           </button>
-                          <button
-                            onClick={() => handleEdit(project)}
-                            className="p-2 rounded-lg transition-all"
-                            style={{ color: "var(--neutral-400)" }}
-                            onMouseEnter={(e) =>
-                              (e.currentTarget.style.color = "#3b82f6")
-                            }
-                            onMouseLeave={(e) =>
-                              (e.currentTarget.style.color =
-                                "var(--neutral-400)")
-                            }
-                            title="Edit"
-                          >
-                            <svg
-                              className="w-5 h-5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
+                          {isOwner && (
+                            <button
+                              onClick={() => handleEdit(project)}
+                              className="p-2 rounded-lg transition-all"
+                              style={{ color: "var(--neutral-400)" }}
+                              onMouseEnter={(e) =>
+                                (e.currentTarget.style.color = "#3b82f6")
+                              }
+                              onMouseLeave={(e) =>
+                                (e.currentTarget.style.color =
+                                  "var(--neutral-400)")
+                              }
+                              title="Edit"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                              />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={() => handleDelete(project)}
-                            disabled={deletingId === project.id}
-                            className="p-2 rounded-lg transition-all disabled:opacity-50"
-                            style={{ color: "var(--neutral-400)" }}
-                            onMouseEnter={(e) =>
-                              (e.currentTarget.style.color = "#ef4444")
-                            }
-                            onMouseLeave={(e) =>
-                              (e.currentTarget.style.color =
-                                "var(--neutral-400)")
-                            }
-                            title="Delete"
-                          >
-                            {deletingId === project.id ? (
-                              <svg
-                                className="w-5 h-5 animate-spin"
-                                viewBox="0 0 24 24"
-                              >
-                                <circle
-                                  className="opacity-25"
-                                  cx="12"
-                                  cy="12"
-                                  r="10"
-                                  stroke="currentColor"
-                                  strokeWidth="4"
-                                  fill="none"
-                                />
-                              </svg>
-                            ) : (
                               <svg
                                 className="w-5 h-5"
                                 fill="none"
@@ -364,11 +327,58 @@ export default function DashboardProjectsPage() {
                                   strokeLinecap="round"
                                   strokeLinejoin="round"
                                   strokeWidth={2}
-                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                                 />
                               </svg>
-                            )}
-                          </button>
+                            </button>
+                          )}
+                          {isOwner && (
+                            <button
+                              onClick={() => handleDelete(project)}
+                              disabled={deletingId === project.id}
+                              className="p-2 rounded-lg transition-all disabled:opacity-50"
+                              style={{ color: "var(--neutral-400)" }}
+                              onMouseEnter={(e) =>
+                                (e.currentTarget.style.color = "#ef4444")
+                              }
+                              onMouseLeave={(e) =>
+                                (e.currentTarget.style.color =
+                                  "var(--neutral-400)")
+                              }
+                              title="Delete"
+                            >
+                              {deletingId === project.id ? (
+                                <svg
+                                  className="w-5 h-5 animate-spin"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                    fill="none"
+                                  />
+                                </svg>
+                              ) : (
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
+                              )}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -397,14 +407,18 @@ export default function DashboardProjectsPage() {
                     No projects yet
                   </h3>
                   <p className="mb-4" style={{ color: "var(--neutral-400)" }}>
-                    Create your first project to get started
+                    {isOwner
+                      ? "Create your first project to get started"
+                      : "Only the owner can create projects"}
                   </p>
-                  <button
-                    onClick={handleCreateNew}
-                    className="btn-glow px-6 py-2"
-                  >
-                    Create Project
-                  </button>
+                  {isOwner && (
+                    <button
+                      onClick={handleCreateNew}
+                      className="btn-glow px-6 py-2"
+                    >
+                      Create Project
+                    </button>
+                  )}
                 </div>
               )}
             </div>

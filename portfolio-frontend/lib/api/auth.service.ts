@@ -153,7 +153,7 @@ class AuthService {
    */
   hasRole(role: string): boolean {
     const user = tokenManager.getUser();
-    return user?.roles.includes(role) ?? false;
+    return user?.role === role;
   }
 
   /**
@@ -161,15 +161,16 @@ class AuthService {
    */
   hasAnyRole(roles: string[]): boolean {
     const user = tokenManager.getUser();
-    return roles.some((role) => user?.roles.includes(role)) ?? false;
+    return user ? roles.includes(user.role) : false;
   }
 
   /**
    * Check if user has all roles
+   * Note: Since user has only one role, this only returns true if roles array has exactly one matching role
    */
   hasAllRoles(roles: string[]): boolean {
     const user = tokenManager.getUser();
-    return roles.every((role) => user?.roles.includes(role)) ?? false;
+    return user ? roles.length === 1 && roles[0] === user.role : false;
   }
 }
 
