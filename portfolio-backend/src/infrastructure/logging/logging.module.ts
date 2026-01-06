@@ -3,7 +3,7 @@ import { StructuredLogger } from './structured-logger.service';
 
 /**
  * LOGGING MODULE
- * 
+ *
  * Global module that provides structured logging across the app.
  * Marked as @Global so it's available everywhere without imports.
  */

@@ -30,18 +30,18 @@ export class PrismaProjectRepository implements IProjectRepository {
   // ─────────────────────────────────────────────────────────────
 
   async findById(id: string): Promise<Project | null> {
-    const project = await this.prisma.project.findUnique({ 
+    const project = await this.prisma.project.findUnique({
       where: { id },
-      include: { stats: true }
+      include: { stats: true },
     });
     if (!project) return null;
     return ProjectPersistenceMapper.toDomain(project);
   }
 
   async findBySlug(slug: string): Promise<Project | null> {
-    const project = await this.prisma.project.findUnique({ 
+    const project = await this.prisma.project.findUnique({
       where: { slug },
-      include: { stats: true }
+      include: { stats: true },
     });
     if (!project) return null;
     return ProjectPersistenceMapper.toDomain(project);
@@ -172,7 +172,9 @@ export class PrismaProjectRepository implements IProjectRepository {
   async incrementViewPessimistic(projectId: string): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
       // Step 1: Acquire pessimistic write lock - update ProjectStats views
-      const projectStats = await tx.$queryRawUnsafe<Array<{ id: string; views: number }>>(
+      const projectStats = await tx.$queryRawUnsafe<
+        Array<{ id: string; views: number }>
+      >(
         `SELECT id, views FROM "ProjectStats" WHERE "projectId" = $1 FOR UPDATE`,
         projectId,
       );
@@ -270,7 +272,7 @@ export class PrismaProjectRepository implements IProjectRepository {
       }
 
       // Step 2: Get or create project stats
-      let stats = await tx.projectStats.findUnique({
+      const stats = await tx.projectStats.findUnique({
         where: { projectId },
         select: { id: true, views: true },
       });

@@ -14,7 +14,7 @@ export const translations = {
     // Hero Section
     hero: {
       name: "Bùi Gia Uy",
-      role: "Backend-Focused Fullstack Developer",
+      role: "Full-Stack Developer (Web & Mobile)",
       tagline: "Self-taught developer with experience building backend, frontend and mobile apps.",
       taglineSecond: "Worked at tech startup, quick learner with ability to adapt to multiple technologies.",
       techStack: ["Node.js", "NestJS", "Laravel", "Next.js", "Flutter"],
@@ -69,13 +69,24 @@ export const translations = {
       title: "Experience",
       job: {
         title: "Software Developer",
-        company: "Startup (Taiwan-based)",
-        period: "11/2023 – 08/2024",
+        company: "PROPWAY VIET NAM",
+        period: "2024 – 2025",
         responsibilities: [
           "Participated in building web & mobile applications",
           "Self-learned Dart/Flutter to develop applications",
           "Integrated frontend with backend API written in Golang",
           "Supported building website registration system using Vue.js",
+        ],
+      },
+      job_2: {
+        title: "Software Developer Intern",
+        company: "IMEX GLOBAL ENTERPRISES",
+        period: "2023",
+        responsibilities: [
+          "Built and enhanced responsive web interfaces using HTML, CSS, JavaScript with focus on usability and performance.",
+          "Integrated RESTful APIs to display dynamic data on the frontend.",
+          "Worked with third-party APIs to implement client-requested features.",
+          "Maintained and refactored existing codebase under team guidance.",
         ],
       },
     },
@@ -128,7 +139,7 @@ export const translations = {
     // Hero Section
     hero: {
       name: "Bùi Gia Uy",
-      role: "Backend-Focused Fullstack Developer",
+      role: "Full-Stack Developer (Web & Mobile)",
       tagline: "Lập trình viên tự học với kinh nghiệm xây dựng backend, frontend và mobile app.",
       taglineSecond: "Từng làm việc tại startup công nghệ, có khả năng tự học nhanh và thích ứng với nhiều công nghệ.",
       techStack: ["Node.js", "NestJS", "Laravel", "Next.js", "Flutter"],
@@ -183,13 +194,24 @@ export const translations = {
       title: "Kinh Nghiệm",
       job: {
         title: "Software Developer",
-        company: "Startup (Taiwan-based)",
-        period: "11/2023 – 08/2024",
+        company: "PROPWAY VIỆT NAM",
+        period: "07/2024 – 08/2025",
         responsibilities: [
           "Tham gia xây dựng web & mobile application",
           "Tự học Dart/Flutter để phát triển ứng dụng",
           "Tích hợp frontend với API backend viết bằng Golang",
           "Hỗ trợ xây dựng hệ thống đăng ký website bằng Vue.js",
+        ],
+      },
+      job_2: {
+        title: "Software Developer Intern",
+        company: "IMEX GLOBAL ENTERPRISES",
+        period: "2023",
+        responsibilities: [
+          "Xây dựng và cải thiện giao diện web có đáp ứng với HTML, CSS, JavaScript với tập trung vào tính dễ dùng và hiệu suất.",
+          "Tích hợp API RESTful để hiển thị dữ liệu động trên giao diện.",
+          "Làm việc với các API bên thứ ba để triển khai các tính năng yêu cầu của khách hàng.",
+          "Duy trì và cải thiện mã nguồn hiện có dưới sự hướng dẫn của đội ngũ.",
         ],
       },
     },

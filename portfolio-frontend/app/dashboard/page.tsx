@@ -10,7 +10,8 @@ import { useRouter } from "next/navigation";
  */
 export default function DashboardPage() {
   const router = useRouter();
-  const { user, logout, isLoading: authLoading } = useAuth();
+  const { user, logout, isLoading: authLoading, hasRole } = useAuth();
+  const isOwner = hasRole("OWNER");
   const { data: projects, isLoading: projectsLoading } = useProjects();
 
   const handleLogout = async () => {
@@ -270,10 +271,12 @@ export default function DashboardPage() {
               </svg>
             </div>
             <h3 className="text-xl font-bold mb-2 gradient-text">
-              Manage Projects
+              {isOwner ? "Manage Projects" : "View Projects"}
             </h3>
             <p style={{ color: "var(--neutral-400)" }}>
-              View, create, and edit your projects
+              {isOwner
+                ? "View, create, and edit your projects"
+                : "Browse and view projects (read-only)"}
             </p>
           </button>
 
@@ -351,39 +354,41 @@ export default function DashboardPage() {
             </p>
           </button>
 
-          <button
-            onClick={() => router.push("/dashboard/permissions")}
-            className="contact-cta text-left hover-lift transition-all"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(236, 72, 153, 0.1), transparent)",
-              borderColor: "var(--border-subtle)",
-              padding: "2rem",
-            }}
-          >
-            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-500/20 to-transparent flex items-center justify-center mb-4">
-              <svg
-                className="w-6 h-6"
-                style={{ color: "#ec4899" }}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-2 gradient-text">
-              Permissions
-            </h3>
-            <p style={{ color: "var(--neutral-400)" }}>
-              Manage roles and access control
-            </p>
-          </button>
+          {isOwner && (
+            <button
+              onClick={() => router.push("/dashboard/permissions")}
+              className="contact-cta text-left hover-lift transition-all"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(236, 72, 153, 0.1), transparent)",
+                borderColor: "var(--border-subtle)",
+                padding: "2rem",
+              }}
+            >
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-500/20 to-transparent flex items-center justify-center mb-4">
+                <svg
+                  className="w-6 h-6"
+                  style={{ color: "#ec4899" }}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2 gradient-text">
+                Permissions
+              </h3>
+              <p style={{ color: "var(--neutral-400)" }}>
+                Manage roles and access control
+              </p>
+            </button>
+          )}
 
           <button
             onClick={() => router.push("/projects")}

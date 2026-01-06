@@ -38,8 +38,8 @@ export interface AuthTokens {
 export interface AuthUser {
   id: string;
   email: string;
-  name: string;
-  roles: string[];
+  name?: string;
+  role: string; // Single role: 'OWNER' | 'VIEWER'
 }
 
 export interface AuthResponse {

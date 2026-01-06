@@ -12,7 +12,9 @@ export class ProjectPersistenceMapper {
    * @param prismaProject - The Prisma project object from database (with stats relation)
    * @returns Domain Project entity
    */
-  static toDomain(prismaProject: Prisma.ProjectGetPayload<{ include: { stats: true } }>): Project {
+  static toDomain(
+    prismaProject: Prisma.ProjectGetPayload<{ include: { stats: true } }>,
+  ): Project {
     return new Project(
       prismaProject.id,
       prismaProject.title,

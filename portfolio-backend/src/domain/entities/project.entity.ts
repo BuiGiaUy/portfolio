@@ -34,13 +34,17 @@ export class Project {
       throw new Error('Project slug is required');
     }
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(this.slug)) {
-      throw new Error('Project slug must be URL-friendly (lowercase letters, numbers, and hyphens)');
+      throw new Error(
+        'Project slug must be URL-friendly (lowercase letters, numbers, and hyphens)',
+      );
     }
     if (!this.shortDescription) {
       throw new Error('Project short description is required');
     }
     if (this.shortDescription.length > 200) {
-      throw new Error('Project short description must not exceed 200 characters');
+      throw new Error(
+        'Project short description must not exceed 200 characters',
+      );
     }
     if (!this.content) {
       throw new Error('Project content is required');
@@ -78,7 +82,9 @@ export class Project {
       throw new Error('Project slug is required');
     }
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
-      throw new Error('Project slug must be URL-friendly (lowercase letters, numbers, and hyphens)');
+      throw new Error(
+        'Project slug must be URL-friendly (lowercase letters, numbers, and hyphens)',
+      );
     }
     this.slug = slug;
     this.updatedAt = new Date();
@@ -92,7 +98,9 @@ export class Project {
       throw new Error('Project short description is required');
     }
     if (shortDescription.length > 200) {
-      throw new Error('Project short description must not exceed 200 characters');
+      throw new Error(
+        'Project short description must not exceed 200 characters',
+      );
     }
     this.shortDescription = shortDescription;
     this.updatedAt = new Date();
