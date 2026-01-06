@@ -68,21 +68,33 @@ export class StructuredLogger implements NestLoggerService {
   /**
    * Log with structured metadata (for custom logging)
    */
-  logWithMetadata(message: string, metadata: LogContext, context?: string): void {
+  logWithMetadata(
+    message: string,
+    metadata: LogContext,
+    context?: string,
+  ): void {
     this.writeLog('log', message, metadata, context);
   }
 
   /**
    * Log error with structured metadata
    */
-  errorWithMetadata(message: string, metadata: LogContext, context?: string): void {
+  errorWithMetadata(
+    message: string,
+    metadata: LogContext,
+    context?: string,
+  ): void {
     this.writeLog('error', message, metadata, context);
   }
 
   /**
    * Log warning with structured metadata
    */
-  warnWithMetadata(message: string, metadata: LogContext, context?: string): void {
+  warnWithMetadata(
+    message: string,
+    metadata: LogContext,
+    context?: string,
+  ): void {
     this.writeLog('warn', message, metadata, context);
   }
 
@@ -115,10 +127,11 @@ export class StructuredLogger implements NestLoggerService {
       // Development: Human-readable output with colors
       const timestamp = new Date().toLocaleTimeString();
       const contextPart = context ? ` [${context}]` : '';
-      const metadataStr = Object.keys(sanitizedMetadata).length > 0
-        ? ` ${this.safeStringify(sanitizedMetadata)}`
-        : '';
-      
+      const metadataStr =
+        Object.keys(sanitizedMetadata).length > 0
+          ? ` ${this.safeStringify(sanitizedMetadata)}`
+          : '';
+
       const prefix = `[${timestamp}]`;
       const baseLog = {
         level,
@@ -146,7 +159,7 @@ export class StructuredLogger implements NestLoggerService {
    */
   private safeStringify(obj: any, maxDepth: number = 10): string {
     const seen = new WeakMap<any, boolean>();
-    
+
     const stringify = (value: any, depth: number): any => {
       // Handle primitives
       if (value === null || typeof value !== 'object') {
@@ -169,7 +182,7 @@ export class StructuredLogger implements NestLoggerService {
       try {
         // Handle arrays
         if (Array.isArray(value)) {
-          return value.map(item => stringify(item, depth + 1));
+          return value.map((item) => stringify(item, depth + 1));
         }
 
         // Handle objects
@@ -194,7 +207,10 @@ export class StructuredLogger implements NestLoggerService {
       const sanitized = stringify(obj, 0);
       return JSON.stringify(sanitized);
     } catch (error) {
-      return JSON.stringify({ error: 'Failed to stringify', message: String(error) });
+      return JSON.stringify({
+        error: 'Failed to stringify',
+        message: String(error),
+      });
     }
   }
 
@@ -230,23 +246,29 @@ export class StructuredLogger implements NestLoggerService {
         if (sensitiveFields.has(key)) continue;
 
         const value = context[key];
-        
+
         // Only copy primitives, simple objects, and arrays
         // Skip functions, complex objects that might have circular refs
         if (value === null || value === undefined) {
           sanitized[key] = value;
-        } else if (typeof value === 'string' || 
-                   typeof value === 'number' || 
-                   typeof value === 'boolean') {
+        } else if (
+          typeof value === 'string' ||
+          typeof value === 'number' ||
+          typeof value === 'boolean'
+        ) {
           sanitized[key] = value;
         } else if (Array.isArray(value)) {
           // Only copy if array is small and contains primitives
-          if (value.length < 100 && value.every(v => 
-            typeof v === 'string' || 
-            typeof v === 'number' || 
-            typeof v === 'boolean' || 
-            v === null
-          )) {
+          if (
+            value.length < 100 &&
+            value.every(
+              (v) =>
+                typeof v === 'string' ||
+                typeof v === 'number' ||
+                typeof v === 'boolean' ||
+                v === null,
+            )
+          ) {
             sanitized[key] = value;
           } else {
             sanitized[key] = `[Array(${value.length})]`;

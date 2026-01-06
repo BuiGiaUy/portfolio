@@ -12,6 +12,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../infrastructure/auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../infrastructure/auth/guards/roles.guard';
+import { Roles } from '../../infrastructure/auth/decorators/roles.decorator';
+import { Role } from '../../domain/enums/role.enum';
 import { StorageService } from '../../infrastructure/storage/storage.service';
 import { CreateUploadUseCase } from '../../application/use-cases/create-upload.usecase';
 import { GetUploadByIdUseCase } from '../../application/use-cases/get-upload-by-id.usecase';
@@ -23,7 +26,8 @@ import {
 import { ConfigService } from '@nestjs/config';
 
 @Controller('upload')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.OWNER)
 export class UploadController {
   constructor(
     private readonly storageService: StorageService,

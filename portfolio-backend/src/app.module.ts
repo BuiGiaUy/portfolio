@@ -111,7 +111,7 @@ import { UPLOAD_REPOSITORY } from './domain/repositories/upload.repository.inter
     CreateUploadUseCase,
     GetUploadByIdUseCase,
     DeleteUploadUseCase,
-    
+
     // Infrastructure Services
     StorageService,
     CacheInvalidationService,
@@ -121,7 +121,10 @@ import { UPLOAD_REPOSITORY } from './domain/repositories/upload.repository.inter
       useFactory: (configService: ConfigService) => {
         const config = {
           limit: configService.get<number>('RATE_LIMIT_MAX', 100),
-          windowSeconds: configService.get<number>('RATE_LIMIT_WINDOW_SECONDS', 900),
+          windowSeconds: configService.get<number>(
+            'RATE_LIMIT_WINDOW_SECONDS',
+            900,
+          ),
         };
         return new RateLimiterService(config);
       },

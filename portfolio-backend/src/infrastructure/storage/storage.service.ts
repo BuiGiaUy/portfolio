@@ -156,12 +156,11 @@ export class StorageService {
     if (!pathComponent) {
       return '';
     }
-    
+
     return pathComponent
       .replace(/\.\./g, '')
       .replace(/\//g, '')
       .replace(/\\/g, '')
       .replace(/\0/g, '');
   }
-
 }

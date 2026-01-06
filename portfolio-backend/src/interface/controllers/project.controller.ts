@@ -12,6 +12,9 @@ import {
   Request,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../infrastructure/auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../infrastructure/auth/guards/roles.guard';
+import { Roles } from '../../infrastructure/auth/decorators/roles.decorator';
+import { Role } from '../../domain/enums/role.enum';
 import { CreateProjectUseCase } from '../../application/use-cases/create-project.usecase';
 import { GetAllProjectsUseCase } from '../../application/use-cases/get-all-projects.usecase';
 import { GetProjectsByUserUseCase } from '../../application/use-cases/get-projects-by-user.usecase';
@@ -70,10 +73,14 @@ export class ProjectController {
    * - Ensures GET endpoints return fresh data including the new project
    */
   @Post()
-  @UseGuards(JwtAuthGuard)
-  async create(@Body() dto: CreateProjectDto, @Request() req: any): Promise<ProjectResponseDto> {
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.OWNER)
+  async create(
+    @Body() dto: CreateProjectDto,
+    @Request() req: any,
+  ): Promise<ProjectResponseDto> {
     const userId = req.user.userId;
-    
+
     const project = await this.createProjectUseCase.execute({
       ...dto,
       userId,
@@ -158,7 +165,8 @@ export class ProjectController {
    * - Invalidates user's project list cache
    */
   @Put(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.OWNER)
   async update(
     @Param('id') id: string,
     @Body() dto: UpdateProjectDetailsDto,
@@ -192,7 +200,8 @@ export class ProjectController {
    * - Invalidates user's project list cache
    */
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.OWNER)
   @HttpCode(204)
   async delete(@Param('id') id: string): Promise<void> {
     const { userId } = await this.deleteProjectUseCase.execute(id);

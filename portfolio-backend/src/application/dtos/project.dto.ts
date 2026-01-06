@@ -4,7 +4,14 @@
  * DTOs are used to transfer data between layers.
  * They have no business logic and no dependencies.
  */
-import { IsString, IsArray, IsOptional, IsNotEmpty, IsUrl, ArrayMinSize } from 'class-validator';
+import {
+  IsString,
+  IsArray,
+  IsOptional,
+  IsNotEmpty,
+  IsUrl,
+  ArrayMinSize,
+} from 'class-validator';
 
 export class CreateProjectDto {
   @IsString()
@@ -96,4 +103,3 @@ export class ProjectResponseDto {
   updatedAt!: Date;
   views?: number; // View count from ProjectStats
 }
-

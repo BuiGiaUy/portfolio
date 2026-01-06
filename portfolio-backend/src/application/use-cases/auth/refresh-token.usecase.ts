@@ -61,7 +61,10 @@ export class RefreshTokenUseCase {
 
       // Rotate refresh token (invalidate old, store new)
       const newRefreshTokenHash = await bcrypt.hash(newRefreshToken, 10);
-      await this.userRepository.updateRefreshToken(user.id, newRefreshTokenHash);
+      await this.userRepository.updateRefreshToken(
+        user.id,
+        newRefreshTokenHash,
+      );
 
       // Return response
       const authResponse = new AuthResponseDto(accessToken, {

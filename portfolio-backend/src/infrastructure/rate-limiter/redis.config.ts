@@ -29,7 +29,7 @@ export const getRedisConfig = (): RedisConfig => ({
  */
 export const createRedisClient = (): RedisClient => {
   const config = getRedisConfig();
-  
+
   const client = new Redis({
     host: config.host,
     port: config.port,
@@ -41,8 +41,6 @@ export const createRedisClient = (): RedisClient => {
     },
     maxRetriesPerRequest: 3,
   });
-
-
 
   return client;
 };

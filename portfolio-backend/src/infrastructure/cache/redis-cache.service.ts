@@ -51,7 +51,11 @@ export class RedisCacheService {
    * @param value - Value to cache (will be JSON stringified)
    * @param ttlSeconds - Time to live in seconds (default: 60 seconds)
    */
-  async set(key: string, value: unknown, ttlSeconds: number = 60): Promise<void> {
+  async set(
+    key: string,
+    value: unknown,
+    ttlSeconds: number = 60,
+  ): Promise<void> {
     try {
       const serializedValue = JSON.stringify(value);
 

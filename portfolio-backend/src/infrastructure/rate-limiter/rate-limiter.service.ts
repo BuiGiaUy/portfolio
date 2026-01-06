@@ -4,9 +4,9 @@ import { createRedisClient } from './redis.config';
 
 /**
  * Rate Limiter Service
- * 
+ *
  * Implements IP-based rate limiting using Redis INCR and EXPIRE commands.
- * 
+ *
  * Algorithm:
  * 1. Generate a key based on IP address: `rate-limit:{ip}`
  * 2. Increment the counter for this IP
@@ -43,7 +43,7 @@ export class RateLimiterService implements OnModuleDestroy {
 
   /**
    * Check if a request from the given IP is allowed
-   * 
+   *
    * @param ip - Client IP address
    * @returns RateLimitResult with allowed status and remaining quota
    */

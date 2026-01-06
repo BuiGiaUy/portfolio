@@ -4,10 +4,10 @@ import { RateLimiterService } from './rate-limiter.service';
 
 /**
  * Rate Limiter Middleware
- * 
+ *
  * Applies rate limiting to incoming HTTP requests based on client IP.
  * Returns 429 Too Many Requests when limit is exceeded.
- * 
+ *
  * Headers added to response:
  * - X-RateLimit-Limit: Maximum requests allowed in the window
  * - X-RateLimit-Remaining: Remaining requests in current window
@@ -28,9 +28,12 @@ export class RateLimiterMiddleware implements NestMiddleware {
     // Add rate limit headers
     res.setHeader('X-RateLimit-Limit', '100');
     res.setHeader('X-RateLimit-Remaining', result.remaining.toString());
-    
+
     if (result.resetTime) {
-      res.setHeader('X-RateLimit-Reset', Math.floor(result.resetTime / 1000).toString());
+      res.setHeader(
+        'X-RateLimit-Reset',
+        Math.floor(result.resetTime / 1000).toString(),
+      );
     }
 
     // If limit exceeded, return 429

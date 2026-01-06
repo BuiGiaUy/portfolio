@@ -11,7 +11,7 @@ import { StructuredLogger } from '../logging/structured-logger.service';
 
 /**
  * GLOBAL EXCEPTION FILTER
- * 
+ *
  * Catches all unhandled exceptions and:
  * 1. Logs them via StructuredLogger
  * 2. Sends to Sentry (for 5xx errors)

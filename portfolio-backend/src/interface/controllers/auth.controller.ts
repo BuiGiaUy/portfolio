@@ -20,7 +20,10 @@ import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
 import { CurrentUser } from 'src/infrastructure/auth/decorators/current-user.decorator';
 import { RequestUser } from 'src/infrastructure/auth/strategies/jwt.strategy';
 import { StructuredLogger } from 'src/infrastructure/logging/structured-logger.service';
-import { setSentryUser, clearSentryUser } from 'src/infrastructure/observability/sentry.config';
+import {
+  setSentryUser,
+  clearSentryUser,
+} from 'src/infrastructure/observability/sentry.config';
 
 @Controller('auth')
 export class AuthController {
@@ -143,7 +146,7 @@ export class AuthController {
         // Extract userId from refresh token to invalidate it in database
         const decoded = this.decodeToken(refreshToken);
         await this.logoutUseCase.execute(decoded.sub);
-        
+
         this.logger.logWithMetadata(
           'User logged out successfully',
           {
@@ -155,7 +158,9 @@ export class AuthController {
         // Clear Sentry user context
         clearSentryUser();
       } catch {
-        this.logger.warn('Could not decode token during logout, clearing cookies anyway');
+        this.logger.warn(
+          'Could not decode token during logout, clearing cookies anyway',
+        );
       }
     }
 

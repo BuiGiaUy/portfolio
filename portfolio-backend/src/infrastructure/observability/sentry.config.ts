@@ -3,13 +3,13 @@ import { nodeProfilingIntegration } from '@sentry/profiling-node';
 
 /**
  * SENTRY CONFIGURATION (BACKEND)
- * 
+ *
  * Minimal production-ready error tracking:
  * - Captures unhandled exceptions
  * - Tracks API errors (4xx/5xx)
  * - Attaches user context (userId only, no PII)
  * - Performance monitoring
- * 
+ *
  * Initialize this BEFORE importing any other modules.
  */
 
@@ -31,9 +31,7 @@ export function initSentry() {
 
     // Profiling (optional, useful for performance issues)
     profilesSampleRate: 0.1,
-    integrations: [
-      nodeProfilingIntegration(),
-    ],
+    integrations: [nodeProfilingIntegration()],
 
     // Error filtering
     beforeSend(event, hint) {
@@ -62,8 +60,6 @@ export function initSentry() {
       return breadcrumb;
     },
   });
-
-
 }
 
 /**
@@ -85,7 +81,10 @@ export function clearSentryUser(): void {
 /**
  * Manually capture exception
  */
-export function captureException(error: Error, context?: Record<string, any>): void {
+export function captureException(
+  error: Error,
+  context?: Record<string, any>,
+): void {
   Sentry.captureException(error, {
     extra: context,
   });
@@ -94,6 +93,9 @@ export function captureException(error: Error, context?: Record<string, any>): v
 /**
  * Capture message (for non-errors)
  */
-export function captureMessage(message: string, level: 'info' | 'warning' | 'error' = 'info'): void {
+export function captureMessage(
+  message: string,
+  level: 'info' | 'warning' | 'error' = 'info',
+): void {
   Sentry.captureMessage(message, level);
 }
