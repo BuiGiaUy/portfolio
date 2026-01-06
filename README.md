@@ -1,27 +1,96 @@
-# Portfolio - Production-Ready Fullstack System
+# 🚀 Portfolio - Production-Ready Fullstack System
 
-A modern, production-grade portfolio application showcasing Clean Architecture, React Query, JWT authentication, real-time caching, and comprehensive testing.
+<div align="center">
 
-## 🏗️ Architecture
+![Portfolio Banner](docs/screenshots/homepage.png)
 
-```
-portfolio/
-├── portfolio-backend/     # NestJS API (Clean Architecture)
-├── portfolio-frontend/    # Next.js 14 App Router
-├── ARCHITECTURE.md        # System design documentation
-├── DEPLOYMENT.md          # Deployment guide
-└── E2E_AND_OBSERVABILITY.md  # Testing & monitoring guide
-```
+[![CI/CD](https://github.com/BuiGiaUy/portfolio/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/BuiGiaUy/portfolio/actions)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-11-red?logo=nestjs)](https://nestjs.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?logo=postgresql)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Redis-7-red?logo=redis)](https://redis.io/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker)](https://www.docker.com/)
 
-## ✨ Key Features
+**A modern, production-grade portfolio application showcasing Clean Architecture,
+real-time caching, JWT authentication, and comprehensive testing.**
 
-- 🏛️ **Clean Architecture** - Domain-driven design with clear separation
-- 🔐 **Secure Authentication** - JWT with HttpOnly cookies
-- ⚡ **Redis Caching** - Automatic cache-aside pattern
-- 🧪 **Comprehensive Testing** - Unit, E2E (Playwright), and integration tests
-- 📊 **Observability** - Sentry error tracking + structured logging
-- 🚀 **CI/CD Ready** - GitHub Actions pipeline with Docker deployment
-- 🌐 **i18n Support** - English/Vietnamese multilingual support
+[Live Demo](#) • [Documentation](#-documentation) • [Getting Started](#-quick-start)
+
+</div>
+
+---
+
+## 📖 About
+
+This portfolio system demonstrates enterprise-level software engineering practices through a fullstack application. Built with **Clean Architecture** principles, it features secure authentication, intelligent caching, comprehensive testing, and a robust CI/CD pipeline ready for production deployment.
+
+### ✨ Key Highlights
+
+| Feature                   | Description                                                    |
+| ------------------------- | -------------------------------------------------------------- |
+| 🏛️ **Clean Architecture** | Domain-driven design with clear separation of concerns         |
+| 🔐 **Secure Auth**        | JWT tokens with HttpOnly cookies & refresh token rotation      |
+| ⚡ **Smart Caching**      | Redis cache-aside pattern with automatic invalidation          |
+| 🧪 **155+ Tests**         | Unit tests (148) + E2E tests (7) with full coverage            |
+| 📊 **Observability**      | Sentry error tracking + structured logging                     |
+| 🐳 **Docker Ready**       | Multi-stage builds for optimized production images             |
+| 🔄 **CI/CD Pipeline**     | Automated testing, building, and deployment via GitHub Actions |
+| 🌐 **i18n Support**       | English & Vietnamese multilingual support                      |
+
+---
+
+## 📸 Screenshots
+
+### Homepage
+
+![Homepage](docs/screenshots/homepage.png)
+_Modern landing page with animated hero section, skills showcase, and project highlights_
+
+### Admin Dashboard
+
+![Dashboard](docs/screenshots/dashboard.png)
+_Project management dashboard with analytics, CRUD operations, and real-time updates_
+
+### Project Detail
+
+![Project Detail](docs/screenshots/project-detail.png)
+_Detailed project view with tech stack badges, descriptions, and related projects_
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+
+| Technology        | Purpose                    |
+| ----------------- | -------------------------- |
+| **NestJS 11**     | Scalable Node.js framework |
+| **Prisma ORM**    | Type-safe database access  |
+| **PostgreSQL 16** | Primary database           |
+| **Redis 7**       | Caching & session storage  |
+| **JWT**           | Authentication tokens      |
+| **Sentry**        | Error monitoring           |
+
+### Frontend
+
+| Technology         | Purpose                      |
+| ------------------ | ---------------------------- |
+| **Next.js 15**     | React framework (App Router) |
+| **React Query**    | Server state management      |
+| **TypeScript 5**   | Type safety                  |
+| **Tailwind CSS 4** | Utility-first styling        |
+
+### Infrastructure
+
+| Technology         | Purpose                        |
+| ------------------ | ------------------------------ |
+| **Docker**         | Containerization               |
+| **Docker Compose** | Multi-container orchestration  |
+| **Nginx**          | Reverse proxy & load balancing |
+| **GitHub Actions** | CI/CD automation               |
+
+---
 
 ## 🚀 Quick Start
 
@@ -32,11 +101,11 @@ portfolio/
 - Redis ≥ 6
 - Docker (optional)
 
-### Setup
+### Local Development
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/portfolio.git
+git clone https://github.com/BuiGiaUy/portfolio.git
 cd portfolio
 
 # Backend setup
@@ -54,36 +123,31 @@ cp .env.example .env.local
 npm run dev
 ```
 
-**Access:**
+**Access Points:**
 
-- Frontend: http://localhost:3001
-- Backend API: http://localhost:3000
-- API Docs: http://localhost:3000/api
+- 🌐 Frontend: http://localhost:3001
+- 🔌 Backend API: http://localhost:3000
+- 📚 API Docs: http://localhost:3000/api
 
 ### Docker Deployment
 
 ```bash
-# Build and run all services
-docker compose up --build
+# Copy environment file
+cp .env.example .env
 
-# Run detached
-docker compose up -d
+# Build and run all services
+docker compose up --build -d
+
+# Check status
+docker compose ps
 ```
 
-## 📚 Documentation
-
-| Document                                                       | Description                            |
-| -------------------------------------------------------------- | -------------------------------------- |
-| [ARCHITECTURE.md](./ARCHITECTURE.md)                           | System design, patterns, and structure |
-| [DEPLOYMENT.md](./DEPLOYMENT.md)                               | Production deployment guide            |
-| [E2E_AND_OBSERVABILITY.md](./E2E_AND_OBSERVABILITY.md)         | Testing and monitoring setup           |
-| [portfolio-backend/README.md](./portfolio-backend/README.md)   | Backend API documentation              |
-| [portfolio-frontend/README.md](./portfolio-frontend/README.md) | Frontend app documentation             |
+---
 
 ## 🧪 Testing
 
 ```bash
-# Backend tests
+# Backend tests (148 unit tests)
 cd portfolio-backend
 npm run test              # Unit tests
 npm run test:e2e          # E2E tests
@@ -95,52 +159,106 @@ npm run test:e2e          # Playwright E2E tests
 npm run test:e2e:ui       # Visual debugger
 ```
 
-## 🛠️ Tech Stack
+### Test Results
 
-### Backend
-
-- NestJS 10
-- Prisma ORM
-- PostgreSQL
-- Redis
-- JWT Authentication
-- Sentry
-
-### Frontend
-
-- Next.js 14 (App Router)
-- React Query (TanStack Query)
-- TypeScript
-- Tailwind CSS
-
-### Infrastructure
-
-- Docker & Docker Compose
-- GitHub Actions
-- Nginx (reverse proxy)
-
-## 📊 Project Status
-
-- ✅ Authentication & Authorization
-- ✅ Project CRUD operations
-- ✅ Redis caching layer
-- ✅ E2E testing suite
-- ✅ Structured logging
-- ✅ Error tracking (Sentry)
-- ✅ CI/CD pipeline
-- ✅ Docker deployment
-
-## 🤝 Contributing
-
-1. Follow Clean Architecture patterns
-2. Write tests for new features
-3. Run linters before committing
-4. Update documentation as needed
-
-## 📄 License
-
-MIT License - See LICENSE file for details
+- ✅ **148 unit tests** passing
+- ✅ **7 E2E tests** passing
+- ✅ **0 security vulnerabilities**
 
 ---
 
-**Built with ❤️ using NestJS and Next.js**
+## 📚 Documentation
+
+| Document                                               | Description                 |
+| ------------------------------------------------------ | --------------------------- |
+| [ARCHITECTURE.md](./ARCHITECTURE.md)                   | System design & patterns    |
+| [DEPLOYMENT.md](./DEPLOYMENT.md)                       | Production deployment guide |
+| [E2E_AND_OBSERVABILITY.md](./E2E_AND_OBSERVABILITY.md) | Testing & monitoring        |
+
+---
+
+## 🔄 CI/CD Pipeline
+
+Automated workflow triggered on push to `main`:
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Checkout  │ -> │  Run Tests  │ -> │ Build Image │ -> │   Deploy    │
+│    Code     │    │  & Linting  │    │  Push Hub   │    │   to VPS    │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+```
+
+**Pipeline Steps:**
+
+1. ✅ Install dependencies
+2. ✅ Run backend tests (Jest)
+3. ✅ Lint & typecheck frontend
+4. ✅ Build Docker images
+5. ✅ Push to Docker Hub
+6. ✅ Deploy to production server
+
+---
+
+## 📊 Project Status
+
+- ✅ Authentication & Authorization (JWT + Refresh Tokens)
+- ✅ Project CRUD with optimistic updates
+- ✅ Redis caching layer with auto-invalidation
+- ✅ E2E testing suite (Jest + Playwright)
+- ✅ Structured logging (JSON format)
+- ✅ Error tracking (Sentry integration)
+- ✅ CI/CD pipeline (GitHub Actions)
+- ✅ Docker deployment ready
+- ✅ i18n support (EN/VI)
+
+---
+
+## 🏗️ Architecture
+
+```
+portfolio/
+├── portfolio-backend/          # NestJS API (Clean Architecture)
+│   ├── src/
+│   │   ├── domain/             # Entities, repositories interfaces
+│   │   ├── application/        # Use cases, DTOs
+│   │   ├── infrastructure/     # Database, cache, external services
+│   │   └── interface/          # Controllers, guards, middleware
+│   └── tests/                  # Unit & E2E tests
+│
+├── portfolio-frontend/         # Next.js 15 App Router
+│   ├── app/                    # App router pages
+│   ├── components/             # Reusable UI components
+│   ├── lib/                    # Utilities, API clients
+│   └── services/               # API service layer
+│
+├── nginx/                      # Reverse proxy configuration
+├── docker-compose.yml          # Multi-container orchestration
+└── .github/workflows/          # CI/CD pipeline
+```
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feat/amazing-feature`)
+3. Follow Clean Architecture patterns
+4. Write tests for new features
+5. Run linters before committing
+6. Submit a Pull Request
+
+---
+
+## 📄 License
+
+MIT License - See [LICENSE](./LICENSE) file for details
+
+---
+
+<div align="center">
+
+**Built with ❤️ by [Gia Uy](https://github.com/BuiGiaUy)**
+
+[![GitHub](https://img.shields.io/badge/GitHub-BuiGiaUy-black?logo=github)](https://github.com/BuiGiaUy)
+
+</div>
