@@ -21,3 +21,7 @@ portfolio-frontend/out/
 
 # Docker ignored files
 docker-data/
+
+# SSL Certificates (sensitive - never commit!)
+nginx/ssl/
+certbot/
