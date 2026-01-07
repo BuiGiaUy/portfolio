@@ -1,4 +1,4 @@
-import type { Prisma } from '../../generated/prisma/client/client';
+import type { Prisma } from '../../generated/prisma/client';
 import { Comment } from '../../domain/entities/comment.entity';
 
 /**

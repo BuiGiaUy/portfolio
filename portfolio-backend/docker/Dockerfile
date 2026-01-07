@@ -31,6 +31,7 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/src/generated ./dist/src/generated
 COPY --from=builder /app/prisma ./prisma
 COPY package.json package-lock.json ./
 
